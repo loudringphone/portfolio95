@@ -6,6 +6,10 @@
   height: 40vmin;
   pointer-events: none;
 }
+.underscore {
+  text-decoration: underline;
+  text-decoration-thickness: 0.1rem;
+}
 
 .start-up-background {
   background-color: black;
@@ -17,12 +21,15 @@
 .start-up {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
 }
 
 body {
   height: 100vh;
+  width: 100vw;
   background-color: #008080;
+  /* overflow: hidden; */
 }
 .react-draggable {
   height: 0;

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
-import logo from '../../assets/images/logo.png'
+import win95logo from '../../assets/images/win95-logo.png'
+
 import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
 import './dockbar.css'
 
@@ -34,9 +35,9 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
             style={{ fontWeight: "bold" }}
         >
             <img
-            src={logo}
+            src={win95logo}
             alt="Start"
-            style={{ height: "20px", marginRight: 4 }}
+            style={{ height: "22px", marginRight: 2, marginLeft: -2, transform: "rotate(-20deg)"}}
             />
             Start
         </Button>
@@ -45,7 +46,7 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
                 style={{
                 position: "absolute",
                 left: "0px",
-                width: "150px",
+                width: "200px",
                 bottom: "100%",
                 zIndex: 6
                 }}
@@ -53,20 +54,20 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
             >
               <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleResume}>
             <Mailnews20 style={{height:'30px', width:'30px'}}/>
-                <p style={{fontSize: 'small'}}>My Resume</p>
+                <p><span className='underscore'>M</span>y Resume</p>
             </MenuListItem>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handlePortfolio}>
             <Shell325 style={{height:'30px', width:'30px'}}/>
-                <p style={{fontSize: 'small'}}>Portfolio</p>
+                <p><span className='underscore'>P</span>ortfolio</p>
             </MenuListItem>
             <Separator/>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}}>
                 <Password1010 style={{transform: 'rotate(-90deg)', height:'30px', width:'30px'}}/>
-                <p style={{fontSize: 'small'}}>Log Off User...</p>
+                <p><span className='underscore'>L</span>og Off User</p>
             </MenuListItem>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}}>
                 <Computer4 style={{height:'30px', width:'30px'}}/>
-                <p style={{fontSize: 'small'}}>Shut Down...</p>
+                <p><span className='underscore'>S</span>hut Down</p>
             </MenuListItem>
             </MenuList>
         )}
