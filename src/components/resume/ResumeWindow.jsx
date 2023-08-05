@@ -51,7 +51,7 @@ const StyledScrollView = styled(ScrollView)`
 }
 `;
 
-const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndex}) => {
+const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -64,7 +64,11 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
 
   const onStart = () => {
     activatingResume(true)
-    indexingWindows({resume: 2, portfolio: 1})
+    if (windowIndice.portfolio > windowIndice.browser) {
+      indexingWindows({resume: 3, portfolio: 2, browser: 1})
+    } else {
+      indexingWindows({resume: 3, portfolio: 1, browser: 2})
+    }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -75,11 +79,15 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingResume(true);
-    indexingWindows({resume: 2, portfolio: 1})
+    if (windowIndice.portfolio > windowIndice.browser) {
+      indexingWindows({resume: 3, portfolio: 2, browser: 1})
+    } else {
+      indexingWindows({resume: 3, portfolio: 1, browser: 2})
+    }
   };
   return (
     <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper style={{zIndex: windowIndex}}>
+    <Wrapper style={{zIndex: windowIndice.resume}}>
     <Window className='resume-window' style={{display: resumeDisplay}} onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={resumeActive} className='window-title'>
         <span>resume.exe</span>
