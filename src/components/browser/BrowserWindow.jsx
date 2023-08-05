@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
 import {
   Button,
@@ -50,7 +50,7 @@ const StyledScrollView = styled(ScrollView)`
 }
 `;
 
-const BrowserWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndex}) => {
+const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -62,8 +62,13 @@ const BrowserWindow = ({resumeDisplay, openingResume, activatingResume, resumeAc
   });
 
   const onStart = () => {
-    activatingResume(true)
-    indexingWindows({resume: 2, portfolio: 1})
+    activatingBrowser(true)
+    activatingBrowser(true);
+    if (windowIndice.portfolio > windowIndice.resume) {
+      indexingWindows({browser: 3, portfolio: 2, resume: 1})
+    } else {
+      indexingWindows({browser: 3, portfolio: 1, resume: 2})
+    }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -73,23 +78,48 @@ const BrowserWindow = ({resumeDisplay, openingResume, activatingResume, resumeAc
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingResume(true);
-    indexingWindows({resume: 2, portfolio: 1})
+    activatingBrowser(true);
+    if (windowIndice.portfolio > windowIndice.resume) {
+      indexingWindows({browser: 3, portfolio: 2, resume: 1})
+    } else {
+      indexingWindows({browser: 3, portfolio: 1, resume: 2})
+    }
   };
+  useEffect(() => {
+    const iframe = document.getElementById('embeddedWebpage');
+    const iframeDocument = iframe?.contentDocument || iframe?.contentWindow.document;
+    const iframeBody = iframeDocument?.body;
+
+    if (iframeBody) {
+      iframeBody.style.overflow = 'hidden';
+      iframe.style.height = iframeBody.scrollHeight + 'px';
+    }
+  }, []);
+
+  const handleClose = () => {
+    openingBrowser('none')
+    settingProjectUrl(null)
+  }
   return (
     <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper style={{zIndex: windowIndex}}>
-    <Window className='resume-window' style={{display: resumeDisplay}} onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={resumeActive} className='window-title'>
-        <span>resume.exe</span>
-        <Button onClick={()=>{openingResume('none')}}>
+    <Wrapper style={{zIndex: windowIndice.browser}}>
+    <Window className='browser-window' style={{display: browserDisplay}} onClick={handleClickInsideWindow}>
+    <strong className="cursor"><WindowHeader  active={browserActive} className='window-title'>
+        <span>browser.exe</span>
+        <Button onClick={handleClose}>
           <span className='close-icon' />
         </Button>
       </WindowHeader></strong>
       <WindowContent className='window-content'>
     
     <StyledScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
-        
+      <iframe
+        title="Embedded Webpage"
+        src={projectUrl}
+        width="100%"
+        height="600"
+        scrolling="no"
+      />
       
         </StyledScrollView>
      

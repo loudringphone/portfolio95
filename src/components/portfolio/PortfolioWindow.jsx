@@ -50,7 +50,7 @@ const StyledScrollView = styled(ScrollView)`
 }
 `;
 
-const PortfolioWindow = ({portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, indexingWindows, windowIndex}) => {
+const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, indexingWindows, windowIndice}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -62,15 +62,22 @@ const PortfolioWindow = ({portfolioDisplay, openingPortfolio, activatingPortfoli
     }
   });
 
-   const handleGo = () => {
-    console.log(projects[projectSelected].site);
+   const handleGo = (event) => {
+    event.stopPropagation();
+    settingProjectUrl(projects[projectSelected].site);
+    indexingWindows({portfolio: 2, resume: 1, browser: 3})
+    openingBrowser('block')
    }
   const selectingProject = (id) => {
     setProjectSelected(id)
   }
   const onStart = () => {
     activatingPortfolio(true)
-    indexingWindows({resume: 1, portfolio: 2})
+    if (windowIndice.resume > windowIndice.browser) {
+      indexingWindows({portfolio: 3, resume: 2, browser: 1})
+    } else {
+      indexingWindows({portfolio: 3, resume: 1, browser: 2})
+    }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -81,13 +88,17 @@ const PortfolioWindow = ({portfolioDisplay, openingPortfolio, activatingPortfoli
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingPortfolio(true);
-    indexingWindows({resume: 1, portfolio: 2})
+    if (windowIndice.resume > windowIndice.browser) {
+      indexingWindows({portfolio: 3, resume: 2, browser: 1})
+    } else {
+      indexingWindows({portfolio: 3, resume: 1, browser: 2})
+    }
   };
 
   
   return (
     <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper style={{zIndex: windowIndex}}>
+    <Wrapper style={{zIndex: windowIndice.portfolio}}>
     <Window className='portfolio-window' style={{display: portfolioDisplay}} onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={portfolioActive} className='window-title'>
         <span>portfolio.exe</span>

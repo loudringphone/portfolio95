@@ -11,6 +11,8 @@ import { DockBar } from './components/dockbar/DockBar';
 import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
+import win95startup from './assets/images/win95-startup.jpeg'
+import win95sound from './assets/sounds/win95.mp3'
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -32,13 +34,21 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
+  const [projectUrl, setProjectUrl] = useState(null)
+  const [dockMenuActive, setDockMenuActive] = useState(false)
   const [portfolioDisplay, setPortfolioDisplay] = useState('none')
   const [portfolioActive, setPortfolioActive] = useState(true)
   const [resumeDisplay, setResumeDisplay] = useState('none')
   const [resumeActive, setResumeActive] = useState(true)
-  const [dockMenuActive, setDockMenuActive] = useState(false)
-  const [windowIndice, setWindowIndice] = useState({resume: 1, portfolio: 1})
+  const [browserDisplay, setBrowserDisplay] = useState('none')
+  const [browserActive, setBrowserActive] = useState(true)
+  const [windowIndice, setWindowIndice] = useState({resume: 1, portfolio: 1, browser: 1})
+  const [loading, setLoading] = useState(true)
 
+  const settingProjectUrl = (url) => {
+    setProjectUrl(url)
+  }
+  
   const indexingWindows = (obj) => {
     setWindowIndice(obj)
   }
@@ -51,6 +61,7 @@ const App = () => {
     if (boolean) {
       activiatingDockMenu(false)
       activatingResume(false)
+      activatingBrowser(false)
     }
   }
 
@@ -62,6 +73,19 @@ const App = () => {
     if (boolean) {
       activiatingDockMenu(false)
       activatingPortfolio(false)
+      activatingBrowser(false)
+    }
+  }
+
+  const openingBrowser = (display) => {
+    setBrowserDisplay(display)
+  }
+  const activatingBrowser = (boolean) => {
+    setBrowserActive(boolean)
+    if (boolean) {
+      activiatingDockMenu(false)
+      activatingPortfolio(false)
+      activatingResume(false)
     }
   }
 
@@ -77,22 +101,34 @@ const App = () => {
   const handleClick = () => {
     activiatingDockMenu(false)
     activatingPortfolio(false)
+    activatingResume(false)
+    activatingBrowser(false)
+
   }
 
   return (
   
  
   <div style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-    <Helmet>
-    <GlobalStyles />
-    <ThemeProvider theme={original}>
-      <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
-      <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndex={windowIndice.resume} />
-      <PortfolioWindow openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndex={windowIndice.portfolio} />
-      {/* <BrowserWindow /> */}
-    < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} />
-    </ThemeProvider>
-    </Helmet>
+      { !loading ? 
+        <div className='start-up-background'>
+          <img className='start-up' src={win95startup} alt="start up"/>
+        </div>
+      :
+      <Helmet style={{height: "100vh", width: "100vw"}}>
+
+      <GlobalStyles />
+      <ThemeProvider theme={original}>
+        <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
+        <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} />
+        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndice={windowIndice} />
+        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} />
+      < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} />
+      </ThemeProvider>
+      </Helmet>
+
+      }
+    
   </div>
   
   )
