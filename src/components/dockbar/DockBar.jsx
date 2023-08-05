@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import logo from '../../assets/images/logo.png'
-import { Computer4 } from "@react95/icons";
-import { Password1010 } from "@react95/icons";
-import { Shell325 } from "@react95/icons";
+import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
 import './dockbar.css'
 
-export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, indexingWindows}) => {
+export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -18,6 +16,12 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     activatingPortfolio(true);
     openingPortfolio('block')
     indexingWindows({resume: 1, portfolio: 2})
+  }
+  const handleResume = (event) => {
+    event.stopPropagation();
+    activatingResume(true);
+    openingResume('block')
+    indexingWindows({resume: 2, portfolio: 1})
   }
 
   return (
@@ -47,6 +51,10 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
                 }}
                 onClick={handleClick}
             >
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleResume}>
+            <Mailnews20 style={{height:'30px', width:'30px'}}/>
+                <p style={{fontSize: 'small'}}>My Resume</p>
+            </MenuListItem>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handlePortfolio}>
             <Shell325 style={{height:'30px', width:'30px'}}/>
                 <p style={{fontSize: 'small'}}>Portfolio</p>

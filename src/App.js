@@ -9,6 +9,7 @@ import DesktopIcons from './desktop-icons/DesktopIcons';
 import { DockBar } from './components/dockbar/DockBar';
 import PortfolioWindow from './portfolio/PortfolioWindow';
 import ResumeWindow from './resume/ResumeWindow';
+import { Helmet } from './helmet/Helmet';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -39,7 +40,6 @@ const App = () => {
 
   const indexingWindows = (obj) => {
     setWindowIndice(obj)
-    console.log(obj)
   }
 
   const openingPortfolio = (display) => {
@@ -82,14 +82,17 @@ const App = () => {
   
  
   <div style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
+    <Helmet>
     <GlobalStyles />
     <ThemeProvider theme={original}>
       <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
       <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndex={windowIndice.resume} />
       <PortfolioWindow openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndex={windowIndice.portfolio} />
-    < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} indexingWindows={indexingWindows} />
+    < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} />
     </ThemeProvider>
+    </Helmet>
   </div>
+  
   )
   };
 

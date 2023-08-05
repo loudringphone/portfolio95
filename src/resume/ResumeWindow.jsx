@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ResumePdf from './ResumePdf';
 import Draggable from 'react-draggable';
 import {
   Button,
@@ -9,60 +10,17 @@ import {
   TextInput,
 } from 'react95';
 import styled from 'styled-components';
-import './resumewindow.css'
+import './resumewindow.scss'
 const Wrapper = styled.div`
   position: absolute;
   background: transparent;
-  .window-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
   .close-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-left: -1px;
-    margin-top: -1px;
-    transform: rotateZ(45deg);
-    position: relative;
     &:before,
     &:after {
       content: '';
       position: absolute;
       background: ${({ theme }) => theme.materialText};
     }
-    &:before {
-      height: 100%;
-      width: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:after {
-      height: 3px;
-      width: 100%;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-  .window {
-    max-width: 600px;
-    display: flex
-    min-height: 200px;
-  }
-  .window-content {
-    display: flex;
-    max-height: 360px;
-    width: 400px;
-    gap: 15px;
-  }
-  .footer {
-    display: block;
-    margin: 0.25rem;
-    height: 31px;
-    line-height: 31px;
-    padding-left: 0.25rem;
   }
 `;
 
@@ -136,9 +94,9 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
     
 
 
-    <StyledScrollView style={{ width: "100%", height: "260px", overflowWrap: 'anywhere' }}>
+    <StyledScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
         
-          <p>test</p>
+        <ResumePdf />
       
         </StyledScrollView>
      

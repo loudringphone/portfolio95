@@ -1,8 +1,0 @@
-.resume-window{
-    position: 'absolute';
-    width: max-content;
-    height: max-content;
-    top: 0;
-    transform: translate(150px, -50px);
-}
-

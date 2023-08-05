@@ -1,6 +1,5 @@
 import React from 'react'
-import { Mailnews20 } from '@react95/icons'
-import { Shell325 } from "@react95/icons";
+import { Mailnews20, Shell325 } from '@react95/icons'
 import './desktopicons.css'
 const DesktopIcons = ({openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows}) => {
   const handlePortfolio = (event) => {
