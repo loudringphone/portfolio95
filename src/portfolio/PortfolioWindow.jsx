@@ -1,5 +1,3 @@
-
-
 import React, {useState} from 'react';
 import Draggable from 'react-draggable';
 import {
@@ -13,59 +11,15 @@ import {
 import styled from 'styled-components';
 import ProjectTree from './ProjectTree';
 import { projects } from './projects';
+import './portfoliowindow.scss'
+
 const Wrapper = styled.div`
-  padding: 5rem;
   position: absolute;
-  background: ${({ theme }) => theme.desktopBackground};
-  .window-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
   .close-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-left: -1px;
-    margin-top: -1px;
-    transform: rotateZ(45deg);
-    position: relative;
     &:before,
     &:after {
-      content: '';
-      position: absolute;
       background: ${({ theme }) => theme.materialText};
     }
-    &:before {
-      height: 100%;
-      width: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:after {
-      height: 3px;
-      width: 100%;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-  .window {
-    max-width: 600px;
-    display: flex
-    min-height: 200px;
-  }
-  .window-content {
-    display: flex;
-    max-height: 360px;
-    gap: 15px;
-  }
-  .footer {
-    display: block;
-    margin: 0.25rem;
-    height: 31px;
-    line-height: 31px;
-    padding-left: 0.25rem;
   }
 `;
 
@@ -96,9 +50,8 @@ const StyledScrollView = styled(ScrollView)`
 }
 `;
 
-const ProjectWindow = () => {
+const PortfolioWindow = ({portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, indexingWindows, windowIndex}) => {
   const [projectSelected, setProjectSelected] = useState(null)
-  const [windowDisplay, setWindowDisplay] = useState('block')
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -109,9 +62,6 @@ const ProjectWindow = () => {
     }
   });
 
-    const handleClose = () => {
-      setWindowDisplay('none')
-    }
    const handleGo = () => {
     console.log(projects[projectSelected].site);
    }
@@ -119,22 +69,29 @@ const ProjectWindow = () => {
     setProjectSelected(id)
   }
   const onStart = () => {
+    activatingPortfolio(true)
+    indexingWindows({resume: 1, portfolio: 2})
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
   const onStop = () => {
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
- 
   const dragHandlers = { onStart, onStop };
+  const handleClickInsideWindow = (event) => {
+    event.stopPropagation();
+    activatingPortfolio(true);
+    indexingWindows({resume: 1, portfolio: 2})
+  };
 
+  
   return (
     <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper>
-    <Window className='window' style={{display: windowDisplay}}>
-    <strong className="cursor"><WindowHeader  active={true} className='window-title'>
+    <Wrapper style={{zIndex: windowIndex}}>
+    <Window className='portfolio-window' style={{display: portfolioDisplay}} onClick={handleClickInsideWindow}>
+    <strong className="cursor"><WindowHeader  active={portfolioActive} className='window-title'>
         <span>portfolio.exe</span>
-        <Button onClick={handleClose}>
+        <Button onClick={()=>{openingPortfolio('none')}}>
           <span className='close-icon' />
         </Button>
       </WindowHeader></strong>
@@ -157,7 +114,7 @@ const ProjectWindow = () => {
     
 
 
-    <StyledScrollView style={{ width: "100%", height: "260px", overflowWrap: 'anywhere' }}>
+    <StyledScrollView style={{ maxWidth: "300px", height: "260px", overflowWrap: 'anywhere' }}>
         
           <p>{projects[projectSelected].article}</p>
       
@@ -175,4 +132,4 @@ const ProjectWindow = () => {
   )
 }
 
-export default ProjectWindow
+export default PortfolioWindow

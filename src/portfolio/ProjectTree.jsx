@@ -1,6 +1,7 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
-import { GroupBox, TreeLeaf, TreeView } from 'react95';
+import { GroupBox, TreeView } from 'react95';
+import { Explorer100, FilePen, ReaderCd2, Awfxcg321303, Shell3218, Mshearts1 } from "@react95/icons";
 import styled from 'styled-components';
 import { Button } from 'react95';
 const Wrapper = styled.div`
@@ -28,14 +29,14 @@ const portfolio = [
   {
     id: 'projects',
     label: 'Projects',
-    icon: <>🛠️</>,
+    icon: <Explorer100 style={{height:'20px', width:'20px'}}/>,
     items: [
      
-          { id: 'winstons-blog', label: "Winston's Blog", icon: <>📝</> },
-          { id: 'video-store', label: 'Video Store', icon: <>🛍️</> },
-          { id: 'spark-studio', label: 'Spark Studio', icon: <>🎯</> },
-          { id: 'sancbook', label: 'Sancbook', icon: <>👬</> },
-          { id: 'ultimate-tic-tac-toe', label: 'Ultimate Tic Tac Toe', icon: <>♟️</> },
+          { id: 'winstons-blog', label: "Winston's Blog", icon: <FilePen style={{height:'20px', width:'20px'}}/> },
+          { id: 'video-store', label: 'Video Store', icon: <ReaderCd2 style={{height:'20px', width:'20px'}}/> },
+          { id: 'spark-studio', label: 'Spark Studio', icon: <Awfxcg321303 style={{height:'20px', width:'20px'}}/> },
+          { id: 'sancbook', label: 'Sancbook', icon: <Shell3218 style={{height:'20px', width:'20px'}}/> },
+          { id: 'ultimate-tic-tac-toe', label: 'Ultimate Tic Tac Toe', icon: <Mshearts1 style={{height:'20px', width:'20px'}}/> },
     ]
   }
 ];

@@ -1,21 +1,32 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
-import logo from '../assets/images/logo.png'
-import {Bomb} from '@react95/icons/icons.css';
+import logo from '../../assets/images/logo.png'
 import { Computer4 } from "@react95/icons";
 import { Password1010 } from "@react95/icons";
 import { Shell325 } from "@react95/icons";
-export const Footer = () => {
-  const [open, setOpen] = useState(false);
+import './dockbar.css'
 
+export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, indexingWindows}) => {
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    activatingDockMenu(!dockMenuActive)
+
+  }
+  const handlePortfolio = (event) => {
+    event.stopPropagation();
+    activatingPortfolio(true);
+    openingPortfolio('block')
+    indexingWindows({resume: 1, portfolio: 2})
+  }
 
   return (
-    <AppBar style={{ top: "unset", bottom: 0 }}>
+    <AppBar style={{ top: "unset", bottom: 0, zIndex: 5 }}>
     <Toolbar style={{ justifyContent: "space-between" }}>
         <div style={{ position: "relative", display: "inline-block" }}>
         <Button
-            onClick={() => setOpen(!open)}
-            active={open}
+            onClick={handleClick}
+            active={dockMenuActive}
             style={{ fontWeight: "bold" }}
         >
             <img
@@ -25,17 +36,18 @@ export const Footer = () => {
             />
             Start
         </Button>
-        {open && (
+        {dockMenuActive && (
             <MenuList
                 style={{
                 position: "absolute",
                 left: "0px",
                 width: "150px",
                 bottom: "100%",
+                zIndex: 6
                 }}
-                onClick={() => setOpen(false)}
+                onClick={handleClick}
             >
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}}>
+            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handlePortfolio}>
             <Shell325 style={{height:'30px', width:'30px'}}/>
                 <p style={{fontSize: 'small'}}>Portfolio</p>
             </MenuListItem>
