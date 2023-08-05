@@ -5,11 +5,12 @@ import original from "react95/dist/themes/original";
 import ms_sans_serif from "react95/dist/fonts/ms_sans_serif.woff2";
 import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
 import './App.css';
-import DesktopIcons from './desktop-icons/DesktopIcons';
-import { DockBar } from './components/dockbar/DockBar';
-import PortfolioWindow from './portfolio/PortfolioWindow';
-import ResumeWindow from './resume/ResumeWindow';
+import DesktopIcons from './components/desktop-icons/DesktopIcons';
 import { Helmet } from './helmet/Helmet';
+import { DockBar } from './components/dockbar/DockBar';
+import PortfolioWindow from './components/portfolio/PortfolioWindow';
+import ResumeWindow from './components/resume/ResumeWindow';
+import BrowserWindow from './components/browser/BrowserWindow';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -88,6 +89,7 @@ const App = () => {
       <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
       <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndex={windowIndice.resume} />
       <PortfolioWindow openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndex={windowIndice.portfolio} />
+      {/* <BrowserWindow /> */}
     < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} />
     </ThemeProvider>
     </Helmet>
