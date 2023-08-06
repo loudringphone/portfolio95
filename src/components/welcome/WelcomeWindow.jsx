@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Password1010 } from "@react95/icons";
+import ConditionalAnimatedWrapper from '../ConditionalAnimatedWrapper';
 import Draggable from 'react-draggable';
 import {
   Button,
@@ -23,10 +24,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
+const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) => {
   const [username, setUsername] = useState('Admin')
   const [password, setPassword] = useState('admin')
-
+  const [signinError, setSigninError] = useState(false)
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -61,23 +62,37 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
       handleSubmit();
     }
   }
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     if (username == 'Admin' && password == 'admin') {
       signingIn(true)
       const audio = new Audio(win95sound);
       audio.play();
+    } else {
+      event.stopPropagation();
+      activatingWelcome(false)
+      setSigninError(true)
+      setTimeout(() => {
+        activatingWelcome(true)
+        setSigninError(false)
+      }, 1000);
     }
   }
+ 
+  const handleHelp = () => {
+    
+  }
+
 
   return (
     <div className='welcome'>
-    <Draggable handle="strong" {...dragHandlers}>
+    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper>
+    <ConditionalAnimatedWrapper animate={signinError}>
     <Window className='welcome-window' onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
+      <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
         <span>Welcome to Windows</span>
         <div className="buttons">
-        <Button>
+        <Button onClick={handleHelp} onTouch={handleHelp}>
           <span className='help-icon'>?</span>
         </Button>
         <Button>
@@ -105,13 +120,12 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
         <Button type="submit" onClick={handleSubmit} onTouch={handleSubmit}>OK</Button>
         <Button>Cancel</Button>
       </div>
-        
       </WindowContent>
-     
     </Window>
-  </Wrapper>
-  </Draggable>
-  </div>
+    </ConditionalAnimatedWrapper>
+    </Wrapper>
+    </Draggable>
+    </div>
   )
 }
 

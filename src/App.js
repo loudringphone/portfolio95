@@ -47,6 +47,7 @@ const App = () => {
   const [windowIndice, setWindowIndice] = useState({resume: 1, portfolio: 1, browser: 1})
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
+  const [bounds, setBounds] = useState(false);
 
   const signingIn = (boolean) => {
     setSigned(boolean)
@@ -65,6 +66,7 @@ const App = () => {
   }
 
   const openingPortfolio = (display) => {
+    console.log(display)
     setPortfolioDisplay(display)
   }
   const activatingPortfolio = (boolean) => {
@@ -118,9 +120,24 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
-    }, 2500);
+    }, 2000);
+
+    const handleResize = () => {
+      if (window.innerWidth <= 1000) {
+        setBounds(false)
+      } else {
+        setBounds("body")
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []); 
 
+  
   if (loading) {
     return (
       <div className='start-up-background'>
@@ -130,16 +147,14 @@ const App = () => {
   } 
   if (!signed) {
     return (
-      
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
       <GlobalStyles />
       <div style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-      <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} />
+        <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} bounds={bounds} />
       </div>
       </ThemeProvider>
       </Helmet>
-
     )
   }
 
@@ -152,12 +167,12 @@ const App = () => {
       <GlobalStyles />
       <ThemeProvider theme={original}>
        
-          <div style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
+          <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
           <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
-        <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} />
-        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndice={windowIndice} />
-        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} />
-      < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} />
+        <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
+        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
+        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
+      < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} />
       </div>
 
 

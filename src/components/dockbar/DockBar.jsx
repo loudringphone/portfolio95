@@ -5,7 +5,7 @@ import win95logo from '../../assets/images/win95-logo.png'
 import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
 import './dockbar.css'
 
-export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows}) => {
+export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows, signingIn, activatingWelcome}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -23,6 +23,10 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     activatingResume(true);
     openingResume('block')
     indexingWindows({resume: 2, portfolio: 1})
+  }
+  const handleLogOff = () => {
+    activatingWelcome(true)
+    signingIn(false)
   }
 
   return (
@@ -61,7 +65,7 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
                 <p><span className='underscore'>P</span>ortfolio</p>
             </MenuListItem>
             <Separator/>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}}>
+            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleLogOff} >
                 <Password1010 style={{transform: 'rotate(-90deg)', height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>L</span>og Off User</p>
             </MenuListItem>

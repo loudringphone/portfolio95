@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice}) => {
+const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -60,13 +60,14 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
       indexingWindows({resume: 3, portfolio: 1, browser: 2})
     }
   };
+
   return (
-    <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper style={{zIndex: windowIndice.resume}}>
+    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume}}>
     <Window className='resume-window' style={{display: resumeDisplay}} onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={resumeActive} className='window-title'>
         <span>resume.exe</span>
-        <Button onClick={()=>{openingResume('none')}}>
+        <Button onClick={()=>{openingResume('none')}} onTouchStart={()=>{openingResume('none')}}>
           <span className='close-icon' />
         </Button>
       </WindowHeader></strong>

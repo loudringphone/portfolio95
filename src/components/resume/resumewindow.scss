@@ -1,10 +1,10 @@
+.drag-resume {
+  grid-column: 8;
+  grid-row: 4;
+}
 .resume-window{
-    position: 'absolute';
     width: max-content;
     height: max-content;
-    top: 0;
-    transform: translate(150px, -200px);
-
     .window-title {
         display: flex;
         align-items: center;
