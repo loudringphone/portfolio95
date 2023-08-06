@@ -6,11 +6,20 @@
   height: 40vmin;
   pointer-events: none;
 }
+.desktop {
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
+  grid-template-rows: repeat(48, 1fr);
+}
 .underscore {
   text-decoration: underline;
   text-decoration-thickness: 0.1rem;
 }
-
+.react-draggable.react-draggable-dragged {
+  z-index: 1;
+  height: 0;
+  width: 0;
+}
 button {
   box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -38,6 +47,9 @@ body {
 .react-draggable {
   height: 0;
   width: 0;
+  grid-column: 6;
+  grid-row: 1;
+  position: relative !important;
 }
 
 @media (prefers-reduced-motion: no-preference) {

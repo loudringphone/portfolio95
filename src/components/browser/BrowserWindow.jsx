@@ -49,7 +49,7 @@ const StyledScrollView = styled(ScrollView)`
 }
 `;
 
-const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice}) => {
+const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -100,12 +100,12 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
     settingProjectUrl(null)
   }
   return (
-    <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper style={{zIndex: windowIndice.browser}}>
+    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser}}>
     <Window className='browser-window' style={{display: browserDisplay}} onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={browserActive} className='window-title'>
         <span>browser.exe</span>
-        <Button onClick={handleClose}>
+        <Button onClick={handleClose} onTouchStart={handleClose}>
           <span className='close-icon' />
         </Button>
       </WindowHeader></strong>

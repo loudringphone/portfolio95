@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, indexingWindows, windowIndice}) => {
+const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, indexingWindows, windowIndice, bounds}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -70,12 +70,12 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
 
   
   return (
-    <Draggable handle="strong" {...dragHandlers}>
-    <Wrapper style={{zIndex: windowIndice.portfolio}}>
+    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio}}>
     <Window className='portfolio-window' style={{display: portfolioDisplay}} onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={portfolioActive} className='window-title'>
         <span>portfolio.exe</span>
-        <Button onClick={()=>{openingPortfolio('none')}}>
+        <Button onClick={()=>{openingPortfolio('none')}} onTouchStart={()=>{openingPortfolio('none')}}>
           <span className='close-icon' />
         </Button>
       </WindowHeader></strong>

@@ -1,12 +1,11 @@
-html {
-    overflow: hidden;
+.drag-browser {
+    grid-column: 11;
+    grid-row: 5;
 }
+
 .browser-window{
-    position: 'absolute';
     width: 600px;
     height: max-content;
-    top: 0;
-    transform: translate(180px, -160px);
     html {
         overflow: hidden;
     }
