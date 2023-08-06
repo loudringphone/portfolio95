@@ -84,9 +84,8 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
 
 
   return (
-    <div className='welcome'>
     <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper>
+    <Wrapper className="drag-welcome">
     <ConditionalAnimatedWrapper animate={signinError}>
     <Window className='welcome-window' onClick={handleClickInsideWindow}>
       <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
@@ -125,7 +124,6 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
     </ConditionalAnimatedWrapper>
     </Wrapper>
     </Draggable>
-    </div>
   )
 }
 

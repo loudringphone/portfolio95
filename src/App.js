@@ -127,15 +127,20 @@ const App = () => {
     setShutDOwn(boolean)
   }
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 2200);
-
-      if (window.innerWidth <= 1000) {
-        setBounds(false)
-      } else {
-        setBounds("body")
-      }
+    if (window.innerWidth <= 800) {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2200);
+    } else {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2200);
+    }
+    if (window.innerWidth <= 1000) {
+      setBounds(false)
+    } else {
+      setBounds("body")
+    }
   }, []); 
 
   useEffect(() => {
@@ -171,22 +176,48 @@ const App = () => {
 
   if (turnOff) {
     return (
+      
       <div className='shut-down-background'>
+      <ThemeProvider theme={original}>
+
+      <GlobalStyles />
+        {
+          window.innerWidth <= 600 ? 
+          <p className='shut-down-text'>It's now safe to turn off your computer.</p>
+          :
           <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
+        }
+        
+          
+      </ThemeProvider>
+
       </div>
     )
   }
   if (shutDown) {
     return (
       <div className='shut-down-background'>
-          <img className='shut-down' src={window.innerWidth <= 800 ? win95shutdownMobile : win95shutdown} alt="start up"/>
+        {
+          window.innerWidth <= 800 ?
+          <img className='shut-down-mobile' src={win95shutdownMobile} alt="shut down"/>
+          :
+          <img className='shut-down' src={win95shutdown} alt="shut down"/>
+
+        }
       </div>
     )
   }
   if (loading) {
     return (
       <div className='start-up-background'>
-          <img className='start-up' src={window.innerWidth <= 800 ? win95startupMobile : win95startup} alt="start up"/>
+        {
+          window.innerWidth <= 800 ?
+          <img className='start-up-mobile' src={win95startupMobile} alt="start up"/>
+          :
+          <img className='start-up' src={win95startup} alt="start up"/>
+
+        }
+          
       </div>
     )
   } 
@@ -195,7 +226,7 @@ const App = () => {
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
       <GlobalStyles />
-      <div style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
+      <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
         <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} bounds={bounds} />
       </div>
       </ThemeProvider>

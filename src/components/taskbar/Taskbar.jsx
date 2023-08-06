@@ -42,7 +42,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     const audio = new Audio(win95shutdown);
     audio.play();
   }
-
+ 
   return (
     <AppBar style={{ top: "unset", bottom: 0, zIndex: 5 }}>
     <Toolbar style={{ justifyContent: "space-between" }}>
