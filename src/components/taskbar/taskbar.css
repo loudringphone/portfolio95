@@ -5,4 +5,24 @@
 .task, .task, .task, .task::after, .task::after, .task::after {
     width: 200px !important;
     justify-content: flex-start !important;
+    background-image: none !important;
+}
+
+.jrwZug:not(:first-child) {
+    background-color: rgb(245, 245, 245);
+}
+.jrwZug:first-child {
+    background-color: rgb(215, 215, 215);
+}
+.start-button {
+    background-image: none !important;
+}
+.start-button:active {
+    outline:2px dotted #0a0a0a !important;
+    outline-offset:-8px;
+}
+.jrwZug:first-child:after {
+    outline:2px dotted #0a0a0a !important;
+    outline-offset:-8px;
+
 }

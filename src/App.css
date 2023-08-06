@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -22,9 +23,9 @@
 }
 button {
   box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.3);
-  background-image: none !important;
 }
-button:focus:after {
+
+button:after {
   outline: none !important;
 }
 
@@ -34,11 +35,24 @@ button:focus:after {
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .start-up, .shut-down {
-  width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.start-up-mobile {
+  width: 100%;
+  object-fit: cover;
+}
+.shut-down-mobile {
+  height: 100%;
+}
+
+.shut-down-text {
+  color: darkorange;
+  font-size: large;
+  font-weight: bold;
 }
 
 body {

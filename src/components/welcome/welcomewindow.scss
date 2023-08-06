@@ -1,10 +1,10 @@
-html {
-    overflow: hidden;
-}
+.drag-welcome {
+    grid-column: 8;
+    grid-row: 10;
+  }
 .welcome-window{
     // position: 'absolute';
     width: 650px;
-    transform: translate(30%, 50%);
     html {
         overflow: hidden;
     }
