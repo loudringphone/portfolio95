@@ -28,18 +28,16 @@ button:focus:after {
   outline: none !important;
 }
 
-
-.start-up-background {
+.start-up-background, .shut-down-background {
   background-color: black;
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
 }
-.start-up {
+.start-up, .shut-down {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
 }
 

@@ -3,8 +3,10 @@ import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "reac
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
 import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
+import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
-export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows, signingIn, activatingWelcome, activeTasks, portfolioActive, resumeActive, browserActive, activatingBrowser, windowIndice}) => {
+
+export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows, signingIn, activatingWelcome, activeTasks, portfolioActive, resumeActive, browserActive, activatingBrowser, windowIndice, turningoff}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -34,6 +36,11 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
   const handleLogOff = () => {
     activatingWelcome(true)
     signingIn(false)
+  }
+  const handleShutDown = () => {
+    turningoff(true)
+    const audio = new Audio(win95shutdown);
+    audio.play();
   }
 
   return (
@@ -89,7 +96,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
                 <Password1010 style={{transform: 'rotate(-90deg)', height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>L</span>og Off User</p>
             </MenuListItem>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}}>
+            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleShutDown}>
                 <Computer4 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>S</span>hut Down</p>
             </MenuListItem>
