@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import ResumePdf from './ResumePdf';
 import Draggable from 'react-draggable';
+import './scrollview.css';
+
 import {
   Button,
   Window,
@@ -22,33 +24,6 @@ const Wrapper = styled.div`
       background: ${({ theme }) => theme.materialText};
     }
   }
-`;
-
-const StyledScrollView = styled(ScrollView)`
-  /* Customize the scrollbar here */
-  scrollbar-width: thick;
-  ::-webkit-scrollbar {
-    width: 20px;
-  }
- 
-  ::-webkit-scrollbar-thumb {
-    box-sizing: border-box;
-    display: inline-block;
-    background: rgb(198, 198, 198);
-    color: rgb(10, 10, 10);
-    border-style: solid;
-    border-width: 2px;
-    border-color: rgb(223, 223, 223) rgb(10, 10, 10) rgb(10, 10, 10) rgb(223, 223, 223);
-    box-shadow: rgb(254, 254, 254) 1px 1px 0px 1px inset, rgb(132, 133, 132) -1px -1px 0px 1px inset;
-    outline-offset: -2px;
-    
-  }
-  ::-webkit-scrollbar-track {
-    background-image: linear-gradient(45deg, rgb(198, 198, 198) 25%, transparent 25%, transparent 75%, rgb(198, 198, 198) 75%), linear-gradient(45deg, rgb(198, 198, 198) 25%, transparent 25%, transparent 75%, rgb(198, 198, 198) 75%);
-    background-color: rgb(254, 254, 254);
-    background-size: 4px 4px;
-    background-position: 0px 0px, 2px 2px;
-}
 `;
 
 const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice}) => {
@@ -102,11 +77,11 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
     
 
 
-    <StyledScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
+    <ScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
         
         <ResumePdf />
       
-        </StyledScrollView>
+        </ScrollView>
      
         
       </WindowContent>

@@ -3,10 +3,8 @@ html {
 }
 .welcome-window{
     // position: 'absolute';
-    width: 600px;
-    height: 250px;
-    transform: translate(50%, 50%);
-   
+    width: 650px;
+    transform: translate(30%, 50%);
     html {
         overflow: hidden;
     }
@@ -50,19 +48,47 @@ html {
     }
     }
     .window {
-    display: flex;
+        display: flex;
     }
     .window-content {
-    display: flex;
-    gap: 15px;
+        padding: 20px;
+        display: flex;
+        gap: 1rem;
     }
-    .footer {
-    display: block;
-    margin: 0.25rem;
-    height: 31px;
-    line-height: 31px;
-    padding-left: 0.25rem;
+    .login-info {
+        display:flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
     }
+    .username, .password {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    label {
+        width: 100px;
+    }
+    .login-buttons {
+        width: min-content;
+
+        button {
+            width: 100px;
+            height: 35px;
+        }
+    }
+    .login-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
 }
+
 
 
