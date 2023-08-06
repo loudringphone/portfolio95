@@ -1,0 +1,8 @@
+.start-button {
+    margin-right: 0.5rem;
+}
+
+.task, .task, .task, .task::after, .task::after, .task::after {
+    width: 200px !important;
+    justify-content: flex-start !important;
+}

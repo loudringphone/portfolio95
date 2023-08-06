@@ -22,7 +22,12 @@
 }
 button {
   box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.3);
+  background-image: none !important;
 }
+button:focus:after {
+  outline: none !important;
+}
+
 
 .start-up-background {
   background-color: black;

@@ -15,8 +15,9 @@
   outline-offset: -2px;
 }
 ::-webkit-scrollbar-track {
-  background-image: linear-gradient(45deg, rgb(198, 198, 198) 25%, transparent 25%, transparent 75%, rgb(198, 198, 198) 75%), linear-gradient(45deg, rgb(198, 198, 198) 25%, transparent 25%, transparent 75%, rgb(198, 198, 198) 75%);
-  background-color: rgb(254, 254, 254);
+  /* background-image: linear-gradient(45deg, rgb(198, 198, 198) 25%, transparent 25%, transparent 75%, rgb(198, 198, 198) 75%), linear-gradient(45deg, rgb(198, 198, 198) 25%, transparent 25%, transparent 75%, rgb(198, 198, 198) 75%); */
+  /* background-color: rgb(254, 254, 254); */
+  background-color: rgb(225, 225, 225) ;
   background-size: 4px 4px;
   background-position: 0px 0px, 2px 2px;
 }
