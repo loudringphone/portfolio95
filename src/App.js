@@ -12,8 +12,12 @@ import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
-import win95startup from './assets/images/win95-startup.jpg'
-import win95startupMobile from './assets/images/win95-startup-mobile.jpeg'
+import win95startup from './assets/images/win95-startup.jpg';
+import win95startupMobile from './assets/images/win95-startup-mobile.jpeg';
+import win95shutdown from './assets/images/win95-shutdown.png';
+import win95shutdownMobile from './assets/images/win95-shutdown-mobile.png';
+import safeTurnOff from './assets/images/safe-turn-off.jpeg';
+
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -49,6 +53,9 @@ const App = () => {
   const [signed, setSigned] = useState(false)
   const [bounds, setBounds] = useState(false);
   const [activeTasks, setActiveTasks] = useState(new Set());
+  const [shutDown, setShutDOwn] = useState(false)
+  const [turnOff, setTurnOff] = useState(false)
+
 
   const signingIn = (boolean) => {
     setSigned(boolean)
@@ -116,11 +123,13 @@ const App = () => {
     activatingBrowser(false)
     activatingWelcome(false)
   }
-
+  const turningoff = (boolean) => {
+    setShutDOwn(boolean)
+  }
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
-    }, 1);
+    }, 2200);
 
       if (window.innerWidth <= 1000) {
         setBounds(false)
@@ -152,6 +161,28 @@ const App = () => {
     setActiveTasks(newActiveTasks);
   }, [portfolioDisplay, resumeDisplay, browserDisplay]); 
 
+  useEffect(() => {
+    if (shutDown) {
+      setTimeout(() => {
+        setTurnOff(true)
+      }, 2000);
+    }
+  },[shutDown])
+
+  if (turnOff) {
+    return (
+      <div className='shut-down-background'>
+          <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
+      </div>
+    )
+  }
+  if (shutDown) {
+    return (
+      <div className='shut-down-background'>
+          <img className='shut-down' src={window.innerWidth <= 800 ? win95shutdownMobile : win95shutdown} alt="start up"/>
+      </div>
+    )
+  }
   if (loading) {
     return (
       <div className='start-up-background'>
@@ -159,7 +190,7 @@ const App = () => {
       </div>
     )
   } 
-  if (signed) {
+  if (!signed) {
     return (
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
@@ -186,7 +217,7 @@ const App = () => {
         <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
         <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} activatingBrowser={activatingBrowser} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
-      < Taskbar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} activeTasks={activeTasks} portfolioActive={portfolioActive} resumeActive={resumeActive} browserActive={browserActive} activatingBrowser={activatingBrowser} windowIndice={windowIndice} />
+      < Taskbar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} activeTasks={activeTasks} portfolioActive={portfolioActive} resumeActive={resumeActive} browserActive={browserActive} activatingBrowser={activatingBrowser} windowIndice={windowIndice} turningoff={turningoff} />
       </div>
 
 

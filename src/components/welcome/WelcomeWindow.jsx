@@ -11,7 +11,7 @@ import {
 } from 'react95';
 import styled from 'styled-components';
 import './welcomewindow.scss'
-import win95sound from '../../assets/sounds/win95.mp3'
+import win95startup from '../../assets/sounds/win95startup.mp3'
 
 const Wrapper = styled.div`
   background: transparent;
@@ -65,7 +65,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
   const handleSubmit = (event) => {
     if (username == 'Admin' && password == 'admin') {
       signingIn(true)
-      const audio = new Audio(win95sound);
+      const audio = new Audio(win95startup);
       audio.play();
     } else {
       event.stopPropagation();
