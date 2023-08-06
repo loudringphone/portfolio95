@@ -11,10 +11,14 @@
   text-decoration-thickness: 0.1rem;
 }
 
+button {
+  box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.3);
+}
+
 .start-up-background {
   background-color: black;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
 }

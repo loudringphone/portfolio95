@@ -12,8 +12,8 @@ import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
-import win95startup from './assets/images/win95-startup.jpeg'
-import win95sound from './assets/sounds/win95.mp3'
+import win95startup from './assets/images/win95-startup.jpg'
+import win95startupMobile from './assets/images/win95-startup-mobile.jpeg'
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -36,6 +36,7 @@ const GlobalStyles = createGlobalStyle`
 
 const App = () => {
   const [projectUrl, setProjectUrl] = useState(null)
+  const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
   const [portfolioDisplay, setPortfolioDisplay] = useState('none')
   const [portfolioActive, setPortfolioActive] = useState(true)
@@ -45,7 +46,11 @@ const App = () => {
   const [browserActive, setBrowserActive] = useState(true)
   const [windowIndice, setWindowIndice] = useState({resume: 1, portfolio: 1, browser: 1})
   const [loading, setLoading] = useState(true)
-  const [signing, setSigning] = useState(true)
+  const [signed, setSigned] = useState(false)
+
+  const signingIn = (boolean) => {
+    setSigned(boolean)
+  }
 
   const settingProjectUrl = (url) => {
     setProjectUrl(url)
@@ -53,6 +58,10 @@ const App = () => {
   
   const indexingWindows = (obj) => {
     setWindowIndice(obj)
+  }
+
+  const activatingWelcome = (boolean) => {
+    setWelcomeActive(boolean)
   }
 
   const openingPortfolio = (display) => {
@@ -91,8 +100,6 @@ const App = () => {
     }
   }
 
-
-
   const activiatingDockMenu = (boolean) => {
     setDockMenuActive(boolean)
     if (boolean) {
@@ -105,30 +112,31 @@ const App = () => {
     activatingPortfolio(false)
     activatingResume(false)
     activatingBrowser(false)
+    activatingWelcome(false)
   }
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
-      // const audio = new Audio(win95sound);
-      // audio.play();
-    }, 1500);
+    }, 2500);
   }, []); 
 
   if (loading) {
     return (
       <div className='start-up-background'>
-          <img className='start-up' src={win95startup} alt="start up"/>
+          <img className='start-up' src={window.innerWidth <= 800 ? win95startupMobile : win95startup} alt="start up"/>
       </div>
     )
   } 
-  if (!signing) {
+  if (!signed) {
     return (
       
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
       <GlobalStyles />
-      <WelcomeWindow />
+      <div style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
+      <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} />
+      </div>
       </ThemeProvider>
       </Helmet>
 
