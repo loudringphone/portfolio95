@@ -7,7 +7,7 @@ import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
 import './App.css';
 import DesktopIcons from './components/desktop-icons/DesktopIcons';
 import { Helmet } from './helmet/Helmet';
-import { DockBar } from './components/dockbar/DockBar';
+import { Taskbar } from './components/taskbar/Taskbar';
 import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
@@ -48,6 +48,7 @@ const App = () => {
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
   const [bounds, setBounds] = useState(false);
+  const [activeTasks, setActiveTasks] = useState(new Set());
 
   const signingIn = (boolean) => {
     setSigned(boolean)
@@ -66,7 +67,6 @@ const App = () => {
   }
 
   const openingPortfolio = (display) => {
-    console.log(display)
     setPortfolioDisplay(display)
   }
   const activatingPortfolio = (boolean) => {
@@ -120,24 +120,38 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
-    }, 2000);
+    }, 1);
 
-    const handleResize = () => {
       if (window.innerWidth <= 1000) {
         setBounds(false)
       } else {
         setBounds("body")
       }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
   }, []); 
 
-  
+  useEffect(() => {
+    const newActiveTasks = new Set(activeTasks);
+    if (portfolioDisplay !== 'none' && !newActiveTasks.has("portfolio")) {
+      newActiveTasks.add("portfolio");
+    }
+    if (resumeDisplay !== 'none' && !newActiveTasks.has("resume")) {
+      newActiveTasks.add("resume");
+    }
+    if (browserDisplay !== 'none' && !newActiveTasks.has("browser")) {
+      newActiveTasks.add("browser");
+    }
+    if (portfolioDisplay == 'none' && newActiveTasks.has("portfolio")) {
+      newActiveTasks.delete("portfolio");
+    }
+    if (resumeDisplay == 'none' && newActiveTasks.has("resume")) {
+      newActiveTasks.delete("resume");
+    }
+    if (browserDisplay == 'none' && newActiveTasks.has("browser")) {
+      newActiveTasks.delete("browser");
+    }
+    setActiveTasks(newActiveTasks);
+  }, [portfolioDisplay, resumeDisplay, browserDisplay]); 
+
   if (loading) {
     return (
       <div className='start-up-background'>
@@ -145,7 +159,7 @@ const App = () => {
       </div>
     )
   } 
-  if (!signed) {
+  if (signed) {
     return (
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
@@ -170,9 +184,9 @@ const App = () => {
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
           <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
         <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
-        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
+        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} activatingBrowser={activatingBrowser} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
-      < DockBar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} />
+      < Taskbar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} activeTasks={activeTasks} portfolioActive={portfolioActive} resumeActive={resumeActive} browserActive={browserActive} activatingBrowser={activatingBrowser} windowIndice={windowIndice} />
       </div>
 
 

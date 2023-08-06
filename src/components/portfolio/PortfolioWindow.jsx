@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, indexingWindows, windowIndice, bounds}) => {
+const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, activatingBrowser, indexingWindows, windowIndice, bounds}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -38,6 +38,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
    const handleGo = (event) => {
     event.stopPropagation();
     settingProjectUrl(projects[projectSelected].site);
+    activatingBrowser(true)
     indexingWindows({portfolio: 2, resume: 1, browser: 3})
     openingBrowser('block')
    }
@@ -94,11 +95,8 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
          Go
        </Button>
     </div>
-   
-    
 
-
-    <ScrollView style={{ maxWidth: "300px", height: "260px", overflowWrap: 'anywhere' }}>
+    <ScrollView style={{ maxWidth: "300px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
         
           <p>{projects[projectSelected].article}</p>
       

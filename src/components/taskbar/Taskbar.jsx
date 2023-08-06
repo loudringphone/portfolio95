@@ -1,11 +1,10 @@
 import React from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
+import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
-
 import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
-import './dockbar.css'
-
-export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows, signingIn, activatingWelcome}) => {
+import './taskbar.css'
+export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows, signingIn, activatingWelcome, activeTasks, portfolioActive, resumeActive, browserActive, activatingBrowser, windowIndice}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -14,15 +13,23 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
   }
   const handlePortfolio = (event) => {
     event.stopPropagation();
-    activatingPortfolio(true);
     openingPortfolio('block')
-    indexingWindows({resume: 1, portfolio: 2})
+    activatingPortfolio(true);
+    if (windowIndice.resume > windowIndice.browser) {
+      indexingWindows({portfolio: 3, resume: 2, browser: 1})
+    } else {
+      indexingWindows({portfolio: 3, resume: 1, browser: 2})
+    }
   }
   const handleResume = (event) => {
     event.stopPropagation();
     activatingResume(true);
     openingResume('block')
-    indexingWindows({resume: 2, portfolio: 1})
+    if (windowIndice.portfolio > windowIndice.browser) {
+      indexingWindows({resume: 3, portfolio: 2, browser: 1})
+    } else {
+      indexingWindows({resume: 3, portfolio: 1, browser: 2})
+    }
   }
   const handleLogOff = () => {
     activatingWelcome(true)
@@ -32,11 +39,12 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
   return (
     <AppBar style={{ top: "unset", bottom: 0, zIndex: 5 }}>
     <Toolbar style={{ justifyContent: "space-between" }}>
-        <div style={{ position: "relative", display: "inline-block" }}>
+        <div style={{ position: "relative", display: "flex" }}>
         <Button
-            onClick={handleClick}
-            active={dockMenuActive}
-            style={{ fontWeight: "bold" }}
+          className="start-button"
+          onClick={handleClick}
+          active={dockMenuActive}
+          style={{ fontWeight: "bold" }}
         >
             <img
             src={win95logo}
@@ -45,6 +53,18 @@ export const DockBar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
             />
             Start
         </Button>
+        {
+          [...activeTasks].map((task, i) => (
+            <Task
+              key={i}
+              task={task}
+              active={task == "portfolio"? portfolioActive : task ==        "resume"? resumeActive : browserActive}
+              activatingTask={task == "portfolio"? activatingPortfolio : task ==        "resume"? activatingResume : activatingBrowser}
+              indexingWindows={indexingWindows}
+              windowIndice={windowIndice}
+              />
+          ))
+        }
         {dockMenuActive && (
             <MenuList
                 style={{
