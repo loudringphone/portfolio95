@@ -108,7 +108,13 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
 
     <ScrollView style={{ maxWidth: "300px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
         
-          <p>{projects[projectSelected].article}</p>
+          { 
+            window.innerWidth > 500 || projects[projectSelected].article.length <= 500 ? 
+              <p>{projects[projectSelected].article}</p>
+              
+          :
+              <p>{projects[projectSelected].article.slice(0, 500) + '...'}</p>
+          }
       
         </ScrollView>
         </div>
