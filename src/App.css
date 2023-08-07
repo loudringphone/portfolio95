@@ -17,11 +17,14 @@
   text-decoration: underline;
   text-decoration-thickness: 0.1rem;
 }
-.react-draggable.react-draggable-dragged {
-  z-index: 1;
-  height: 0;
-  width: 0;
+/* .react-draggable {
+  height: 100%;
+  width: 100%;
 }
+.react-draggable-dragged {
+  height: 100%;
+  width: 100%;
+} */
 button {
   box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -60,19 +63,14 @@ button:after {
   font-weight: bold;
 }
 
+
 body {
-  height: 100vh;
-  width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
   background-color: #008080;
   /* overflow: hidden; */
 }
-.react-draggable {
-  height: 0;
-  width: 0;
-  grid-column: 6;
-  grid-row: 1;
-  position: relative !important;
-}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

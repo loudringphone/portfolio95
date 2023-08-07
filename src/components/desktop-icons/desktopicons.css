@@ -5,6 +5,7 @@
     grid-template-rows: 1fr 1fr;
     padding: 1.5rem;
     justify-items: center;
+    width: 90px;
 }
 .icon-resume {
     grid-column: 1;

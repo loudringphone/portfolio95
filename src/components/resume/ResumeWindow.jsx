@@ -25,6 +25,7 @@ const Wrapper = styled.div`
     }
   }
 `;
+const initialPosition = { x: 60, y: 60 };
 
 const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
@@ -62,7 +63,7 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
   };
 
   return (
-    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: resumeDisplay, visibility: tasksVisibility.resume}}>
     <Window className='resume-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={resumeActive} className='window-title'>
@@ -78,24 +79,16 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    
-    
-   
-    
-
-
     <ScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
-        
         <ResumePdf />
-      
         </ScrollView>
-     
-        
       </WindowContent>
      
     </Window>
   </Wrapper>
+
   </Draggable>
+
   )
 }
 
