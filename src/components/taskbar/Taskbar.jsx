@@ -18,9 +18,9 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     openingPortfolio('block')
     activatingPortfolio(true);
     if (windowIndice.resume > windowIndice.browser) {
-      indexingWindows({portfolio: 3, resume: 2, browser: 1})
+      indexingWindows({portfolio: 7, resume: 6, browser: 5})
     } else {
-      indexingWindows({portfolio: 3, resume: 1, browser: 2})
+      indexingWindows({portfolio: 7, resume: 5, browser: 6})
     }
   }
   const handleResume = (event) => {
@@ -28,9 +28,9 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     activatingResume(true);
     openingResume('block')
     if (windowIndice.portfolio > windowIndice.browser) {
-      indexingWindows({resume: 3, portfolio: 2, browser: 1})
+      indexingWindows({resume: 7, portfolio: 6, browser: 5})
     } else {
-      indexingWindows({resume: 3, portfolio: 1, browser: 2})
+      indexingWindows({resume: 7, portfolio: 5, browser: 6})
     }
   }
   const handleLogOff = () => {
@@ -44,7 +44,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
   }
  
   return (
-    <AppBar style={{ top: "unset", bottom: 0, zIndex: 5 }}>
+    <AppBar style={{ top: "unset", bottom: 0, zIndex: 98 }}>
     <Toolbar style={{ justifyContent: "space-between" }}>
         <div style={{ position: "relative", display: "flex" }}>
         <Button

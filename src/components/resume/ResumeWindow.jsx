@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ResumePdf from './ResumePdf';
 import Draggable from 'react-draggable';
-import './scrollview.css';
+import './scrollview.scss';
 
 import {
   Button,
@@ -40,9 +40,9 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
   const onStart = () => {
     activatingResume(true)
     if (windowIndice.portfolio > windowIndice.browser) {
-      indexingWindows({resume: 3, portfolio: 2, browser: 1})
+      indexingWindows({resume: 7, portfolio: 6, browser: 5})
     } else {
-      indexingWindows({resume: 3, portfolio: 1, browser: 2})
+      indexingWindows({resume: 7, portfolio: 5, browser: 6})
     }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -55,9 +55,9 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
     event.stopPropagation();
     activatingResume(true);
     if (windowIndice.portfolio > windowIndice.browser) {
-      indexingWindows({resume: 3, portfolio: 2, browser: 1})
+      indexingWindows({resume: 7, portfolio: 6, browser: 5})
     } else {
-      indexingWindows({resume: 3, portfolio: 1, browser: 2})
+      indexingWindows({resume: 7, portfolio: 5, browser: 6})
     }
   };
 

@@ -39,7 +39,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     event.stopPropagation();
     settingProjectUrl(projects[projectSelected].site);
     activatingBrowser(true)
-    indexingWindows({portfolio: 2, resume: 1, browser: 3})
+    indexingWindows({portfolio: 6, resume: 5, browser: 7})
     openingBrowser('block')
    }
   const selectingProject = (id) => {
@@ -48,9 +48,9 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
   const onStart = () => {
     activatingPortfolio(true)
     if (windowIndice.resume > windowIndice.browser) {
-      indexingWindows({portfolio: 3, resume: 2, browser: 1})
+      indexingWindows({portfolio: 7, resume: 6, browser: 5})
     } else {
-      indexingWindows({portfolio: 3, resume: 1, browser: 2})
+      indexingWindows({portfolio: 7, resume: 5, browser: 6})
     }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -63,9 +63,9 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     event.stopPropagation();
     activatingPortfolio(true);
     if (windowIndice.resume > windowIndice.browser) {
-      indexingWindows({portfolio: 3, resume: 2, browser: 1})
+      indexingWindows({portfolio: 7, resume: 6, browser: 5})
     } else {
-      indexingWindows({portfolio: 3, resume: 1, browser: 2})
+      indexingWindows({portfolio: 7, resume: 5, browser: 6})
     }
   };
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Mailnews20, Shell325 } from '@react95/icons'
 import Draggable from 'react-draggable';
 import './desktopicons.css'
-const DesktopIcons = ({openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows}) => {
+const DesktopIcons = ({windowIndice, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows}) => {
   const [resumeIndex, setResumeIndex] = useState(0)
   const [portfolioIndex, setPortfolioIndex] = useState(0)
   const [state, setState] = useState({
@@ -26,8 +26,12 @@ const DesktopIcons = ({openingPortfolio, activatingPortfolio, openingResume, act
     event.stopPropagation();
     activatingPortfolio(true);
     openingPortfolio('block')
-    indexingWindows({resume: 1, portfolio: 2})
-    setPortfolioIndex(10)
+    if (windowIndice.browser > windowIndice.resume) {
+      indexingWindows({browser: 6, portfolio: 7, resume: 5})
+    } else {
+      indexingWindows({browser: 5, portfolio: 7, resume: 6})
+    }
+    setPortfolioIndex(1)
     setResumeIndex(0)
   }
   const handleResume = (event) => {
@@ -35,16 +39,21 @@ const DesktopIcons = ({openingPortfolio, activatingPortfolio, openingResume, act
     activatingResume(true);
     openingResume('block')
     indexingWindows({resume: 2, portfolio: 1})
-    setResumeIndex(10)
+    if (windowIndice.browser > windowIndice.portfolio) {
+      indexingWindows({browser: 6, portfolio: 5, resume: 7})
+    } else {
+      indexingWindows({browser: 5, portfolio: 6, resume: 7})
+    }
+    setResumeIndex(1)
     setPortfolioIndex(0)
 
   }
   const handlePickingResume = () => {
-    setResumeIndex(10)
+    setResumeIndex(99)
     setPortfolioIndex(0)
   }
   const handlePickingPortfolio = () => {
-    setPortfolioIndex(10)
+    setPortfolioIndex(99)
     setResumeIndex(0)
   }
   const handleLeavingResume = () => {
@@ -59,15 +68,15 @@ const DesktopIcons = ({openingPortfolio, activatingPortfolio, openingResume, act
     <div className="desktop-icons">
       <Draggable bounds="body" {...dragHandlers}>
       <div className='icon icon-resume' style={{zIndex: resumeIndex}}>
-        <Mailnews20 style={{height:'60px', width:'60px'}} onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMuseUp={handleLeavingResume} onClick={handleLeavingResume} />
-        <p onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMuseUp={handleLeavingResume} onClick={handleLeavingResume}>My Resume</p>
+        <Mailnews20 style={{height:'60px', width:'60px'}} onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMouseUp={handleLeavingResume} onClick={handleLeavingResume} />
+        <p onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMouseUp={handleLeavingResume} onClick={handleLeavingResume}>My Resume</p>
       </div>
       </Draggable>
       <Draggable bounds="body" {...dragHandlers}>
       
       <div className='icon icon-portfolio' style={{zIndex: portfolioIndex}}>
-        <Shell325 style={{height:'60px', width:'60px'}} onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMuseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}/>
-        <p onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMuseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}>Portfolio</p>
+        <Shell325 style={{height:'60px', width:'60px'}} onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMouseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}/>
+        <p onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMouseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}>Portfolio</p>
       </div>
       </Draggable>
 
