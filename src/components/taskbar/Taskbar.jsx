@@ -92,7 +92,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
             >
               <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleResume}>
             <Mailnews20 style={{height:'30px', width:'30px'}}/>
-                <p><span className='underscore'>M</span>y Resume</p>
+                <p><span className='underscore'>R</span>esume</p>
             </MenuListItem>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handlePortfolio}>
             <Shell325 style={{height:'30px', width:'30px'}}/>

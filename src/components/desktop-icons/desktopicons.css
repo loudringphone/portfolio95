@@ -1,16 +1,10 @@
 .desktop-icons {
-    grid-area: 1 / 1 / 21 / 7; /* Spans from row 1 to row 20, and columns 1 to 6 */
+    grid-area: 1 / 1 / 21 / 14;
     display: grid;
     grid-template-columns: 90px;
     grid-template-rows: 1fr 1fr;
     padding: 1.5rem;
     justify-items: center;
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90px;
-    gap: 2rem;
-    padding: 1rem; */
 }
 .icon-resume {
     grid-column: 1;
@@ -45,4 +39,13 @@ img {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+}
+
+@media (max-height: 600px) {
+    .desktop-icons {
+        gap: 1rem;
+    }
+
+
+
 }
