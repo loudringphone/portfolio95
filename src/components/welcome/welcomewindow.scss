@@ -1,13 +1,5 @@
-.drag-welcome {
-    grid-column: 8;
-    grid-row: 10;
-  }
-.welcome-window{
-    // position: 'absolute';
+.drag-welcome{
     width: 650px;
-    html {
-        overflow: hidden;
-    }
     .window-title {
         display: flex;
         align-items: center;
@@ -88,6 +80,22 @@
         gap: 0.75rem;
     }
     
+}
+
+@media (max-width: 500px) {
+    .drag-welcome{
+        width: 95vw;
+        .window-content {
+            flex-direction: column;
+        }
+        .login-buttons {
+           display: flex;
+           flex-direction: row;
+           width:max-content;
+           margin-left: auto;
+           margin-top: 1rem;
+        }
+    }   
 }
 
 
