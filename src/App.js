@@ -138,8 +138,8 @@ const App = () => {
       setEnergyStar(false)
       setTimeout(() => {
         setLoading(false)
-      }, 2000);
-    }, 5000);
+      }, 1000);
+    }, 2500);
     
     if (window.innerWidth <= 1000) {
       setBounds(false)
