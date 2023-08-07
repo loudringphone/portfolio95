@@ -12,6 +12,9 @@ import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
+import win95energystar from './assets/images/win95-energystar.gif';
+import win95energystarMobile from './assets/images/win95-energystar-mobile.gif';
+
 import win95startup from './assets/images/win95-startup.jpg';
 import win95startupMobile from './assets/images/win95-startup-mobile.jpeg';
 import win95shutdown from './assets/images/win95-shutdown.png';
@@ -55,6 +58,7 @@ const App = () => {
   const [activeTasks, setActiveTasks] = useState(new Set());
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
+  const [energyStar, setEnergyStar] = useState(true)
 
 
   const signingIn = (boolean) => {
@@ -127,15 +131,13 @@ const App = () => {
     setShutDOwn(boolean)
   }
   useEffect(() => {
-    if (window.innerWidth <= 800) {
+    setTimeout(() => {
+      setEnergyStar(false)
       setTimeout(() => {
         setLoading(false)
       }, 2200);
-    } else {
-      setTimeout(() => {
-        setLoading(false)
-      }, 2200);
-    }
+    }, 5200);
+    
     if (window.innerWidth <= 1000) {
       setBounds(false)
     } else {
@@ -183,7 +185,8 @@ const App = () => {
       <GlobalStyles />
         {
           window.innerWidth <= 600 ? 
-          <p className='shut-down-text'>It's now safe to turn off your computer.</p>
+          <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
+          // <p className='shut-down-text'>It's now safe to turn off your computer.</p>
           :
           <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
         }
@@ -204,6 +207,20 @@ const App = () => {
           <img className='shut-down' src={win95shutdown} alt="shut down"/>
 
         }
+      </div>
+    )
+  }
+  if (energyStar) {
+    return (
+      <div className='start-up-background'>
+        {
+          window.innerWidth <= 800 ?
+          <img className='start-up' src={win95energystarMobile} alt="start up"/>
+          :
+          <img className='start-up' src={win95energystar} alt="start up"/>
+
+        }
+          
       </div>
     )
   }

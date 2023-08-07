@@ -55,9 +55,12 @@
     line-height: 31px;
     padding-left: 0.25rem;
     }
-    // .browser-view > div {
-    //     background-color: white;
-    // }
+    .browser-screen {
+        position: absolute;
+        background-color: transparent;
+        width:  calc(100% - 40px);
+        height: calc(100% -  75px);
+    }
 }
 
 

@@ -5,7 +5,6 @@ import {
   Window,
   WindowContent,
   WindowHeader,
-  ScrollView,
 } from 'react95';
 import styled from 'styled-components';
 import './browserwindow.scss'
@@ -74,6 +73,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
       </WindowHeader></strong>
       <WindowContent className='window-content'style={{ height: "500px" }}>
     {/* <StyledScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }} className='browser-view' > */}
+      <div className='browser-screen' style={{display: browserActive?"none":"block"}}></div>
       <iframe
         src={projectUrl}
         width="100%"

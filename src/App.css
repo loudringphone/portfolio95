@@ -11,6 +11,7 @@
   display: grid;
   grid-template-columns: repeat(48, 1fr);
   grid-template-rows: repeat(48, 1fr);
+  background-color: #008080;
 }
 .underscore {
   text-decoration: underline;
@@ -39,14 +40,18 @@ button:after {
 }
 .start-up, .shut-down {
   height: 100%;
-  object-fit: cover;
+  width: 100%;
+  object-fit: contain;
 }
 .start-up-mobile {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 .shut-down-mobile {
   height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 
 .shut-down-text {
