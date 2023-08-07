@@ -6,14 +6,15 @@ import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
-export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, openingResume, indexingWindows, signingIn, activatingWelcome, standbyTasks, portfolioActive, resumeActive, browserActive, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, openingPortfolio, openingResume, indexingWindows, signingIn, activatingWelcome, standbyTasks, portfolioActive, resumeActive, browserActive, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
-    activatingDockMenu(!dockMenuActive)
+    activiatingDockMenu(!dockMenuActive)
   }
   const handlePortfolio = (event) => {
     event.stopPropagation();
+    activiatingDockMenu(false)
     openingPortfolio('block')
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility.portfolio = 'visible'
@@ -27,6 +28,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, o
   }
   const handleResume = (event) => {
     event.stopPropagation();
+    activiatingDockMenu(false)
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility.resume = 'visible'
     minimisingTasks(newTasksVisibility)
