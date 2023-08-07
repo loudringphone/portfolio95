@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({resumeDisplay, openingResume, activatingTask, activeTask, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
+const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -65,15 +65,15 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingTask, activeTask,
   };
 
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: resumeDisplay, visibility: tasksVisibility.resume}}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has('resume') ? 'block' : 'none', visibility: tasksVisibility.resume}}>
     <Window className='resume-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
         <span>resume.exe</span>
 
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={()=>{openingResume('none')}} onTouchStart={()=>{openingResume('none')}}>
+        <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchStart={()=>{displayingTask(false, 'resume')}}>
           <span className='close-icon' />
         </Button>
         </div>

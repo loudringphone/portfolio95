@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) => {
+const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
   const [username, setUsername] = useState('Admin')
   const [password, setPassword] = useState('admin')
   const [signinError, setSigninError] = useState(false)
@@ -84,7 +84,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
 
 
   return (
-    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Draggable bounds="body" handle="strong" {...dragHandlers}>
     <Wrapper className="drag-welcome">
     <ConditionalAnimatedWrapper animate={signinError}>
     <Window className='welcome-window' onClick={handleClickInsideWindow}>

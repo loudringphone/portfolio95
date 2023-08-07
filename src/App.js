@@ -46,18 +46,15 @@ const App = () => {
   const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible'})
   const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
-  const [portfolioDisplay, setPortfolioDisplay] = useState('none')
-  const [resumeDisplay, setResumeDisplay] = useState('none')
-  const [browserDisplay, setBrowserDisplay] = useState('none')
-
+  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5})
+  const [standbyTasks, setStandbyTasks] = useState(new Set());
+  const [displayTasks, setDisplayTasks] = useState(new Set())
   const [activeTask, setActiveTask] = useState(null)
   
 
-  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5})
+ 
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
-  const [bounds, setBounds] = useState(false);
-  const [standbyTasks, setStandbyTasks] = useState(new Set());
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
@@ -79,24 +76,26 @@ const App = () => {
     setWelcomeActive(boolean)
   }
 
-  const openingPortfolio = (display) => {
-    setPortfolioDisplay(display)
-  }
+
 
   const activatingTask = (str) => {
     setActiveTask(str)
   }
 
-  const openingResume = (display) => {
-    setResumeDisplay(display)
+ const displayingTask = (boolean, str) => {
+  const newDisplayTasks = new Set(displayTasks)
+  if (boolean) {
+    newDisplayTasks.add(str)
+  } else {
+    newDisplayTasks.delete(str)
   }
+  setDisplayTasks(newDisplayTasks)
+ }
 
   const minimisingTasks = (obj) => {
     setTasksVisibility(obj)
   }
-  const openingBrowser = (display) => {
-    setBrowserDisplay(display)
-  }
+  
 
   const activiatingDockMenu = (boolean) => {
     setDockMenuActive(boolean)
@@ -119,36 +118,30 @@ const App = () => {
         setLoading(false)
       }, 1000);
     }, 2500);
-    
-    if (window.innerWidth <= 1000) {
-      setBounds("body")
-    } else {
-      setBounds("body")
-    }
   }, []); 
 
   useEffect(() => {
     const newStandybyTasks = new Set(standbyTasks);
-    if (portfolioDisplay !== 'none' && !newStandybyTasks.has("portfolio")) {
+    if (displayTasks.has("portfolio") && !newStandybyTasks.has("portfolio")) {
       newStandybyTasks.add("portfolio");
     }
-    if (resumeDisplay !== 'none' && !newStandybyTasks.has("resume")) {
+    if (displayTasks.has("resume") && !newStandybyTasks.has("resume")) {
       newStandybyTasks.add("resume");
     }
-    if (browserDisplay !== 'none' && !newStandybyTasks.has("browser")) {
+    if (displayTasks.has("browser") && !newStandybyTasks.has("browser")) {
       newStandybyTasks.add("browser");
     }
-    if (portfolioDisplay == 'none' && newStandybyTasks.has("portfolio")) {
+    if (!displayTasks.has("portfolio") && newStandybyTasks.has("portfolio")) {
       newStandybyTasks.delete("portfolio");
     }
-    if (resumeDisplay == 'none' && newStandybyTasks.has("resume")) {
+    if (!displayTasks.has("resume") && newStandybyTasks.has("resume")) {
       newStandybyTasks.delete("resume");
     }
-    if (browserDisplay == 'none' && newStandybyTasks.has("browser")) {
+    if (!displayTasks.has("browser") && newStandybyTasks.has("browser")) {
       newStandybyTasks.delete("browser");
     }
     setStandbyTasks(newStandybyTasks);
-  }, [portfolioDisplay, resumeDisplay, browserDisplay]); 
+  }, [displayTasks]); 
 
   useEffect(() => {
     if (shutDown) {
@@ -226,7 +219,7 @@ const App = () => {
       <ThemeProvider theme={original}>
       <GlobalStyles />
       <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-        <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} bounds={bounds} />
+        <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} />
       </div>
       </ThemeProvider>
       </Helmet>
@@ -243,11 +236,11 @@ const App = () => {
       <ThemeProvider theme={original}>
        
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-          <DesktopIcons openingPortfolio={openingPortfolio} openingResume={openingResume}  indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} />
-        <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
-        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
-        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
-      < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} openingResume={openingResume} resumeDisplay={resumeDisplay} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
+          <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} />
+        <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
+        <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
+        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
+      < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
       </div>
 
 

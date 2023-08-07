@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
+const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -61,12 +61,12 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
   };
 
   const handleClose = () => {
-    openingBrowser('none')
+    displayingTask(false, 'browser')
     settingProjectUrl(null)
   }
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: browserDisplay, visibility: tasksVisibility.browser}}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: displayTasks.has('browser') ? 'block' : 'none', visibility: tasksVisibility.browser}}>
     <Window className='browser-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'browser'} className='window-title'>
         <span>browser.exe</span>

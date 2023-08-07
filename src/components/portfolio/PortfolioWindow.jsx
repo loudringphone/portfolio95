@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingTask, activeTask, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
+const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -46,7 +46,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     minimisingTasks(newTasksVisibility)
     activatingTask('browser')
     indexingWindows({portfolio: 6, resume: 5, browser: 7})
-    openingBrowser('block')
+    displayingTask(true, 'browser')
    }
   const selectingProject = (id) => {
     setProjectSelected(id)
@@ -77,14 +77,14 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
 
   
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: portfolioDisplay, visibility: tasksVisibility.portfolio}}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={()=>{openingPortfolio('none')}} onTouchStart={()=>{openingPortfolio('none')}}>
+        <Button onClick={()=>{displayingTask(false, 'portfolio')}} onTouchStart={()=>{displayingTask(false, 'portfolio')}}>
           <span className='close-icon' />
         </Button>
         </div>
