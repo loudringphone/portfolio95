@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Mailnews20, Shell325 } from '@react95/icons'
 import Draggable from 'react-draggable';
 import './desktopicons.css'
-const DesktopIcons = ({windowIndice, openingPortfolio, openingResume, indexingWindows, tasksVisibility, minimisingTasks, activatingTask}) => {
+const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask}) => {
   const [resumeIndex, setResumeIndex] = useState(0)
   const [portfolioIndex, setPortfolioIndex] = useState(0)
   const [state, setState] = useState({
@@ -28,7 +28,7 @@ const DesktopIcons = ({windowIndice, openingPortfolio, openingResume, indexingWi
     newTasksVisibility.portfolio = 'visible'
     minimisingTasks(newTasksVisibility)
     activatingTask('portfolio')
-    openingPortfolio('block')
+    displayingTask(true, 'portfolio')
     if (windowIndice.browser > windowIndice.resume) {
       indexingWindows({browser: 6, portfolio: 7, resume: 5})
     } else {
@@ -43,7 +43,7 @@ const DesktopIcons = ({windowIndice, openingPortfolio, openingResume, indexingWi
     newTasksVisibility.resume = 'visible'
     minimisingTasks(newTasksVisibility)
     activatingTask('resume')
-    openingResume('block')
+    displayingTask(true, 'resume')
     indexingWindows({resume: 2, portfolio: 1})
     if (windowIndice.browser > windowIndice.portfolio) {
       indexingWindows({browser: 6, portfolio: 5, resume: 7})

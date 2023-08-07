@@ -6,7 +6,7 @@ import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
-export const Taskbar = ({activiatingDockMenu, dockMenuActive, openingPortfolio, openingResume, indexingWindows, signingIn, activatingWelcome, standbyTasks, portfolioActive, resumeActive, browserActive, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, activatingWelcome, standbyTasks, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -15,7 +15,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, openingPortfolio, 
   const handlePortfolio = (event) => {
     event.stopPropagation();
     activiatingDockMenu(false)
-    openingPortfolio('block')
+    displayingTask(true, 'portfolio')
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility.portfolio = 'visible'
     minimisingTasks(newTasksVisibility)
@@ -33,7 +33,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, openingPortfolio, 
     newTasksVisibility.resume = 'visible'
     minimisingTasks(newTasksVisibility)
     activatingTask('resume');
-    openingResume('block')
+    displayingTask(true, 'resume')
     if (windowIndice.portfolio > windowIndice.browser) {
       indexingWindows({resume: 7, portfolio: 6, browser: 5})
     } else {
