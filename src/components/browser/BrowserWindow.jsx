@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Draggable from 'react-draggable';
+import MinimisingButton from '../buttons/MinimisingButton';
 import {
   Button,
   Window,
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds}) => {
+const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -63,13 +64,17 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
   }
   return (
     <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser}}>
-    <Window className='browser-window' style={{display: browserDisplay}} onClick={handleClickInsideWindow}>
+    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: browserDisplay, visibility: tasksVisibility.browser}}>
+    <Window className='browser-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={browserActive} className='window-title'>
         <span>browser.exe</span>
+        <div className="buttons">
+        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} activatingTask={activatingBrowser}/>
         <Button onClick={handleClose} onTouchStart={handleClose}>
           <span className='close-icon' />
         </Button>
+        </div>
+        
       </WindowHeader></strong>
       <WindowContent className='window-content'style={{ height: "500px" }}>
     {/* <StyledScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }} className='browser-view' > */}
@@ -79,7 +84,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
         width="100%"
         height="100%"
         frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen
         scrolling="yes"
       />

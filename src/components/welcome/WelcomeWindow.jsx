@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Password1010 } from "@react95/icons";
 import ConditionalAnimatedWrapper from '../ConditionalAnimatedWrapper';
 import Draggable from 'react-draggable';
@@ -68,13 +68,13 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
       const audio = new Audio(win95startup);
       audio.play();
     } else {
-      event.stopPropagation();
+      event?.stopPropagation();
       activatingWelcome(false)
       setSigninError(true)
       setTimeout(() => {
         activatingWelcome(true)
         setSigninError(false)
-      }, 1000);
+      }, 750);
     }
   }
  

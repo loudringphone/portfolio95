@@ -43,6 +43,7 @@ const GlobalStyles = createGlobalStyle`
 
 const App = () => {
   const [projectUrl, setProjectUrl] = useState(null)
+  const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible'})
   const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
   const [portfolioDisplay, setPortfolioDisplay] = useState('none')
@@ -59,7 +60,7 @@ const App = () => {
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
-
+  
 
   const signingIn = (boolean) => {
     setSigned(boolean)
@@ -100,7 +101,9 @@ const App = () => {
       activatingBrowser(false)
     }
   }
-
+  const minimisingTasks = (obj) => {
+    setTasksVisibility(obj)
+  }
   const openingBrowser = (display) => {
     setBrowserDisplay(display)
   }
@@ -261,11 +264,11 @@ const App = () => {
       <ThemeProvider theme={original}>
        
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-          <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} windowIndice={windowIndice} />
-        <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
-        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} activatingBrowser={activatingBrowser} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
-        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
-      < Taskbar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} activeTasks={activeTasks} portfolioActive={portfolioActive} resumeActive={resumeActive} browserActive={browserActive} activatingBrowser={activatingBrowser} windowIndice={windowIndice} turningoff={turningoff} />
+          <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} />
+        <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
+        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} activatingBrowser={activatingBrowser} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
+        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
+      < Taskbar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} activeTasks={activeTasks} portfolioActive={portfolioActive} resumeActive={resumeActive} browserActive={browserActive} activatingBrowser={activatingBrowser} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} />
       </div>
 
 
