@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
@@ -21,10 +21,7 @@ const Wrapper = styled.div`
     }
   }
 `;
-let initialPosition = { x: 80, y: 80 };
-if (window.innerWidth <= 500) {
-  initialPosition = { x: 40, y: 40 };
-}
+
 const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
@@ -46,6 +43,13 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
     }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
+
+  const [initialPosition, setInitialPosition] = useState({ x: 80, y: 80 })
+  useEffect(() => {
+    if (window.innerWidth <= 500) {
+      setInitialPosition = { x: 20, y: 20 };
+    }
+  }, [])
 
   const onStop = () => {
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
@@ -79,8 +83,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
         </div>
         
       </WindowHeader></strong>
-      <WindowContent className='window-content'style={{ height: "500px" }}>
-    {/* <StyledScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }} className='browser-view' > */}
+      <WindowContent className='window-content'>
       <div className='browser-screen' style={{display: browserActive?"none":"block"}}></div>
       <iframe
         src={projectUrl}

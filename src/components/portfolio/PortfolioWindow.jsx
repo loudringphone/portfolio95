@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
@@ -13,11 +13,6 @@ import styled from 'styled-components';
 import ProjectTree from './ProjectTree';
 import { projects } from './projects';
 import './portfoliowindow.scss'
-
-const initialPosition = { x: 70, y: 70 };
-if (window.innerWidth <= 500) {
-  initialPosition = { x: 35, y: 35 };
-}
 
 const Wrapper = styled.div`
   position: absolute;
@@ -40,6 +35,13 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
       x: -400, y: 200
     }
   });
+  const [initialPosition, setInitialPosition] = useState({ x: 70, y: 70 })
+  useEffect(() => {
+    if (window.innerWidth <= 500) {
+      setInitialPosition = { x: 15, y: 15 };
+    }
+  }, [])
+  
 
    const handleGo = (event) => {
     event.stopPropagation();

@@ -1,7 +1,9 @@
 @media (max-width: 500px) {
-    .browser-window {
-      width: 420px !important; 
-  }
+    .browser-window{
+    .window-content {
+        width: 380px !important;
+    }
+    }
 }
 
 .drag-browser {
@@ -10,8 +12,8 @@
 }
 
 .browser-window{
-    width: 600px;
     height: max-content;
+    
     html {
         overflow: hidden;
     }
@@ -52,6 +54,8 @@
     }
     .window-content {
     display: flex;
+    width: 600px;
+    height: 500px;
     gap: 15px;
     }
     .footer {
