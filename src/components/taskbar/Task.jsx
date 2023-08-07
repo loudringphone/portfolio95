@@ -3,19 +3,19 @@ import './taskbar.css'
 import { Button } from "react95";
 
 
-function Task({task, active, activatingTask, windowIndice, indexingWindows, tasksVisibility, minimisingTasks}) {
+function Task({task, activeTask, activatingTask, windowIndice, indexingWindows, tasksVisibility, minimisingTasks}) {
   const handleClick = (event) => {
     event.stopPropagation();
-    if (active) {
+    if (activeTask == task) {
       const newTasksVisibility = new Object(tasksVisibility)
       newTasksVisibility[task] = 'collapse'
       minimisingTasks(newTasksVisibility)
-      activatingTask(false)
+      activatingTask(null)
     } else {
       const newTasksVisibility = new Object(tasksVisibility)
       newTasksVisibility[task] = 'visible'
       minimisingTasks(newTasksVisibility)
-      activatingTask(true)
+      activatingTask(task)
 
       if (task == "portfolio") {
         if (windowIndice.resume > windowIndice.browser) {
@@ -41,7 +41,7 @@ function Task({task, active, activatingTask, windowIndice, indexingWindows, task
   return (
     <Button
             className="task"
-            active={active}
+            active={activeTask == task}
             style={{ fontWeight: "bold" }}
             onClick={handleClick}
         >

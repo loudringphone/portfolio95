@@ -6,7 +6,7 @@ import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
-export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, activatingPortfolio, openingResume, activatingResume, indexingWindows, signingIn, activatingWelcome, activeTasks, portfolioActive, resumeActive, browserActive, activatingBrowser, windowIndice, turningoff, tasksVisibility, minimisingTasks}) => {
+export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, openingResume, indexingWindows, signingIn, activatingWelcome, standbyTasks, portfolioActive, resumeActive, browserActive, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -18,7 +18,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility.portfolio = 'visible'
     minimisingTasks(newTasksVisibility)
-    activatingPortfolio(true);
+    activatingTask('portfolio');
     if (windowIndice.resume > windowIndice.browser) {
       indexingWindows({portfolio: 7, resume: 6, browser: 5})
     } else {
@@ -30,7 +30,7 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility.resume = 'visible'
     minimisingTasks(newTasksVisibility)
-    activatingResume(true);
+    activatingTask('resume');
     openingResume('block')
     if (windowIndice.portfolio > windowIndice.browser) {
       indexingWindows({resume: 7, portfolio: 6, browser: 5})
@@ -66,14 +66,14 @@ export const Taskbar = ({activatingDockMenu, dockMenuActive, openingPortfolio, a
             Start
         </Button>
         {
-          [...activeTasks].map((task, i) => (
+          [...standbyTasks].map((task, i) => (
             <Task
               key={i}
               task={task}
               minimisingTasks={minimisingTasks}
               tasksVisibility={tasksVisibility}
-              active={task == "portfolio"? portfolioActive : task == "resume"? resumeActive : browserActive}
-              activatingTask={task == "portfolio"? activatingPortfolio : task == "resume"? activatingResume : activatingBrowser}
+              activeTask={activeTask}
+              activatingTask={activatingTask}
               indexingWindows={indexingWindows}
               windowIndice={windowIndice}
               />

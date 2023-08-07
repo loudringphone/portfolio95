@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
+const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -34,8 +34,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
   });
 
   const onStart = () => {
-    activatingBrowser(true)
-    activatingBrowser(true);
+    activatingTask('browser');
     if (windowIndice.portfolio > windowIndice.resume) {
       indexingWindows({browser: 7, portfolio: 6, resume: 5})
     } else {
@@ -47,7 +46,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
   const [initialPosition, setInitialPosition] = useState({ x: 80, y: 80 })
   useEffect(() => {
     if (window.innerWidth <= 500) {
-      setInitialPosition = { x: 20, y: 20 };
+      setInitialPosition({ x: 20, y: 20 });
     }
   }, [])
 
@@ -57,7 +56,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingBrowser(true);
+    activatingTask('browser');
     if (windowIndice.portfolio > windowIndice.resume) {
       indexingWindows({browser: 3, portfolio: 2, resume: 1})
     } else {
@@ -73,10 +72,10 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
     <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: browserDisplay, visibility: tasksVisibility.browser}}>
     <Window className='browser-window' onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={browserActive} className='window-title'>
+    <strong className="cursor"><WindowHeader  active={activeTask == 'browser'} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} activatingTask={activatingBrowser}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
         <Button onClick={handleClose} onTouchStart={handleClose}>
           <span className='close-icon' />
         </Button>
@@ -84,7 +83,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-      <div className='browser-screen' style={{display: browserActive?"none":"block"}}></div>
+      <div className='browser-screen' style={{display: activeTask == 'browser' ? "none" : "block"}}></div>
       <iframe
         src={projectUrl}
         width="100%"

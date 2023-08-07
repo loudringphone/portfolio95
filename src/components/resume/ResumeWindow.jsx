@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
+const ResumeWindow = ({resumeDisplay, openingResume, activatingTask, activeTask, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -40,12 +40,12 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
   const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
   useEffect(() => {
     if (window.innerWidth <= 500) {
-      setInitialPosition = { x: 10, y: 10 };
+      setInitialPosition({ x: 10, y: 10 });
     }
   }, [])
 
   const onStart = () => {
-    activatingResume(true)
+    activatingTask('resume');
     if (windowIndice.portfolio > windowIndice.browser) {
       indexingWindows({resume: 7, portfolio: 6, browser: 5})
     } else {
@@ -60,7 +60,7 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingResume(true);
+    activatingTask('resume');
     if (windowIndice.portfolio > windowIndice.browser) {
       indexingWindows({resume: 7, portfolio: 6, browser: 5})
     } else {
@@ -72,11 +72,11 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
     <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: resumeDisplay, visibility: tasksVisibility.resume}}>
     <Window className='resume-window'onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={resumeActive} className='window-title'>
+    <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
         <span>resume.exe</span>
 
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingResume}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
         <Button onClick={()=>{openingResume('none')}} onTouchStart={()=>{openingResume('none')}}>
           <span className='close-icon' />
         </Button>
