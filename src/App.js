@@ -124,7 +124,7 @@ const App = () => {
     }, 2500);
     
     if (window.innerWidth <= 1000) {
-      setBounds(false)
+      setBounds("body")
     } else {
       setBounds("body")
     }
