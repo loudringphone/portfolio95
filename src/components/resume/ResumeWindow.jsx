@@ -38,11 +38,7 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingTask, activeTask,
   });
 
   const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
-  useEffect(() => {
-    if (window.innerWidth <= 500) {
-      setInitialPosition({ x: 10, y: 10 });
-    }
-  }, [])
+  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 5, y: 10 })
 
   const onStart = () => {
     activatingTask('resume');
@@ -69,7 +65,7 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingTask, activeTask,
   };
 
   return (
-    <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: resumeDisplay, visibility: tasksVisibility.resume}}>
     <Window className='resume-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
