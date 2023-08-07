@@ -100,7 +100,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    
+        <div style={{display: 'flex', gap: '1rem'}}>
       <Password1010 style={{height:'65px', width:'65px', padding: '5px'}}/>
       <div className="login-info">
         <p>Type a user name and password to log on to Windows.</p>
@@ -114,6 +114,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn, bounds}) =>
             <TextInput name="password" type="password" value={password} onInput={handlePassword} onKeyDown={handlePassword}/>
           </div>
         </form>
+      </div>
       </div>
       <div className="login-buttons">
         <Button type="submit" onClick={handleSubmit} onTouch={handleSubmit}>OK</Button>
