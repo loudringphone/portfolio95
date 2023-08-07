@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ResumePdf from './ResumePdf';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
@@ -25,10 +25,6 @@ const Wrapper = styled.div`
     }
   }
 `;
-const initialPosition = { x: 60, y: 60 };
-if (window.innerWidth <= 500) {
-  initialPosition = { x: 30, y: 30 };
-}
 
 const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
@@ -40,6 +36,13 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
       x: -400, y: 200
     }
   });
+
+  const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
+  useEffect(() => {
+    if (window.innerWidth <= 500) {
+      setInitialPosition = { x: 10, y: 10 };
+    }
+  }, [])
 
   const onStart = () => {
     activatingResume(true)
