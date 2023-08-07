@@ -36,12 +36,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     }
   });
   const [initialPosition, setInitialPosition] = useState({ x: 70, y: 70 })
-  useEffect(() => {
-    if (window.innerWidth <= 500) {
-      setInitialPosition({ x: 15, y: 15 });
-    }
-  }, [])
-  
+  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 10, y: 15 })
 
    const handleGo = (event) => {
     event.stopPropagation();
@@ -82,7 +77,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
 
   
   return (
-    <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: portfolioDisplay, visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'portfolio'} className='window-title'>
