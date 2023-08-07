@@ -58,7 +58,9 @@ const ProjectTree = ({selectingProject}) => {
     selectingProject(selected)
   }, [selected])
 
-  
+  const handleSelect = (_, id) => {
+    setSelected(id)
+  }
 
   // const handleExpandClick = useCallback(() => {
   //   setExpanded(oldExpanded => (oldExpanded.length === 0 ? allIds : []));
