@@ -1,7 +1,7 @@
 
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GroupBox, TreeView } from 'react95';
-import { Explorer100, FilePen, ReaderCd2, Awfxcg321303, Shell3218, Mshearts1 } from "@react95/icons";
+import { Brush ,Explorer100, FilePen, ReaderCd2, Awfxcg321303, Shell3218, Mshearts1 } from "@react95/icons";
 import styled from 'styled-components';
 import { Button } from 'react95';
 const Wrapper = styled.div`
@@ -31,7 +31,7 @@ const portfolio = [
     label: 'Projects',
     icon: <Explorer100 style={{height:'20px', width:'20px'}}/>,
     items: [
-     
+          { id: 'winstons-portfolio', label: "Winston's Portfolio", icon: <Brush style={{height:'20px', width:'20px'}}/> },
           { id: 'winstons-blog', label: "Winston's Blog", icon: <FilePen style={{height:'20px', width:'20px'}}/> },
           { id: 'video-store', label: 'Video Store', icon: <ReaderCd2 style={{height:'20px', width:'20px'}}/> },
           { id: 'spark-studio', label: 'Spark Studio', icon: <Awfxcg321303 style={{height:'20px', width:'20px'}}/> },
@@ -60,20 +60,20 @@ const ProjectTree = ({selectingProject}) => {
 
   
 
-  const handleExpandClick = useCallback(() => {
-    setExpanded(oldExpanded => (oldExpanded.length === 0 ? allIds : []));
-    setSelected(null)
-    selectingProject(null)
-  }, []);
+  // const handleExpandClick = useCallback(() => {
+  //   setExpanded(oldExpanded => (oldExpanded.length === 0 ? allIds : []));
+  //   setSelected(null)
+  //   selectingProject(null)
+  // }, []);
 
   return (
     <Wrapper>
     <div style={{ width: '250px' }}>
-      <Panel className="tree-button-area">
+      {/* <Panel className="tree-button-area">
         <Button onClick={handleExpandClick} fullWidth>
           {expanded.length === 0 ? 'Expand all' : 'Collapse all'}
         </Button>
-      </Panel>
+      </Panel> */}
 
       <GroupBox label='Portfolio'>
         <TreeView
