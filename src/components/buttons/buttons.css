@@ -1,0 +1,10 @@
+.buttons {
+    display: flex;
+  }
+.minimise-icon {
+
+    display: inline-block;
+    border-bottom: 4px solid black; /* Adjust the thickness as needed */
+    padding: 0 4px; /* Adjust the padding to control the length */
+    margin-bottom: 9px
+}

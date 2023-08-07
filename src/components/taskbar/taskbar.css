@@ -12,10 +12,11 @@
     background-color: rgb(245, 245, 245);
 }
 .jrwZug:first-child {
-    background-color: rgb(215, 215, 215);
+    
 }
 .start-button {
     background-image: none !important;
+    background-color: rgb(185, 185, 185) !important;
 }
 .start-button:active {
     outline:2px dotted #0a0a0a !important;

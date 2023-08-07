@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Draggable from 'react-draggable';
+import MinimisingButton from '../buttons/MinimisingButton';
 import {
   Button,
   Window,
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, activatingBrowser, indexingWindows, windowIndice, bounds}) => {
+const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, activatingBrowser, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -38,6 +39,9 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
    const handleGo = (event) => {
     event.stopPropagation();
     settingProjectUrl(projects[projectSelected].site);
+    const newTasksVisibility = new Object(tasksVisibility)
+    newTasksVisibility.browser = 'visible'
+    minimisingTasks(newTasksVisibility)
     activatingBrowser(true)
     indexingWindows({portfolio: 6, resume: 5, browser: 7})
     openingBrowser('block')
@@ -72,13 +76,17 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
   
   return (
     <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio}}>
-    <Window className='portfolio-window' style={{display: portfolioDisplay}} onClick={handleClickInsideWindow}>
+    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: portfolioDisplay, visibility: tasksVisibility.portfolio}}>
+    <Window className='portfolio-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={portfolioActive} className='window-title'>
         <span>portfolio.exe</span>
+        <div className="buttons">
+        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingPortfolio}/>
         <Button onClick={()=>{openingPortfolio('none')}} onTouchStart={()=>{openingPortfolio('none')}}>
           <span className='close-icon' />
         </Button>
+        </div>
+        
       </WindowHeader></strong>
       <WindowContent className='window-content'>
     <ProjectTree selectingProject={selectingProject} />

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ResumePdf from './ResumePdf';
 import Draggable from 'react-draggable';
+import MinimisingButton from '../buttons/MinimisingButton';
 import './scrollview.scss';
 
 import {
@@ -9,7 +10,6 @@ import {
   WindowContent,
   WindowHeader,
   ScrollView,
-  TextInput,
 } from 'react95';
 import styled from 'styled-components';
 import './resumewindow.scss'
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds}) => {
+const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -63,13 +63,19 @@ const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeAct
 
   return (
     <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume}}>
-    <Window className='resume-window' style={{display: resumeDisplay}} onClick={handleClickInsideWindow}>
+    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: resumeDisplay, visibility: tasksVisibility.resume}}>
+    <Window className='resume-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={resumeActive} className='window-title'>
         <span>resume.exe</span>
+
+        <div className="buttons">
+        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingResume}/>
         <Button onClick={()=>{openingResume('none')}} onTouchStart={()=>{openingResume('none')}}>
           <span className='close-icon' />
         </Button>
+        </div>
+
+        
       </WindowHeader></strong>
       <WindowContent className='window-content'>
     
