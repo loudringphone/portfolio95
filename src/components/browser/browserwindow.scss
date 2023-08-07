@@ -1,3 +1,9 @@
+@media (max-width: 500px) {
+    .browser-window {
+      width: 420px !important; 
+  }
+}
+
 .drag-browser {
     grid-column: 11;
     grid-row: 5;

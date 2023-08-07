@@ -26,6 +26,9 @@ const Wrapper = styled.div`
   }
 `;
 const initialPosition = { x: 60, y: 60 };
+if (window.innerWidth <= 500) {
+  initialPosition = { x: 30, y: 30 };
+}
 
 const ResumeWindow = ({resumeDisplay, openingResume, activatingResume, resumeActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
