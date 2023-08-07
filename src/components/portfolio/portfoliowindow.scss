@@ -1,3 +1,18 @@
+@media (max-width: 500px) {
+  .drag-portfolio {
+    width: 95vw !important; 
+  }
+  .portfolio-window {
+    .window-content {
+      flex-direction: column;
+      max-height: fit-content !important;
+      align-items: center;
+     
+    }
+  }
+}
+
+
 .drag-portfolio {
   width: 650px; 
 }
