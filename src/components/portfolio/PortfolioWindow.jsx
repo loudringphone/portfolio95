@@ -15,6 +15,9 @@ import { projects } from './projects';
 import './portfoliowindow.scss'
 
 const initialPosition = { x: 70, y: 70 };
+if (window.innerWidth <= 500) {
+  initialPosition = { x: 35, y: 35 };
+}
 
 const Wrapper = styled.div`
   position: absolute;

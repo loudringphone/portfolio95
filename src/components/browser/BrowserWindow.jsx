@@ -21,8 +21,10 @@ const Wrapper = styled.div`
     }
   }
 `;
-const initialPosition = { x: 80, y: 80 };
-
+let initialPosition = { x: 80, y: 80 };
+if (window.innerWidth <= 500) {
+  initialPosition = { x: 40, y: 40 };
+}
 const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
