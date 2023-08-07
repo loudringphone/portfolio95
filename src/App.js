@@ -48,14 +48,11 @@ const App = () => {
   const [dockMenuActive, setDockMenuActive] = useState(false)
   const [portfolioDisplay, setPortfolioDisplay] = useState('none')
   const [resumeDisplay, setResumeDisplay] = useState('none')
+  const [browserDisplay, setBrowserDisplay] = useState('none')
 
   const [activeTask, setActiveTask] = useState(null)
   
-  const [portfolioActive, setPortfolioActive] = useState(true)
-  const [resumeActive, setResumeActive] = useState(true)
-  const [browserActive, setBrowserActive] = useState(true)
 
-  const [browserDisplay, setBrowserDisplay] = useState('none')
   const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5})
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
@@ -248,9 +245,9 @@ const App = () => {
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
           <DesktopIcons openingPortfolio={openingPortfolio} openingResume={openingResume}  indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} />
         <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
-        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} portfolioActive={portfolioActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
-        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
-      < Taskbar activatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} openingResume={openingResume} resumeDisplay={resumeDisplay} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} portfolioActive={portfolioActive} resumeActive={resumeActive} browserActive={browserActive} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
+        <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
+        <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
+      < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} openingResume={openingResume} resumeDisplay={resumeDisplay} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
       </div>
 
 
