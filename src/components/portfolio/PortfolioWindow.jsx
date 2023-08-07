@@ -14,6 +14,8 @@ import ProjectTree from './ProjectTree';
 import { projects } from './projects';
 import './portfoliowindow.scss'
 
+const initialPosition = { x: 70, y: 70 };
+
 const Wrapper = styled.div`
   position: absolute;
   .close-icon {
@@ -75,7 +77,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
 
   
   return (
-    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: portfolioDisplay, visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={portfolioActive} className='window-title'>

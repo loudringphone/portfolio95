@@ -21,6 +21,7 @@ const Wrapper = styled.div`
     }
   }
 `;
+const initialPosition = { x: 80, y: 80 };
 
 const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBrowser, activatingBrowser, browserActive, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
@@ -63,7 +64,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
     settingProjectUrl(null)
   }
   return (
-    <Draggable bounds={bounds} handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: browserDisplay, visibility: tasksVisibility.browser}}>
     <Window className='browser-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={browserActive} className='window-title'>
