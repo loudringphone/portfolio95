@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingPortfolio, portfolioActive, activatingBrowser, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
+const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, openingPortfolio, activatingTask, activeTask, indexingWindows, windowIndice, bounds, tasksVisibility, minimisingTasks}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -38,7 +38,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
   const [initialPosition, setInitialPosition] = useState({ x: 70, y: 70 })
   useEffect(() => {
     if (window.innerWidth <= 500) {
-      setInitialPosition = { x: 15, y: 15 };
+      setInitialPosition({ x: 15, y: 15 });
     }
   }, [])
   
@@ -49,7 +49,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility.browser = 'visible'
     minimisingTasks(newTasksVisibility)
-    activatingBrowser(true)
+    activatingTask('browser')
     indexingWindows({portfolio: 6, resume: 5, browser: 7})
     openingBrowser('block')
    }
@@ -57,7 +57,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     setProjectSelected(id)
   }
   const onStart = () => {
-    activatingPortfolio(true)
+    activatingTask('portfolio')
     if (windowIndice.resume > windowIndice.browser) {
       indexingWindows({portfolio: 7, resume: 6, browser: 5})
     } else {
@@ -72,7 +72,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingPortfolio(true);
+    activatingTask('portfolio');
     if (windowIndice.resume > windowIndice.browser) {
       indexingWindows({portfolio: 7, resume: 6, browser: 5})
     } else {
@@ -85,10 +85,10 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     <Draggable defaultPosition={initialPosition} bounds={bounds} handle="strong" {...dragHandlers}>
     <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: portfolioDisplay, visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={portfolioActive} className='window-title'>
+    <strong className="cursor"><WindowHeader  active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingPortfolio}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
         <Button onClick={()=>{openingPortfolio('none')}} onTouchStart={()=>{openingPortfolio('none')}}>
           <span className='close-icon' />
         </Button>

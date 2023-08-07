@@ -7,7 +7,7 @@ const MinimisingButton = ({tasksVisibility, task, minimisingTasks, activatingTas
         const newTasksVisibility = new Object(tasksVisibility);
         newTasksVisibility[task] = 'collapse';
         minimisingTasks(newTasksVisibility);
-        activatingTask(false);
+        activatingTask(null);
     }
   return (
     <Button onClick={handleClick} onTouch={handleClick}>
