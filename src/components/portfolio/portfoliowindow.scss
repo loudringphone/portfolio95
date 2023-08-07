@@ -1,7 +1,7 @@
 @media (max-width: 500px) {
   .portfolio-window {
     .window-content {
-      width: 80vw !important; 
+      width: 82.5vw !important; 
       flex-direction: column;
       max-height: fit-content !important;
       align-items: center;
@@ -11,9 +11,7 @@
 }
 
 
-.drag-portfolio {
-  width: 650px; 
-}
+
 .portfolio-window{
     .window-title {
       display: flex;
