@@ -1,11 +1,10 @@
-.drag-resume {
-  grid-column: 8;
-  grid-row: 4;
+@media (max-width: 800px) {
+  .drag-resume {
+    width: 470px; 
+}
 }
 .resume-window{
-    width: max-content;
-    height: max-content;
-    .window-title {
+  .window-title {
         display: flex;
         align-items: center;
         justify-content: space-between;

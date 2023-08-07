@@ -21,13 +21,6 @@ export default function ResumePdf() {
   const [file, setFile] = useState(resume);
   const [numPages, setNumPages] = useState(1);
 
-  function onFileChange(event) {
-    const { files } = event.target;
-    if (files && files[0]) {
-      setFile(files[0] || null);
-    }
-  }
-
   function onDocumentLoadSuccess(nextNumPages) {
     setNumPages(nextNumPages);
   }
@@ -36,9 +29,9 @@ export default function ResumePdf() {
   
         
         <div className="pdf_container">
-          <Document file={file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
+          <Document file={file} onLoadSuccess={onDocumentLoadSuccess} options={options} >
             {Array.from(new Array(numPages), (el, index) => (
-              <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+              <Page key={`page_${index + 1}`} pageNumber={index + 1}  />
             ))}
           </Document>
       </div>
