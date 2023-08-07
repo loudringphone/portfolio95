@@ -75,7 +75,7 @@ const DesktopIcons = ({windowIndice, openingPortfolio, activatingPortfolio, open
       <Draggable bounds="body" {...dragHandlers}>
       <div className='icon icon-resume' style={{zIndex: resumeIndex}}>
         <Mailnews20 style={{height:'60px', width:'60px'}} onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMouseUp={handleLeavingResume} onClick={handleLeavingResume} />
-        <p onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMouseUp={handleLeavingResume} onClick={handleLeavingResume}>My Resume</p>
+        <p onDoubleClick={handleResume} onTouchStart={handleResume} onMouseDown={handlePickingResume} onTouchEnd={handleLeavingResume} onMouseUp={handleLeavingResume} onClick={handleLeavingResume}>Resume</p>
       </div>
       </Draggable>
       <Draggable bounds="body" {...dragHandlers}>
