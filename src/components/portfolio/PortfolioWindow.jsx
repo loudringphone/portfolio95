@@ -109,7 +109,7 @@ const PortfolioWindow = ({openingBrowser, settingProjectUrl, portfolioDisplay, o
     <ScrollView style={{ maxWidth: "350px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
         
           { 
-            window.innerWidth > 700 || projects[projectSelected].article.length <= 500 ? 
+            window.innerWidth > 700 || projects[projectSelected].article.length <= 5000 ? 
               <p>{projects[projectSelected].article}</p>
               
           :
