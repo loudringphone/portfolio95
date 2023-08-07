@@ -10,21 +10,21 @@ function Task({active, task, activatingTask, windowIndice, indexingWindows}) {
 
     if (task == "portfolio") {
       if (windowIndice.resume > windowIndice.browser) {
-        indexingWindows({portfolio: 3, resume: 2, browser: 1})
+        indexingWindows({portfolio: 7, resume: 6, browser: 5})
       } else {
-        indexingWindows({portfolio: 3, resume: 1, browser: 2})
+        indexingWindows({portfolio: 7, resume: 5, browser: 6})
       }
     } else if (task == "resume") {
       if (windowIndice.portfolio > windowIndice.browser) {
-        indexingWindows({resume: 3, portfolio: 2, browser: 1})
+        indexingWindows({resume: 7, portfolio: 6, browser: 5})
       } else {
-        indexingWindows({resume: 3, portfolio: 1, browser: 2})
+        indexingWindows({resume: 7, portfolio: 5, browser: 6})
       }
     } else {
       if (windowIndice.portfolio > windowIndice.resume) {
-        indexingWindows({browser: 3, portfolio: 2, resume: 1})
+        indexingWindows({browser: 7, portfolio: 6, resume: 5})
       } else {
-        indexingWindows({browser: 3, portfolio: 1, resume: 2})
+        indexingWindows({browser: 7, portfolio: 5, resume: 6})
       }
     }
     

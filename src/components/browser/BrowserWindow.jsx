@@ -36,9 +36,9 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, browserDisplay, openingBr
     activatingBrowser(true)
     activatingBrowser(true);
     if (windowIndice.portfolio > windowIndice.resume) {
-      indexingWindows({browser: 3, portfolio: 2, resume: 1})
+      indexingWindows({browser: 7, portfolio: 6, resume: 5})
     } else {
-      indexingWindows({browser: 3, portfolio: 1, resume: 2})
+      indexingWindows({browser: 7, portfolio: 5, resume: 6})
     }
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };

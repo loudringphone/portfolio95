@@ -51,7 +51,7 @@ const App = () => {
   const [resumeActive, setResumeActive] = useState(true)
   const [browserDisplay, setBrowserDisplay] = useState('none')
   const [browserActive, setBrowserActive] = useState(true)
-  const [windowIndice, setWindowIndice] = useState({resume: 1, portfolio: 1, browser: 1})
+  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5})
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
   const [bounds, setBounds] = useState(false);
@@ -135,13 +135,13 @@ const App = () => {
       setEnergyStar(false)
       setTimeout(() => {
         setLoading(false)
-      }, 2200);
-    }, 5200);
+      }, 22);
+    }, 52);
     
     if (window.innerWidth <= 1000) {
       setBounds(false)
     } else {
-      setBounds("body")
+      setBounds("parent")
     }
   }, []); 
 
@@ -261,7 +261,7 @@ const App = () => {
       <ThemeProvider theme={original}>
        
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-          <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} />
+          <DesktopIcons openingPortfolio={openingPortfolio} activatingPortfolio={activatingPortfolio} openingResume={openingResume} activatingResume={activatingResume} indexingWindows={indexingWindows} windowIndice={windowIndice} />
         <ResumeWindow openingResume={openingResume} resumeDisplay={resumeDisplay} activatingResume={activatingResume} resumeActive={resumeActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
         <PortfolioWindow openingBrowser={openingBrowser} settingProjectUrl={settingProjectUrl} openingPortfolio={openingPortfolio} portfolioDisplay={portfolioDisplay} activatingPortfolio={activatingPortfolio} portfolioActive={portfolioActive} activatingBrowser={activatingBrowser} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} openingBrowser={openingBrowser} browserDisplay={browserDisplay} activatingBrowser={activatingBrowser} browserActive={browserActive} indexingWindows={indexingWindows} windowIndice={windowIndice} bounds={bounds} />
