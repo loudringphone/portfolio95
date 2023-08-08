@@ -2,10 +2,21 @@
     margin-right: 0.5rem;
 }
 
-.task, .task, .task, .task::after, .task::after, .task::after {
-    width: 200px !important;
+@media (min-width: 500px) {
+    .task {
+        width: 200px !important;
+    }
+}
+@media (max-width: 500px) {
+    .task {
+        width: 20vw !important;
+    }
+}
+.task {
     justify-content: flex-start !important;
     background-image: none !important;
+    white-space: nowrap;
+    overflow: hidden; 
 }
 
 .jrwZug:not(:first-child) {

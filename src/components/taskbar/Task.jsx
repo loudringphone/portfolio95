@@ -45,7 +45,7 @@ function Task({task, activeTask, activatingTask, windowIndice, indexingWindows, 
             style={{ fontWeight: "bold" }}
             onClick={handleClick}
         >
-            {task}.exe
+            {window.innerWidth <= 500? task : `${task}.exe`}
     </Button>
   )
 }
