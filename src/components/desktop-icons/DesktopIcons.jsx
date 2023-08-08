@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Mailnews20, Shell325 } from '@react95/icons'
+import { Mailnews20, Shell32167 } from '@react95/icons'
 import Draggable from 'react-draggable';
 import './desktopicons.css'
 const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask}) => {
@@ -81,7 +81,7 @@ const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisib
       <Draggable bounds="body" {...dragHandlers}>
       
       <div className='icon icon-portfolio' style={{zIndex: portfolioIndex}}>
-        <Shell325 style={{height:'60px', width:'60px'}} onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMouseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}/>
+        <Shell32167 style={{height:'60px', width:'60px'}} onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMouseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}/>
         <p onDoubleClick={handlePortfolio} onTouchStart={handlePortfolio} onMouseDown={handlePickingPortfolio} onTouchEnd={handleLeavingPortfolio} onMouseUp={handleLeavingPortfolio} onClick={handleLeavingPortfolio}>Portfolio</p>
       </div>
       </Draggable>
