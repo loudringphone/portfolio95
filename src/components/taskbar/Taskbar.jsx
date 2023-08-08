@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
-import { Mailnews20, Shell325, Computer4, Password1010 } from '@react95/icons'
+import { Mailnews20, Shell32167, Computer4, Password1010 } from '@react95/icons'
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
@@ -97,7 +97,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
                 <p><span className='underscore'>R</span>esume</p>
             </MenuListItem>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handlePortfolio}>
-            <Shell325 style={{height:'30px', width:'30px'}}/>
+            <Shell32167 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>P</span>ortfolio</p>
             </MenuListItem>
             <Separator/>
