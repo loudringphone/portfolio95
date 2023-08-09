@@ -1,13 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
+import TextScroller from './TextScroller';
+import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
+import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
+import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
+
+import monOncle from '../../assets/sounds/mon-oncle.mp3'
 
 import {
   Button,
   Window,
   WindowContent,
   WindowHeader,
-  ScrollView,
 } from 'react95';
 import styled from 'styled-components';
 import './musicwindow.scss'
@@ -36,8 +41,9 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   });
 
   const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
-  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 5, y: 10 })
-
+  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 15, y: 15 })
+  const [audio, setAudio] = useState(null);
+  const [playing, setPlaying] = useState(false)
   const onStart = () => {
     activatingTask('music');
     indexingWindows('music')
@@ -52,6 +58,31 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     event.stopPropagation();
     activatingTask('music');
     indexingWindows('music')
+  };
+
+  const handlePlay = () => {
+    if (!audio) {
+      const newAudio = new Audio(monOncle);
+      setAudio(newAudio);
+      newAudio.play();
+      setPlaying(true)
+    } else {
+      audio.play();
+      setPlaying(true)
+    }
+  }
+  const handlePause = () => {
+    if (audio) {
+      audio.pause();
+      setPlaying(false)
+    }
+  };
+  const handleStop = () => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setPlaying(false)
+    }
   };
 
   return (
@@ -71,7 +102,14 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    
+      <div className="music-title-container">
+      <TextScroller text="Mon Oncle - My favourite movie and soundtrack" />
+      </div>
+      <div className="buttons">
+        <Button onClick={handlePlay} disabled={playing}><PlayMiniFillIcon /></Button>
+        <Button onClick={handlePause}><PauseMiniFillIcon /></Button>
+        <Button onClick={handleStop}><StopMiniFillIcon /></Button>
+      </div>
       </WindowContent>
      
     </Window>
