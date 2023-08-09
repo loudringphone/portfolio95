@@ -35,11 +35,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
 
   const onStart = () => {
     activatingTask('browser');
-    if (windowIndice.portfolio > windowIndice.resume) {
-      indexingWindows({browser: 7, portfolio: 6, resume: 5})
-    } else {
-      indexingWindows({browser: 7, portfolio: 5, resume: 6})
-    }
+    indexingWindows('browser')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -53,11 +49,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingTask('browser');
-    if (windowIndice.portfolio > windowIndice.resume) {
-      indexingWindows({browser: 3, portfolio: 2, resume: 1})
-    } else {
-      indexingWindows({browser: 3, portfolio: 1, resume: 2})
-    }
+    indexingWindows('browser')
   };
 
   const handleClose = () => {

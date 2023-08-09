@@ -11,6 +11,7 @@ import { Taskbar } from './components/taskbar/Taskbar';
 import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
+import MusicWindow from './components/music/MusicWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
 import win95energystar from './assets/images/win95-energystar.gif';
 import win95energystarMobile from './assets/images/win95-energystar-mobile.gif';
@@ -43,10 +44,10 @@ const GlobalStyles = createGlobalStyle`
 
 const App = () => {
   const [projectUrl, setProjectUrl] = useState(null)
-  const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible'})
+  const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible', music: 'visible'})
   const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
-  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5})
+  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5, music: 5})
   const [standbyTasks, setStandbyTasks] = useState(new Set());
   const [displayTasks, setDisplayTasks] = useState(new Set())
   const [activeTask, setActiveTask] = useState(null)
@@ -68,8 +69,17 @@ const App = () => {
     setProjectUrl(url)
   }
   
-  const indexingWindows = (obj) => {
-    setWindowIndice(obj)
+  const indexingWindows = (key) => {
+    const newWindowIndice = new Object(windowIndice)
+    delete newWindowIndice[key];
+    const sortedKeys = Object.keys(windowIndice).sort((a, b) => windowIndice[a] - windowIndice[b]);
+    let i = 0
+    sortedKeys.forEach((k) => {
+      newWindowIndice[k] = 5 + i;
+      i++
+    });
+    newWindowIndice[key] = 5 + i
+    setWindowIndice(newWindowIndice)
   }
 
   const activatingWelcome = (boolean) => {
@@ -121,25 +131,18 @@ const App = () => {
   }, []); 
 
   useEffect(() => {
+    const tasksToManage = ["portfolio", "resume", "browser", "music"];
+
     const newStandybyTasks = new Set(standbyTasks);
-    if (displayTasks.has("portfolio") && !newStandybyTasks.has("portfolio")) {
-      newStandybyTasks.add("portfolio");
-    }
-    if (displayTasks.has("resume") && !newStandybyTasks.has("resume")) {
-      newStandybyTasks.add("resume");
-    }
-    if (displayTasks.has("browser") && !newStandybyTasks.has("browser")) {
-      newStandybyTasks.add("browser");
-    }
-    if (!displayTasks.has("portfolio") && newStandybyTasks.has("portfolio")) {
-      newStandybyTasks.delete("portfolio");
-    }
-    if (!displayTasks.has("resume") && newStandybyTasks.has("resume")) {
-      newStandybyTasks.delete("resume");
-    }
-    if (!displayTasks.has("browser") && newStandybyTasks.has("browser")) {
-      newStandybyTasks.delete("browser");
-    }
+
+    tasksToManage.forEach(task => {
+      if (displayTasks.has(task) && !newStandybyTasks.has(task)) {
+        newStandybyTasks.add(task);
+      } else if (!displayTasks.has(task) && newStandybyTasks.has(task)) {
+        newStandybyTasks.delete(task);
+      }
+    });
+
     setStandbyTasks(newStandybyTasks);
   }, [displayTasks]); 
 
@@ -240,6 +243,7 @@ const App = () => {
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
         <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
+        <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
       </div>
 
