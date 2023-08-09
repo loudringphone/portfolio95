@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import ResumePdf from './ResumePdf';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
-import './scrollview.scss';
 
 import {
   Button,
@@ -12,7 +10,7 @@ import {
   ScrollView,
 } from 'react95';
 import styled from 'styled-components';
-import './resumewindow.scss'
+import './musicwindow.scss'
 const Wrapper = styled.div`
   position: absolute;
   background: transparent;
@@ -26,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
+const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -41,8 +39,8 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
   const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 5, y: 10 })
 
   const onStart = () => {
-    activatingTask('resume');
-    indexingWindows('resume')
+    activatingTask('music');
+    indexingWindows('music')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -52,20 +50,20 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingTask('resume');
-    indexingWindows('resume')
+    activatingTask('music');
+    indexingWindows('music')
   };
 
   return (
     <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has('resume') ? 'block' : 'none', visibility: tasksVisibility.resume}}>
-    <Window className='resume-window'onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
-        <span>resume.exe</span>
+    <Wrapper className="drag-music" style={{zIndex: windowIndice['music'], display: displayTasks.has('music') ? 'block' : 'none', visibility: tasksVisibility.music}}>
+    <Window className='music-window'onClick={handleClickInsideWindow}>
+    <strong className="cursor"><WindowHeader  active={activeTask == 'music'} className='window-title'>
+        <span>music.exe</span>
 
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchStart={()=>{displayingTask(false, 'resume')}}>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='music' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
+        <Button onClick={()=>{displayingTask(false, 'music')}} onTouchStart={()=>{displayingTask(false, 'music')}}>
           <span className='close-icon' />
         </Button>
         </div>
@@ -73,9 +71,7 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
-        <ResumePdf />
-        </ScrollView>
+    
       </WindowContent>
      
     </Window>
@@ -86,4 +82,4 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
   )
 }
 
-export default ResumeWindow
+export default MusicWindow
