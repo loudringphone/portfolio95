@@ -45,7 +45,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
     newTasksVisibility.browser = 'visible'
     minimisingTasks(newTasksVisibility)
     activatingTask('browser')
-    indexingWindows({portfolio: 6, resume: 5, browser: 7})
+    indexingWindows('browser')
     displayingTask(true, 'browser')
    }
   const selectingProject = (id) => {
@@ -53,11 +53,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   }
   const onStart = () => {
     activatingTask('portfolio')
-    if (windowIndice.resume > windowIndice.browser) {
-      indexingWindows({portfolio: 7, resume: 6, browser: 5})
-    } else {
-      indexingWindows({portfolio: 7, resume: 5, browser: 6})
-    }
+    indexingWindows('portfolio', windowIndice)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -68,17 +64,11 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingTask('portfolio');
-    if (windowIndice.resume > windowIndice.browser) {
-      indexingWindows({portfolio: 7, resume: 6, browser: 5})
-    } else {
-      indexingWindows({portfolio: 7, resume: 5, browser: 6})
-    }
+    indexingWindows('portfolio')
   };
-
-  
   return (
     <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
-    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice.portfolio, display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
+    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
