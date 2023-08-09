@@ -41,7 +41,20 @@
       }
       .window-content {
         display: flex;
+        flex-direction: column;
+        max-width: 200px;
         gap: 15px;
+
+        .buttons {
+          width: 100%;
+          button {
+            height: 30px;
+            width: 25%;
+          }
+          button:nth-child(1) {
+            width: 50%;
+          }
+        }
       }
       .footer {
         display: block;
@@ -50,6 +63,12 @@
         line-height: 31px;
         padding-left: 0.25rem;
       }
+      .music-title {
+        overflow: hidden;
+        max-width: 200px;
+        white-space: nowrap;
+        color: greenyellow;
+        background-color: black;
+      }
+      
 }
-
-

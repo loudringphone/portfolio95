@@ -107,9 +107,9 @@ const App = () => {
   }
   
 
-  const activiatingDockMenu = (boolean) => {
-    setDockMenuActive(boolean)
-    if (boolean) {
+  const activiatingDockMenu = (isActive) => {
+    setDockMenuActive(isActive)
+    if (isActive) {
       activatingTask(null)
     }
   }
