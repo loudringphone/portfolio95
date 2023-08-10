@@ -13,9 +13,9 @@ import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import MusicWindow from './components/music/MusicWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
+import BlueScreen from './components/bluescreen/BlueScreen';
 import win95energystar from './assets/images/win95-energystar.gif';
 import win95energystarMobile from './assets/images/win95-energystar-mobile.gif';
-
 import win95startup from './assets/images/win95-startup.jpg';
 import win95startupMobile from './assets/images/win95-startup-mobile.jpeg';
 import win95shutdown from './assets/images/win95-shutdown.png';
@@ -245,6 +245,9 @@ const App = () => {
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
+
+        {/* <BlueScreen /> */}
+
       </div>
 
 

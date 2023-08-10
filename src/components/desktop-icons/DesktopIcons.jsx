@@ -1,27 +1,36 @@
-import React, {useState} from 'react'
-import { Mailnews20, Shell32167, MediaCd } from '@react95/icons'
-import Draggable from 'react-draggable';
+import React, {useState, useRef} from 'react'
+import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
 import './desktopicons.css'
+import Icon from './Icon';
+
 const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask}) => {
   const [picking, setPicking] = useState(false)
-  const [iconIndice, setIconIndice] = useState({resume: 0, portfolio: 0, music: 0})
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
+  const [iconIndice, setIconIndice] = useState({
+    'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
+  })
+  const [tasks, setTasks] = useState({
+    'resume': {
+      Icon: Mailnews20,
+      iconRef: useRef(null),
+      visibility: 'visible',
     },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-  const onStart = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
-
+    'portfolio': {
+      Icon: Shell32167,
+      iconRef: useRef(null),
+      visibility: 'visible',
+    },
+    'music': {
+      Icon: MediaCd,
+      iconRef: useRef(null),
+      visibility: 'visible',
+    },
+    'recycle bin': {
+      Icon: Shell3232,
+      iconRef: useRef(null),
+      visibility: 'visible',
+    },
+  })
+  
   const indexingIcons = (key) => {
     const newIconIndice = new Object(iconIndice)
     delete newIconIndice[key];
@@ -36,9 +45,11 @@ const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisib
   }
   const handleIcon = (event, task) => {
     event.stopPropagation();
-    const newTasksVisibility = new Object(tasksVisibility)
-    newTasksVisibility.resume = 'visible'
-    minimisingTasks(newTasksVisibility)
+    const updatedTasksVisibility = {
+      ...tasksVisibility,
+      resume: 'visible'
+    };
+    minimisingTasks(updatedTasksVisibility);
     activatingTask(task)
     displayingTask(true, task)
     indexingWindows(task)
@@ -46,39 +57,76 @@ const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisib
 
   }
   const handlePickingIcon = (task) => {
-    const newIconIndice = new Object(iconIndice)
-    newIconIndice[task] = 99
-    setIconIndice(newIconIndice)
+    const updatedIconIndice = {
+      ...iconIndice,
+      [task]: 99
+    };
+    setIconIndice(updatedIconIndice)
     setPicking(true)
   }
 
   const handleLeavingIcon = (task) => {
     indexingIcons(task)
     setPicking(false)
+    recycling(task)
   }
 
 
+  const areRectsOverlapping = (rect1, rect2) => {
+    const center1X = (rect1.left + rect1.right) / 2;
+    const center1Y = (rect1.top + rect1.bottom) / 2;
+
+    return (
+      center1X >= rect2.left &&
+      center1X <= rect2.right &&
+      center1Y >= rect2.top &&
+      center1Y <= rect2.bottom
+    );
+  };
+
+  const recycling = (task) => {
+    if (task == 'recycle bin') {
+      return
+    }
+    const currentIconRef = tasks[task].iconRef;
+    const binRef = tasks["recycle bin"].iconRef
+    const isOverlapping = areRectsOverlapping(
+      currentIconRef.current.getBoundingClientRect(),
+      binRef.current.getBoundingClientRect()
+    );
+    if (isOverlapping) {
+      if (task == 'resume') {
+        return alert("You must not throw away Winston's resume but you should hire him instead. PS this alert is still working in progress")
+      }
+      setTasks(prevTasks => ({
+        ...prevTasks,
+        [task]: {
+          ...prevTasks[task],
+          visibility: 'hidden'
+        },
+        "recycle bin": {
+          ...prevTasks["recycle bin"],
+          Icon: Shell3233
+        }
+      }));
+    }
+  };
   return (
     <div className="desktop-icons">
-      <Draggable bounds="body" {...dragHandlers}>
-      <div className='icon' style={{zIndex: iconIndice['resume']}}>
-        <Mailnews20 style={{height:'60px', width:'60px'}} onDoubleClick={(event) => handleIcon(event, 'resume')} onTouchStart={(event) => handleIcon(event, 'resume')} onMouseDown={() => handlePickingIcon('resume')} onTouchEnd={() => handleLeavingIcon('resume')} onMouseUp={() => handleLeavingIcon('resume')} onClick={() => handleLeavingIcon('resume')} />
-        <p onDoubleClick={(event) => handleIcon(event, 'resume')} onTouchStart={(event) => handleIcon(event, 'resume')} onMouseDown={() => handlePickingIcon('resume')} onTouchEnd={() => handleLeavingIcon('resume')} onMouseUp={() => handleLeavingIcon('resume')} onClick={() => handleLeavingIcon('resume')}>Resume</p>
-      </div>
-      </Draggable>
-      <Draggable bounds="body" {...dragHandlers}>
-      <div className='icon' style={{zIndex: iconIndice['portfolio']}}>
-        <Shell32167 style={{height:'60px', width:'60px'}} onDoubleClick={(event) => handleIcon(event, 'portfolio')} onTouchStart={(event) => handleIcon(event, 'portfolio')} onMouseDown={() => handlePickingIcon('portfolio')} onTouchEnd={() => handleLeavingIcon('portfolio')} onMouseUp={() => handleLeavingIcon('portfolio')} onClick={() => handleLeavingIcon('portfolio')} />
-        <p onDoubleClick={(event) => handleIcon(event, 'portfolio')} onTouchStart={(event) => handleIcon(event, 'portfolio')} onMouseDown={() => handlePickingIcon('portfolio')} onTouchEnd={() => handleLeavingIcon('portfolio')} onMouseUp={() => handleLeavingIcon('portfolio')} onClick={() => handleLeavingIcon('portfolio')}>Portfolio</p>
-      </div>
-      </Draggable>
-      <Draggable bounds="body" {...dragHandlers}>
-      <div className='icon' style={{zIndex: iconIndice['music']}}>
-        <MediaCd style={{height:'60px', width:'60px'}} onDoubleClick={(event) => handleIcon(event, 'music')} onTouchStart={(event) => handleIcon(event, 'music')} onMouseDown={() => handlePickingIcon('music')} onTouchEnd={() => handleLeavingIcon('music')} onMouseUp={() => handleLeavingIcon('music')} onClick={() => handleLeavingIcon('music')} />
-        <p onDoubleClick={(event) => handleIcon(event, 'music')} onTouchStart={(event) => handleIcon(event, 'music')} onMouseDown={() => handlePickingIcon('music')} onTouchEnd={() => handleLeavingIcon('music')} onMouseUp={() => handleLeavingIcon('music')} onClick={() => handleLeavingIcon('music')}>Music</p>
-      </div>
-      </Draggable>
-
+      {Object.entries(tasks).map(([task, data]) => (
+        <Icon
+          key={task}
+          icon={<data.Icon style={{ height: '60px', width: '60px' }} />}
+          task={task}
+          iconRef={data.iconRef}
+          visibility={data.visibility}
+          iconIndice={iconIndice}
+          handleIcon={handleIcon}
+          handlePickingIcon={handlePickingIcon}
+          handleLeavingIcon={handleLeavingIcon}
+          
+        />
+      ))}
     </div>
   )
 }
