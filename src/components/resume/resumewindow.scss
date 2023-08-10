@@ -5,6 +5,7 @@
 }
 .resume-window{
   .window-title {
+        user-select: none;
         display: flex;
         align-items: center;
         justify-content: space-between;
