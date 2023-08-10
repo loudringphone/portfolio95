@@ -22,9 +22,7 @@
 .jrwZug:not(:first-child) {
     background-color: rgb(245, 245, 245);
 }
-.jrwZug:first-child {
-    
-}
+
 .start-button {
     background-image: none !important;
     background-color: rgb(185, 185, 185) !important;

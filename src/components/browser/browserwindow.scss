@@ -13,11 +13,11 @@
 
 .browser-window{
     height: max-content;
-    
     html {
         overflow: hidden;
     }
     .window-title {
+        user-select: none;
         display: flex;
         align-items: center;
         justify-content: space-between;
