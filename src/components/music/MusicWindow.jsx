@@ -98,8 +98,6 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     if (audio) {
       audio.pause();
       setPlaying(false)
-      console.log(audio.duration, 'duration')
-      console.log(audio.currentTime, 'cur')
       if (audio.currentTime <= 3) {
         if (musicIndex == 0) {
           newMusicIndex = music.length - 1
