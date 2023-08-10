@@ -4,7 +4,6 @@ import { useSpring, animated } from "react-spring";
 const TextScroller = ({ text, isSkipped, resettingText }) => {
   const [animationComplete, setAnimationComplete] = useState(false);
   const [duration, setDuration] = useState(20000)
-  const [timeoutId, setTimeoutId] = useState(null);
   const [key, setKey] = useState(1);
 
   const scrolling = useSpring({
