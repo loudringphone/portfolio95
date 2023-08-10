@@ -35,8 +35,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
       x: -400, y: 200
     }
   });
-  const [initialPosition, setInitialPosition] = useState({ x: 70, y: 70 })
-  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 10, y: 15 })
+  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 70, y: 70 } : { x: 10, y: 15 })
 
    const handleGo = (event) => {
     event.stopPropagation();
@@ -67,7 +66,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
     indexingWindows('portfolio')
   };
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers}>
     <Wrapper className="drag-portfolio" style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'portfolio'} className='window-title'>
