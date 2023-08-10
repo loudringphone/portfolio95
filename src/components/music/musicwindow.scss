@@ -45,6 +45,14 @@
         max-width: 200px;
         gap: 15px;
 
+        .music-title-container {
+          display: flex;
+          gap: 5px;
+        }
+        .count-down {
+          margin-left: auto;
+          width: fit-content;
+        }
         .buttons {
           width: 100%;
           button {

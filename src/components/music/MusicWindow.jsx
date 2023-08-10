@@ -5,7 +5,7 @@ import TextScroller from './TextScroller';
 import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
 import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
 import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
-
+import { formatTime } from '../../functions/formatTime';
 import monOncle from '../../assets/sounds/mon-oncle.mp3'
 
 import {
@@ -42,7 +42,8 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
 
   const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
   const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 15, y: 15 })
-  const [audio, setAudio] = useState(null);
+  const [audio, setAudio] = useState(new Audio(monOncle));
+  const [countdownTime, setCountdownTime] = useState(null);
   const [playing, setPlaying] = useState(false)
   const onStart = () => {
     activatingTask('music');
@@ -82,8 +83,42 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       audio.pause();
       audio.currentTime = 0;
       setPlaying(false)
+      setCountdownTime(Math.floor(audio.duration))
     }
   };
+
+  useEffect(() => {
+    let countdownInterval;
+    if (audio) {
+      if (audio.duration == audio.currentTime) {
+        setCountdownTime(Math.floor(audio.duration))
+      }
+      const handleAudioEnd = () => {
+        setCountdownTime(0);
+        clearInterval(countdownInterval);
+        setTimeout(() => {
+          setPlaying(false);
+          setCountdownTime(Math.floor(audio.duration));
+        }, 500);
+      };
+      audio.addEventListener('ended', handleAudioEnd);
+      if (playing) {
+        const remainingTime = audio.duration - audio.currentTime;
+        setCountdownTime(Math.floor(remainingTime)); 
+        countdownInterval = setInterval(() => {
+          setCountdownTime(prevTime => prevTime - 1);
+        }, 1000);
+        audio.addEventListener('pause', () => {
+          clearInterval(countdownInterval);
+        });
+      }
+      return () => {
+        audio.removeEventListener('ended', handleAudioEnd);
+        clearInterval(countdownInterval);
+      };
+    }
+   
+  }, [audio, playing]);
 
   return (
     <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
@@ -104,6 +139,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       <WindowContent className='window-content'>
       <div className="music-title-container">
       <TextScroller text="Mon Oncle - My favourite movie and soundtrack" />
+      <div className='count-down'>{formatTime(countdownTime)}</div>
       </div>
       <div className="buttons">
         <Button onClick={handlePlay} disabled={playing}><PlayMiniFillIcon /></Button>
