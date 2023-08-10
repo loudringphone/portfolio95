@@ -1,5 +1,5 @@
 import monOncle from '../../assets/music/mon-oncle.mp3';
-import iStartCounting from '../../assets/music/i-start-counting.mp3';
+import iStartCounting from '../../assets/music/i-start-counting.mov';
 import papageno from '../../assets/music/papageno.mp3'
 
 export const music = [

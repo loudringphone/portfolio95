@@ -100,9 +100,11 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     const newAudio = new Audio(music[newMusicIndex].source);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
+      setAudio(newAudio);
+      setIsSkipped(true);
+      newAudio.play();
+      setPlaying(true)
     });
-    setAudio(newAudio);
-    setIsSkipped(true);
   }
 
   const handleForward = () => {
@@ -121,9 +123,12 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     const newAudio = new Audio(music[newMusicIndex].source);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
+      setAudio(newAudio);
+      setIsSkipped(true);
+      newAudio.play();
+      setPlaying(true)
     });
-    setAudio(newAudio);
-    setIsSkipped(true);
+    
   }
   const resettingText = () => {
     setIsSkipped(false);
@@ -186,7 +191,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       <div className="buttons">
         <Button onClick={handleBack}><SkipBackMiniFillIcon /></Button>
         <Button onClick={handlePlay} disabled={playing}><PlayMiniFillIcon /></Button>
-        <Button onClick={handlePause}><PauseMiniFillIcon /></Button>
+        <Button onClick={handlePause} disabled={!playing}><PauseMiniFillIcon /></Button>
         <Button onClick={handleStop}><StopMiniFillIcon /></Button>
         <Button onClick={handleForward}><SkipForwardMiniFillIcon /></Button>
       </div>
