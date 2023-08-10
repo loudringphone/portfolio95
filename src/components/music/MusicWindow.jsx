@@ -66,6 +66,15 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     indexingWindows('music')
   };
 
+  const handleClose = () => {
+    displayingTask(false, 'music')
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setPlaying(false)
+      setCountdownTime(Math.floor(audio.duration))
+    }
+  }
   const handlePlay = () => {
       audio.play();
       setPlaying(true)
@@ -85,16 +94,23 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     }
   };
   const handleBack = () => {
+    let newMusicIndex
     if (audio) {
       audio.pause();
-      audio.currentTime = 0;
       setPlaying(false)
-    }
-    let newMusicIndex
-    if (musicIndex == 0) {
-      newMusicIndex = music.length - 1
+      console.log(audio.duration, 'duration')
+      console.log(audio.currentTime, 'cur')
+      if (audio.currentTime <= 3) {
+        if (musicIndex == 0) {
+          newMusicIndex = music.length - 1
+        } else {
+          newMusicIndex = musicIndex - 1
+        }
+      } else {
+        newMusicIndex = musicIndex
+      }
     } else {
-      newMusicIndex = musicIndex - 1
+      newMusicIndex = musicIndex
     }
     setMusicIndex(newMusicIndex)
     const newAudio = new Audio(music[newMusicIndex].source);
@@ -110,7 +126,6 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   const handleForward = () => {
     if (audio) {
       audio.pause();
-      audio.currentTime = 0;
       setPlaying(false)
     }
     let newMusicIndex
@@ -175,7 +190,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
 
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='music' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={()=>{displayingTask(false, 'music')}} onTouchStart={()=>{displayingTask(false, 'music')}}>
+        <Button onClick={handleClose} onTouchStart={handleClose}>
           <span className='close-icon' />
         </Button>
         </div>
