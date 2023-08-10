@@ -4,9 +4,12 @@ import MinimisingButton from '../buttons/MinimisingButton';
 import TextScroller from './TextScroller';
 import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
 import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
+import SkipForwardMiniFillIcon from 'remixicon-react/SkipForwardMiniFillIcon';
+import SkipBackMiniFillIcon from 'remixicon-react/SkipBackMiniFillIcon';
+
 import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
 import { formatTime } from '../../functions/formatTime';
-import monOncle from '../../assets/sounds/mon-oncle.mp3'
+import { music } from './music'
 
 import {
   Button,
@@ -42,9 +45,11 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
 
   const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
   const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 15, y: 15 })
-  const [audio, setAudio] = useState(new Audio(monOncle));
+  const [musicIndex, setMusicIndex] = useState(0)
+  const [audio, setAudio] = useState(new Audio(music[musicIndex].source));
   const [countdownTime, setCountdownTime] = useState(null);
   const [playing, setPlaying] = useState(false)
+  const [isSkipped, setIsSkipped] = useState(false)
   const onStart = () => {
     activatingTask('music');
     indexingWindows('music')
@@ -62,15 +67,8 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   };
 
   const handlePlay = () => {
-    if (!audio) {
-      const newAudio = new Audio(monOncle);
-      setAudio(newAudio);
-      newAudio.play();
-      setPlaying(true)
-    } else {
       audio.play();
       setPlaying(true)
-    }
   }
   const handlePause = () => {
     if (audio) {
@@ -86,6 +84,50 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       setCountdownTime(Math.floor(audio.duration))
     }
   };
+  const handleBack = () => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setPlaying(false)
+    }
+    let newMusicIndex
+    if (musicIndex == 0) {
+      newMusicIndex = music.length - 1
+    } else {
+      newMusicIndex = musicIndex - 1
+    }
+    setMusicIndex(newMusicIndex)
+    const newAudio = new Audio(music[newMusicIndex].source);
+    newAudio.addEventListener('loadedmetadata', () => {
+      setCountdownTime(Math.floor(newAudio.duration));
+    });
+    setAudio(newAudio);
+    setIsSkipped(true);
+  }
+
+  const handleForward = () => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setPlaying(false)
+    }
+    let newMusicIndex
+    if (musicIndex == music.length - 1) {
+      newMusicIndex = 0
+    } else {
+      newMusicIndex = musicIndex + 1
+    }
+    setMusicIndex(newMusicIndex)
+    const newAudio = new Audio(music[newMusicIndex].source);
+    newAudio.addEventListener('loadedmetadata', () => {
+      setCountdownTime(Math.floor(newAudio.duration));
+    });
+    setAudio(newAudio);
+    setIsSkipped(true);
+  }
+  const resettingText = () => {
+    setIsSkipped(false);
+  }
 
   useEffect(() => {
     let countdownInterval;
@@ -138,13 +180,15 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       </WindowHeader></strong>
       <WindowContent className='window-content'>
       <div className="music-title-container">
-      <TextScroller text="Mon Oncle - My favourite movie and soundtrack" />
+      <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
       <div className='count-down'>{formatTime(countdownTime)}</div>
       </div>
       <div className="buttons">
+        <Button onClick={handleBack}><SkipBackMiniFillIcon /></Button>
         <Button onClick={handlePlay} disabled={playing}><PlayMiniFillIcon /></Button>
         <Button onClick={handlePause}><PauseMiniFillIcon /></Button>
         <Button onClick={handleStop}><StopMiniFillIcon /></Button>
+        <Button onClick={handleForward}><SkipForwardMiniFillIcon /></Button>
       </div>
       </WindowContent>
      
