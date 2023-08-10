@@ -25,6 +25,8 @@ const Wrapper = styled.div`
 `;
 
 const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
+  const [initialPosition, setInitialPosition] = useState({ x: 80, y: 80 })
+  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 15, y: 10 })
   const [username, setUsername] = useState('Admin')
   const [password, setPassword] = useState('admin')
   const [signinError, setSigninError] = useState(false)
@@ -84,7 +86,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
 
 
   return (
-    <Draggable bounds="body" handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
     <Wrapper className="drag-welcome">
     <ConditionalAnimatedWrapper animate={signinError}>
     <Window className='welcome-window' onClick={handleClickInsideWindow}>
