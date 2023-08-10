@@ -97,18 +97,17 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     let newMusicIndex
     if (audio) {
       audio.pause();
-      setPlaying(false)
+      setPlaying(false);
       if (audio.currentTime <= 3) {
-        if (musicIndex == 0) {
-          newMusicIndex = music.length - 1
+        if (musicIndex === 0) {
+          newMusicIndex = music.length - 1;
         } else {
-          newMusicIndex = musicIndex - 1
+          newMusicIndex = musicIndex - 1;
         }
-      } else {
-        newMusicIndex = musicIndex
       }
-    } else {
-      newMusicIndex = musicIndex
+    }
+    if (newMusicIndex === undefined) {
+      newMusicIndex = musicIndex;
     }
     setMusicIndex(newMusicIndex)
     const newAudio = new Audio(music[newMusicIndex].source);
