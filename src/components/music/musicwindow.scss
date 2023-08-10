@@ -4,6 +4,7 @@
   }
 }
 .music-window{
+  user-select: none;
   .window-title {
         display: flex;
         align-items: center;
