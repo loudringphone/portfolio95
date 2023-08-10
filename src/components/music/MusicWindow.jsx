@@ -144,9 +144,8 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
         setCountdownTime(0);
         clearInterval(countdownInterval);
         setTimeout(() => {
-          setPlaying(false);
-          setCountdownTime(Math.floor(audio.duration));
-        }, 500);
+          handleForward()
+        }, 1000);
       };
       audio.addEventListener('ended', handleAudioEnd);
       if (playing) {
