@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
-import { Mailnews20, Shell32167, Computer4, Password1010 } from '@react95/icons'
+import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010 } from '@react95/icons'
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
@@ -12,34 +12,17 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
     event.stopPropagation();
     activiatingDockMenu(!dockMenuActive)
   }
-  const handlePortfolio = (event) => {
-    event.stopPropagation();
-    activiatingDockMenu(false)
-    displayingTask(true, 'portfolio')
-    const newTasksVisibility = new Object(tasksVisibility)
-    newTasksVisibility.portfolio = 'visible'
-    minimisingTasks(newTasksVisibility)
-    activatingTask('portfolio');
-    if (windowIndice.resume > windowIndice.browser) {
-      indexingWindows({portfolio: 7, resume: 6, browser: 5})
-    } else {
-      indexingWindows({portfolio: 7, resume: 5, browser: 6})
-    }
-  }
-  const handleResume = (event) => {
+  const handleTask = (event, task) => {
     event.stopPropagation();
     activiatingDockMenu(false)
     const newTasksVisibility = new Object(tasksVisibility)
-    newTasksVisibility.resume = 'visible'
+    newTasksVisibility[task] = 'visible'
     minimisingTasks(newTasksVisibility)
-    activatingTask('resume');
-    displayingTask(true, 'resume')
-    if (windowIndice.portfolio > windowIndice.browser) {
-      indexingWindows({resume: 7, portfolio: 6, browser: 5})
-    } else {
-      indexingWindows({resume: 7, portfolio: 5, browser: 6})
-    }
+    activatingTask(task);
+    displayingTask(true, task)
+    indexingWindows(task)
   }
+
   const handleLogOff = () => {
     activatingWelcome(true)
     signingIn(false)
@@ -92,13 +75,17 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
                 }}
                 onClick={handleClick}
             >
-              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleResume}>
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'resume')}>
             <Mailnews20 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>R</span>esume</p>
             </MenuListItem>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handlePortfolio}>
+            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'portfolio')}>
             <Shell32167 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>P</span>ortfolio</p>
+            </MenuListItem>
+            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'music')}>
+            <MediaCd style={{height:'30px', width:'30px'}}/>
+                <p><span className='underscore'>M</span>usic</p>
             </MenuListItem>
             <Separator/>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleLogOff} >

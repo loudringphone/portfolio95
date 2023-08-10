@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 
-const TextScroller = ({ text }) => {
+const TextScroller = ({ text, isSkipped, resettingText }) => {
   const [animationComplete, setAnimationComplete] = useState(false);
-  const [duration, setDuration] = useState(10000)
+  const [duration, setDuration] = useState(20000)
+  const [timeoutId, setTimeoutId] = useState(null);
   const [key, setKey] = useState(1);
 
   const scrolling = useSpring({
@@ -18,17 +19,23 @@ const TextScroller = ({ text }) => {
   });
 
   useEffect(() => {
-    if (!animationComplete) {
-      setTimeout(() => {
-        setAnimationComplete(true)
+    let timeoutId = null;
+    if (isSkipped) {
+      resettingText();
+      setAnimationComplete(true);
+    } else if (!animationComplete) {
+      timeoutId = setTimeout(() => {
+        setAnimationComplete(true);
       }, duration);
     } else {
-      setTimeout(() => {
-        setAnimationComplete(false)
-      }, 0);
+      setAnimationComplete(false);
     }
-    
-  }, [animationComplete]); 
+    return () => {
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [animationComplete, isSkipped]); 
 
   return (
     <div key={key} className="music-title">
