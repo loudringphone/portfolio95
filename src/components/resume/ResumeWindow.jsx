@@ -60,6 +60,7 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     event.stopPropagation();
   }
 
+
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has('resume') ? 'block' : 'none', visibility: tasksVisibility.resume}}>
@@ -69,7 +70,7 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
 
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchStart={()=>{displayingTask(false, 'resume')}}>
+        <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchEnd={()=>{displayingTask(false, 'resume')}}>
           <span className='close-icon' />
         </Button>
         </div>

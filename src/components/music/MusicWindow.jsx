@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
+const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks ,signed, signOff}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -146,7 +146,14 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   const resettingText = () => {
     setIsSkipped(false);
   }
-
+  useEffect(() => {
+    if (audio) {
+      if (!signed || signOff) {
+        audio.pause();
+        return setPlaying(false)
+      }
+    }
+  }, [signed, signOff])
   useEffect(() => {
     let countdownInterval;
     if (audio) {
@@ -182,7 +189,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
-  
+
   return (
     <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-music" style={{zIndex: windowIndice['music'], display: displayTasks.has('music') ? 'block' : 'none', visibility: tasksVisibility.music}}>
@@ -192,7 +199,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
 
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='music' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={handleClose} onTouchStart={handleClose}>
+        <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>
         </div>
