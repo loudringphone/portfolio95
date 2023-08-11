@@ -67,7 +67,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     const currentTime = new Date().getTime();
     setLastTouchTime(currentTime);
 
-    if (currentTime - lastTouchTime < 300) {
+    if (currentTime - lastTouchTime <= 300) {
       const updatedTasksVisibility = {
         ...tasksVisibility,
         resume: 'visible'
@@ -79,8 +79,8 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
       indexingIcons(task)
     }
   }
-  const handlePickingIcon = (event, task) => {
-    event.stopPropagation();
+  const handlePickingIcon = (task) => {
+    // event.stopPropagation();
     const updatedIconIndice = {
       ...iconIndice,
       [task]: 99
@@ -90,7 +90,10 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   }
 
   const handleLeavingIcon = (task) => {
-    activatingTask(null)
+    const currentTime = new Date().getTime();
+    if (currentTime - lastTouchTime > 300) {
+      activatingTask(null)
+    }
     indexingIcons(task)
     setPicking(false)
     recycling(task)
