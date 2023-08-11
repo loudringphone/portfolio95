@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { styleReset } from 'react95';
 import original from "react95/dist/themes/original";
@@ -13,6 +13,7 @@ import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import MusicWindow from './components/music/MusicWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
+import WarningWindow from './components/warning/WarningWindow';
 import BlueScreen from './components/bluescreen/BlueScreen';
 import win95energystar from './assets/images/win95-energystar.gif';
 import win95energystarMobile from './assets/images/win95-energystar-mobile.gif';
@@ -47,20 +48,18 @@ const App = () => {
   const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible', music: 'visible'})
   const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
-  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5, music: 5})
+  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5, music: 5, warning: 5})
   const [standbyTasks, setStandbyTasks] = useState(new Set());
   const [displayTasks, setDisplayTasks] = useState(new Set())
   const [activeTask, setActiveTask] = useState(null)
-  
-
- 
+  const [displayBSOD, setDisplayBSOD] =useState('none')
+  const [warnings, setWarnings] = useState(0)
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
   
-
   const signingIn = (boolean) => {
     setSigned(boolean)
   }
@@ -86,40 +85,53 @@ const App = () => {
     setWelcomeActive(boolean)
   }
 
-
-
   const activatingTask = (str) => {
     setActiveTask(str)
   }
 
- const displayingTask = (boolean, str) => {
-  const newDisplayTasks = new Set(displayTasks)
-  if (boolean) {
-    newDisplayTasks.add(str)
-  } else {
-    newDisplayTasks.delete(str)
+  const displayingTask = (boolean, str) => {
+    const newDisplayTasks = new Set(displayTasks)
+    if (boolean) {
+      newDisplayTasks.add(str)
+    } else {
+      newDisplayTasks.delete(str)
+    }
+    setDisplayTasks(newDisplayTasks)
   }
-  setDisplayTasks(newDisplayTasks)
- }
 
   const minimisingTasks = (obj) => {
     setTasksVisibility(obj)
   }
   
-
   const activiatingDockMenu = (isActive) => {
     setDockMenuActive(isActive)
     if (isActive) {
       activatingTask(null)
     }
   }
-  const handleClick = () => {
+
+  const handleDown = () => {
     activiatingDockMenu(false)
     activatingWelcome(false)
     activatingTask(null)
   }
+
   const turningoff = (boolean) => {
     setShutDOwn(boolean)
+  }
+
+  const issuingWarning = (num) => {
+    setWarnings(num)
+    if (num >= 6) {
+      displayingBSOD(true)
+    }
+  }
+  const displayingBSOD = (boolean) => {
+    if (boolean) {
+      setDisplayBSOD('flex')
+    } else {
+      setDisplayBSOD('none')
+    }
   }
   useEffect(() => {
     setTimeout(() => {
@@ -221,7 +233,7 @@ const App = () => {
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
       <GlobalStyles />
-      <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
+      <div className="desktop" style={{height: "100vh", width: "100vw"}} onTouchStart={handleDown} onMouseDown={handleDown}>
         <WelcomeWindow activatingWelcome={activatingWelcome} welcomeActive={welcomeActive} signingIn={signingIn} />
       </div>
       </ThemeProvider>
@@ -238,15 +250,22 @@ const App = () => {
       <GlobalStyles />
       <ThemeProvider theme={original}>
        
-          <div className="desktop" style={{height: "100vh", width: "100vw"}} onClick={handleClick}>
-          <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} />
+          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} >
+            < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
+
+            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} />
+
+
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
         <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
-      < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
-
-        {/* <BlueScreen /> */}
+        <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} />
+        { warnings >= 6 ?
+          <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} />
+          :
+          <></>
+        }
 
       </div>
 
