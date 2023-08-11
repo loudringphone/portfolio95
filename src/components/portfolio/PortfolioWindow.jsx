@@ -50,7 +50,8 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   const selectingProject = (id) => {
     setProjectSelected(id)
   }
-  const onStart = () => {
+  const onStart = (event) => {
+    event.stopPropagation();
     activatingTask('portfolio')
     indexingWindows('portfolio', windowIndice)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
@@ -60,16 +61,20 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
+
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingTask('portfolio');
     indexingWindows('portfolio')
   };
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  }
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-portfolio" style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
     <Window className='portfolio-window' onClick={handleClickInsideWindow}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'portfolio'} className='window-title'>
+    <strong className="cursor"><WindowHeader active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>

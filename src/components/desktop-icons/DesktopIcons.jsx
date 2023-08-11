@@ -3,7 +3,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask}) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, warnings}) => {
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
@@ -96,7 +96,10 @@ const DesktopIcons = ({windowIndice, displayingTask, indexingWindows, tasksVisib
     );
     if (isOverlapping) {
       if (task == 'resume') {
-        return alert("You must not throw away Winston's resume but you should hire him instead. PS this alert is still working in progress")
+        activatingTask('warning')
+        indexingWindows('warning')
+        displayingTask(true, 'warning')
+        return issuingWarning(warnings + 1)
       }
       setTasks(prevTasks => ({
         ...prevTasks,

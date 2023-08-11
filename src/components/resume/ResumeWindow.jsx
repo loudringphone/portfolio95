@@ -37,10 +37,10 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     }
   });
 
-  const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
-  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 5, y: 10 })
+  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 60, y: 60 } : { x: 5, y: 10 })
 
-  const onStart = () => {
+  const onStart = (event) => {
+    event.stopPropagation();
     activatingTask('resume');
     indexingWindows('resume')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
@@ -56,8 +56,12 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     indexingWindows('resume')
   };
 
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  }
+
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has('resume') ? 'block' : 'none', visibility: tasksVisibility.resume}}>
     <Window className='resume-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
