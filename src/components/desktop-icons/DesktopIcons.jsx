@@ -3,7 +3,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, warnings}) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu}) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
@@ -51,14 +51,19 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
       resume: 'visible'
     };
     minimisingTasks(updatedTasksVisibility);
-    activatingTask(task)
-    displayingTask(true, task)
-    indexingWindows(task)
-    indexingIcons(task)
+    activatingTask(task);
+    displayingTask(true, task);
+    indexingWindows(task);
+    indexingIcons(task);
   }
   const handleIconMobile = (event, task) => {
     event.stopPropagation();
-
+    const updatedIconIndice = {
+      ...iconIndice,
+      [task]: 99
+    };
+    setPicking(true)
+    setIconIndice(updatedIconIndice)
     const currentTime = new Date().getTime();
     setLastTouchTime(currentTime);
 
@@ -74,7 +79,8 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
       indexingIcons(task)
     }
   }
-  const handlePickingIcon = (task) => {
+  const handlePickingIcon = (event, task) => {
+    event.stopPropagation();
     const updatedIconIndice = {
       ...iconIndice,
       [task]: 99
@@ -84,6 +90,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   }
 
   const handleLeavingIcon = (task) => {
+    activatingTask(null)
     indexingIcons(task)
     setPicking(false)
     recycling(task)
@@ -146,7 +153,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           handleIconMobile={handleIconMobile}
           handlePickingIcon={handlePickingIcon}
           handleLeavingIcon={handleLeavingIcon}
-          
+          activiatingDockMenu={activiatingDockMenu}
         />
       ))}
     </div>

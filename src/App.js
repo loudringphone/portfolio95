@@ -107,9 +107,9 @@ const App = () => {
     setTasksVisibility(obj)
   }
   
-  const activiatingDockMenu = (isActive) => {
-    setDockMenuActive(isActive)
-    if (isActive) {
+  const activiatingDockMenu = (boolean) => {
+    setDockMenuActive(boolean)
+    if (boolean) {
       activatingTask(null)
     }
   }
@@ -261,7 +261,7 @@ const App = () => {
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} >
             < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
 
-            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} />
+            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} />
 
 
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
