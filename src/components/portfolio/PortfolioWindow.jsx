@@ -78,7 +78,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
         <span>portfolio.exe</span>
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={()=>{displayingTask(false, 'portfolio')}} onTouchStart={()=>{displayingTask(false, 'portfolio')}}>
+        <Button onClick={()=>{displayingTask(false, 'portfolio')}} onTouchEnd={()=>{displayingTask(false, 'portfolio')}}>
           <span className='close-icon' />
         </Button>
         </div>

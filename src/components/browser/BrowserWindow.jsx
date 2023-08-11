@@ -61,7 +61,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
-  
+
   return (
     <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: displayTasks.has('browser') ? 'block' : 'none', visibility: tasksVisibility.browser}}>
@@ -70,7 +70,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
         <span>browser.exe</span>
         <div className="buttons">
         <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
-        <Button onClick={handleClose} onTouchStart={handleClose}>
+        <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>
         </div>

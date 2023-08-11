@@ -84,9 +84,12 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
     
   }
 
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  }
 
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers}>
+    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-welcome">
     <ConditionalAnimatedWrapper animate={signinError}>
     <Window className='welcome-window' onClick={handleClickInsideWindow}>
