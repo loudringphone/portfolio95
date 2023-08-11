@@ -30,7 +30,6 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
         onMouseDown={() => handlePickingIcon(task)}
         onTouchEnd={() => handleLeavingIcon(task)}
         onMouseUp={() => handleLeavingIcon(task)}
-        onClick={() => handleLeavingIcon(task)}
       >
         {icon}
       </div>

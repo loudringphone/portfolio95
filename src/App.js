@@ -127,9 +127,10 @@ const App = () => {
     }, 500);
   }
 
-  const issuingWarning = (num) => {
-    setWarnings(num)
-    if (num >= 6) {
+  const issuingWarning = () => {
+    const updatedWarnings = warnings + 1
+    setWarnings(updatedWarnings)
+    if (updatedWarnings >= 3) {
       displayingBSOD(true)
     }
   }
@@ -145,8 +146,8 @@ const App = () => {
       setEnergyStar(false)
       setTimeout(() => {
         setLoading(false)
-      }, 1000);
-    }, 2500);
+      }, 10);
+    }, 25);
   }, []); 
 
   useEffect(() => {
@@ -268,8 +269,8 @@ const App = () => {
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
         <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} />
-        { warnings >= 6 ?
-          <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} />
+        { warnings >= 3 ?
+          <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} activatingTask={activatingTask} />
           :
           <></>
         }
