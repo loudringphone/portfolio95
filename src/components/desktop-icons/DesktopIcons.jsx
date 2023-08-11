@@ -3,7 +3,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu}) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, elementRefs }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
@@ -91,10 +91,6 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   }
 
   const handleLeavingIcon = (task) => {
-    // const currentTime = new Date().getTime();
-    // if (currentTime - lastTouchTime > 300) {
-    //   activatingTask(null)
-    // }
     indexingIcons(task)
     setPicking(false)
     recycling(task)
@@ -145,11 +141,12 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   };
   return (
     <div className="desktop-icons">
-      {Object.entries(tasks).map(([task, data]) => (
+      {Object.entries(tasks).map(([task, data], index) => (
         <Icon
           key={task}
-          icon={<data.Icon style={{ height: '60px', width: '60px' }} />}
+          icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
           task={task}
+          elementRef={elementRefs[index]}
           iconRef={data.iconRef}
           visibility={data.visibility}
           iconIndice={iconIndice}
@@ -158,6 +155,8 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           handlePickingIcon={handlePickingIcon}
           handleLeavingIcon={handleLeavingIcon}
           activiatingDockMenu={activiatingDockMenu}
+          selectingIcon={selectingIcon}
+          selectedIcon={selectedIcon}
         />
       ))}
     </div>

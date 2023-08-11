@@ -52,6 +52,7 @@ const App = () => {
   const [standbyTasks, setStandbyTasks] = useState(new Set());
   const [displayTasks, setDisplayTasks] = useState(new Set())
   const [activeTask, setActiveTask] = useState(null)
+  const [selectedIcon, setSelectedIcon] = useState(null)
   const [displayBSOD, setDisplayBSOD] =useState('none')
   const [warnings, setWarnings] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -60,12 +61,18 @@ const App = () => {
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
+  const elementRefs = [useRef(), useRef(), useRef(), useRef()];
+  const elementRef = useRef(null);
 
   const signingIn = (boolean) => {
     setSigned(boolean)
     setTimeout(() => {
       setSignOff(!boolean)
     }, 500);
+  }
+
+  const selectingIcon = (str) => {
+    setSelectedIcon(str)
   }
 
   const settingProjectUrl = (url) => {
@@ -114,10 +121,14 @@ const App = () => {
     }
   }
 
-  const handleDown = () => {
+  const handleDown = (event) => {
     activiatingDockMenu(false)
     activatingWelcome(false)
     activatingTask(null)
+    if (elementRefs.some(ref => ref.current.contains(event.target))) {
+      return;
+    }
+    selectingIcon(null)
   }
 
   const turningoff = (boolean) => {
@@ -261,7 +272,7 @@ const App = () => {
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} >
             < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
 
-            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} />
+            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} elementRefs={elementRefs}/>
 
 
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
