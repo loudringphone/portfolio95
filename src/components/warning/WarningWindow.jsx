@@ -87,7 +87,7 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
               <p>Winston will help fix the bugs for you!</p>
               :
               warnings >= 2 ?
-              <p>Hiring Winston would be a better decision!</p>
+              <p>Hiring Winston would be a good decision!</p>
               :
               <p>Are you sure to throw away Winston's resume?</p>
             }
