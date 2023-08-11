@@ -117,7 +117,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
         activatingTask('warning')
         indexingWindows('warning')
         displayingTask(true, 'warning')
-        return issuingWarning(warnings + 1)
+        return issuingWarning()
       }
       setTasks(prevTasks => ({
         ...prevTasks,
