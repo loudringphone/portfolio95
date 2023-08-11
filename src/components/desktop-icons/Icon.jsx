@@ -22,7 +22,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
   return (
-    <Draggable bounds="body" {...dragHandlers} >
+    <Draggable bounds="body" {...dragHandlers}>
     <div className='icon' ref={iconRef} style={{ zIndex: iconIndice[task], visibility: visibility, }}>
       <div
         onDoubleClick={(event) => handleIcon(event, task)}
