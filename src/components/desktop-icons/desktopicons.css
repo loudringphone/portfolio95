@@ -18,7 +18,6 @@
     width: max-content;
     gap: 5px;
     cursor: pointer;
-    z-index: 90;
 }
 
 .desktop-icons  .icon p {
@@ -26,9 +25,29 @@
     color: #fefefe;;
     text-align: center;
     cursor: pointer;
+    padding: 0 0.25rem;
+    z-index: 1;
+    user-select: none;
 }
-
-img {
+.icon-placeholder {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.text-placeholder {
+    position: relative;
+    display: flex;
+}
+.filter {
+    position: absolute;
+    background-color: black;
+    border: 1px solid white ;
+    opacity: 0.25;
+    height: 100%;
+    width: 100%;
+}
+.icon-placeholder img {
+    z-index: 1;
     user-drag: none;
     -webkit-user-drag: none;
     user-select: none;
