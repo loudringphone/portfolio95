@@ -2,7 +2,7 @@ import React, { useState, useRef} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu }) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -12,37 +12,38 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
       x: -400, y: 200
     }
   });
-  const onStart = () => {
+  const onStart = (task) => {
+    activiatingDockMenu(false)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
-  const onStop = () => {
+  const onStop = (task) => {
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
   return (
     <Draggable bounds="body" {...dragHandlers}>
-    <div className='icon' style={{ zIndex: iconIndice[task], visibility: visibility, }}>
+    <div className='icon' ref={iconRef} style={{ zIndex: iconIndice[task], visibility: visibility, }}>
       <div
-        ref={iconRef}
         onDoubleClick={(event) => handleIcon(event, task)}
         onTouchStart={(event) => handleIconMobile(event, task)}
-        onMouseDown={() => handlePickingIcon(task)}
+        onMouseDown={(event) => handlePickingIcon(event, task)}
         onTouchEnd={() => handleLeavingIcon(task)}
         onMouseUp={() => handleLeavingIcon(task)}
       >
         {icon}
       </div>
-      <p
+      <div
         onDoubleClick={(event) => handleIcon(event, task)}
-        onTouchStart={(event) => handleIcon(event, task)}
-        onMouseDown={() => handlePickingIcon(task)}
+        onTouchStart={(event) => handleIconMobile(event, task)}
+        onMouseDown={(event) => handlePickingIcon(event, task)}
         onTouchEnd={() => handleLeavingIcon(task)}
         onMouseUp={() => handleLeavingIcon(task)}
-        onClick={() => handleLeavingIcon(task)}
       >
+      <p>
         {taskName}
       </p>
+      </div>
     </div>
   </Draggable>
   )
