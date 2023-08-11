@@ -83,13 +83,13 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
             style={{ height: "40px"}}
             />
             {
-              warnings >= 3 ?
+              warnings >= 2 ?
               <p>Hiring Winston would be a better decision!</p>
               :
               <p>Are you sure to throw away Winston's resume?</p>
             }
         </div>
-        <Button onClick={()=>{displayingTask(false, 'warning')}} onTouchStart={()=>{displayingTask(false, 'warning')}}> {warnings >= 3 ? 'Yes' :'No'}
+        <Button onClick={()=>{displayingTask(false, 'warning')}} onTouchStart={()=>{displayingTask(false, 'warning')}}> {warnings >= 2 ? 'Yes' :'No'}
         </Button>
       </WindowContent>
      
