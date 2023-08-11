@@ -56,12 +56,16 @@ const App = () => {
   const [warnings, setWarnings] = useState(0)
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
+  const [signOff, setSignOff] = useState(true)
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
-  
+
   const signingIn = (boolean) => {
     setSigned(boolean)
+    setTimeout(() => {
+      setSignOff(!boolean)
+    }, 500);
   }
 
   const settingProjectUrl = (url) => {
@@ -117,7 +121,10 @@ const App = () => {
   }
 
   const turningoff = (boolean) => {
-    setShutDOwn(boolean)
+    setSignOff(boolean)
+    setTimeout(() => {
+      setShutDOwn(boolean)
+    }, 500);
   }
 
   const issuingWarning = (num) => {
@@ -187,7 +194,7 @@ const App = () => {
       </div>
     )
   }
-  if (shutDown) {
+  if (shutDown && signOff) {
     return (
       <div className='shut-down-background'>
         {
@@ -228,7 +235,7 @@ const App = () => {
       </div>
     )
   } 
-  if (!signed) {
+  if (!signed && signOff) {
     return (
       <Helmet style={{height: "100vh", width: "100vw"}}>
       <ThemeProvider theme={original}>
@@ -259,7 +266,7 @@ const App = () => {
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
         <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
-        <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
+        <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
         <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} />
         { warnings >= 6 ?
           <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} />

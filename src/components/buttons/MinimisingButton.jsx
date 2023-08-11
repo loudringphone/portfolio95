@@ -10,7 +10,7 @@ const MinimisingButton = ({tasksVisibility, task, minimisingTasks, activatingTas
         activatingTask(null);
     }
   return (
-    <Button onClick={handleClick} onTouchStart={handleClick}>
+    <Button onClick={handleClick} onTouchEnd={handleClick}>
       <span className='minimise-icon'>&nbsp;</span>
     </Button>
   )

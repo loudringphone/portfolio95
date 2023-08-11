@@ -2,7 +2,7 @@ import React, { useState, useRef} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handlePickingIcon, handleLeavingIcon, iconIndice }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice }) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -26,7 +26,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handlePickingIcon, 
       <div
         ref={iconRef}
         onDoubleClick={(event) => handleIcon(event, task)}
-        onTouchStart={(event) => handleIcon(event, task)}
+        onTouchStart={(event) => handleIconMobile(event, task)}
         onMouseDown={() => handlePickingIcon(task)}
         onTouchEnd={() => handleLeavingIcon(task)}
         onMouseUp={() => handleLeavingIcon(task)}

@@ -4,6 +4,7 @@ import './desktopicons.css'
 import Icon from './Icon';
 
 const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, warnings}) => {
+  const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
@@ -54,7 +55,24 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     displayingTask(true, task)
     indexingWindows(task)
     indexingIcons(task)
+  }
+  const handleIconMobile = (event, task) => {
+    event.stopPropagation();
 
+    const currentTime = new Date().getTime();
+    setLastTouchTime(currentTime);
+
+    if (currentTime - lastTouchTime < 300) {
+      const updatedTasksVisibility = {
+        ...tasksVisibility,
+        resume: 'visible'
+      };
+      minimisingTasks(updatedTasksVisibility);
+      activatingTask(task)
+      displayingTask(true, task)
+      indexingWindows(task)
+      indexingIcons(task)
+    }
   }
   const handlePickingIcon = (task) => {
     const updatedIconIndice = {
@@ -125,6 +143,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           visibility={data.visibility}
           iconIndice={iconIndice}
           handleIcon={handleIcon}
+          handleIconMobile={handleIconMobile}
           handlePickingIcon={handlePickingIcon}
           handleLeavingIcon={handleLeavingIcon}
           
