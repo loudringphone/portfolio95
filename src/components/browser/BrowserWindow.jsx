@@ -40,8 +40,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
-  const [initialPosition, setInitialPosition] = useState({ x: 80, y: 80 })
-  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 15, y: 10 })
+  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 })
 
   const onStop = () => {
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
@@ -63,7 +62,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
   }
 
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: displayTasks.has('browser') ? 'block' : 'none', visibility: tasksVisibility.browser}}>
     <Window className='browser-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'browser'} className='window-title'>
