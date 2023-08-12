@@ -61,9 +61,47 @@ const App = () => {
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
-  const elementRefs = [useRef(), useRef(), useRef(), useRef()];
-  const elementRef = useRef(null);
+  const [teleporting, setTeleporting] = useState(false)
+  const [iconPositions, setIconPositions] = useState({
+    'resume': {
+      elementRef: useRef(null),
+      position: { x: 0, y: 0 }
+    },
+    'portfolio': {
+      elementRef: useRef(null),
+      position: { x: 0, y: 0 }
+    },
+    'music': {
+      elementRef: useRef(null),
+      position: { x: 0, y: 0 }
+    },
+    'recycle bin': {
+      elementRef: useRef(null),
+      position: { x: 0, y: 0 }
+    },
+  })
+  
+  const positioningIcon = (task, x, y) => {
+    setIconPositions(prevTasks => ({
+      ...prevTasks,
+      [task]: {
+        ...prevTasks[task],
+        position: { x: x, y: y }
+      },
+    }));
+  }
 
+  const handleUp = (event) => {
+    if (teleporting) {
+      const rect = iconPositions['resume'].elementRef.current.getBoundingClientRect();
+      const cursorX = event.clientX;
+      const cursorY = event.clientY;
+      const offsetX = cursorX - rect.width;
+      const offsetY = cursorY - rect.height;
+      positioningIcon('resume', offsetX, offsetY)
+    }
+  }
+  
   const signingIn = (boolean) => {
     setSigned(boolean)
     setTimeout(() => {
@@ -125,6 +163,7 @@ const App = () => {
     activiatingDockMenu(false)
     activatingWelcome(false)
     activatingTask(null)
+    const elementRefs = Object.values(iconPositions).map(task => task.elementRef);
     if (elementRefs.some(ref => ref.current.contains(event.target))) {
       return;
     }
@@ -269,10 +308,10 @@ const App = () => {
       <GlobalStyles />
       <ThemeProvider theme={original}>
        
-          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} >
+          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={(event) => handleUp(event)} >
             < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
 
-            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} elementRefs={elementRefs}/>
+            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} iconPositions={iconPositions}/>
 
 
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
