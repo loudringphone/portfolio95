@@ -95,7 +95,7 @@ const App = () => {
     },
   })
   const binWindowRef = useRef(null)
-  const unrecyclingIcon = (task) => {
+  const unrecyclingIcon = () => {
     const recycledTasks = Object.values(icons).reduce((count, task) => {
       if (task.visibility === 'hidden') {
         return count + 1;
@@ -138,8 +138,8 @@ const App = () => {
   }
   const teleportingIcon = (event) => {
     const rect = binWindowRef.current.getBoundingClientRect();
-    const cursorX = event.clientX;
-    const cursorY = event.clientY;
+    const cursorX = event.clientX || event.changedTouches[0].clientX;
+    const cursorY = event.clientY || event.changedTouches[0].clientY;
     if (
       cursorX < rect.x || cursorX > rect.x + rect.width ||
       cursorY < rect.y || cursorY > rect.y + rect.height
@@ -267,6 +267,11 @@ const App = () => {
       }, 10);
     }, 25);
   }, []); 
+  useEffect(() => {
+    if (activeTask) {
+      activiatingDockMenu(false)
+    }
+  }, [activeTask]); 
 
   useEffect(() => {
     const tasksToManage = ["portfolio", "resume", "browser", "music"];
@@ -291,6 +296,8 @@ const App = () => {
       }, 2000);
     }
   },[shutDown])
+
+  
 
   if (turnOff) {
     return (
@@ -376,7 +383,7 @@ const App = () => {
       <GlobalStyles />
       <ThemeProvider theme={original}>
        
-          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} >
+          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
             < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
 
             <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} />
@@ -388,7 +395,7 @@ const App = () => {
         <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
         <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} selectingBinIcon={selectingBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} />
 
-        <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} />
+        <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} activiatingDockMenu={activiatingDockMenu} />
         { warnings >= 3 ?
           <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} activatingTask={activatingTask} />
           :

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import Icon from './Icon';
-
 import {
   Button,
   Window,
@@ -40,7 +39,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
     }
   });
   
-  const [initialPosition, setInitialPosition] = useState({ x: 20, y: 20 })
+  const [initialPosition, setInitialPosition] = useState({ x: 0, y: 20 })
 
   const onStart = () => {
     activatingTask('recycle bin');
@@ -92,8 +91,8 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
   }
 
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: 'block'}} ref={binWindowRef}>
+    // <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
+    <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}} ref={binWindowRef}>
     <Window className='recycle-bin-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
         <span>Recycle Bin</span>
@@ -133,6 +132,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
           activeTask={activeTask}
           binRef={data.binRef}
           binWindowRef={binWindowRef}
+          activatingTask={activatingTask}
           handlePickingIcon={handlePickingIcon}
           handleLeavingIcon={handleLeavingIcon}
           handleDisappearingIcon={handleDisappearingIcon}
@@ -143,12 +143,6 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
       }
     </div>
 
-
-
-
-
-
-
       </WindowContent>
       <Frame variant='well' className='footer'>
           Test
@@ -156,7 +150,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
     </Window>
   </Wrapper>
 
-  </Draggable>
+//   </Draggable>
 
   )
 }
