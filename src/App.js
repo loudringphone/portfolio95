@@ -13,6 +13,7 @@ import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import MusicWindow from './components/music/MusicWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
+import RecycleBinWindow from './components/recyclebin/RecycleBin';
 import WarningWindow from './components/warning/WarningWindow';
 import BlueScreen from './components/bluescreen/BlueScreen';
 import win95energystar from './assets/images/win95-energystar.gif';
@@ -22,6 +23,7 @@ import win95startupMobile from './assets/images/win95-startup-mobile.jpeg';
 import win95shutdown from './assets/images/win95-shutdown.png';
 import win95shutdownMobile from './assets/images/win95-shutdown-mobile.png';
 import safeTurnOff from './assets/images/safe-turn-off.jpeg';
+import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
 
 
 const GlobalStyles = createGlobalStyle`
@@ -48,11 +50,12 @@ const App = () => {
   const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible', music: 'visible'})
   const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
-  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5, music: 5, warning: 5})
+  const [windowIndice, setWindowIndice] = useState({resume: 5, portfolio: 5, browser: 5, music: 5, warning: 5, "recycle bin": 5})
   const [standbyTasks, setStandbyTasks] = useState(new Set());
   const [displayTasks, setDisplayTasks] = useState(new Set())
   const [activeTask, setActiveTask] = useState(null)
   const [selectedIcon, setSelectedIcon] = useState(null)
+  const [selectedBinIcon, setSelectedBinIcon] = useState(null)
   const [displayBSOD, setDisplayBSOD] =useState('none')
   const [warnings, setWarnings] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -61,32 +64,71 @@ const App = () => {
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
-  const [teleporting, setTeleporting] = useState(false)
-  const [iconPositions, setIconPositions] = useState({
+  const [icons, setIcons] = useState({
     'resume': {
+      Icon: Mailnews20,
       elementRef: useRef(null),
       iconRef: useRef(null),
-      position: { x: 0, y: 0 }
+      position: { x: 0, y: 0 },
     },
     'portfolio': {
+      Icon: Shell32167,
       elementRef: useRef(null),
       iconRef: useRef(null),
-      position: { x: 0, y: 0 }
+      binRef: useRef(null),
+      position: { x: 0, y: 125 },
+      visibility: 'visible',
     },
     'music': {
+      Icon: MediaCd,
       elementRef: useRef(null),
       iconRef: useRef(null),
-      position: { x: 0, y: 0 }
+      binRef: useRef(null),
+      position: { x: 0, y: 250 },
+      visibility: 'visible',
     },
     'recycle bin': {
+      Icon: Shell3232,
       elementRef: useRef(null),
       iconRef: useRef(null),
-      position: { x: 0, y: 0 }
+      position: { x: 0, y: 375 },
     },
   })
-  
+  const binWindowRef = useRef(null)
+  const unrecyclingIcon = (task) => {
+    const recycledTasks = Object.values(icons).reduce((count, task) => {
+      if (task.visibility === 'hidden') {
+        return count + 1;
+      } else {
+        return count;
+      }
+    }, 0);
+    if (recycledTasks <= 1) {
+      setIcons(prevTasks => ({
+        ...prevTasks,
+        "recycle bin": {
+          ...prevTasks["recycle bin"],
+          Icon: Shell3232
+        }
+      }));
+    } 
+  }
+
+  const recyclingIcon = (task) => {
+    setIcons(prevTasks => ({
+      ...prevTasks,
+      [task]: {
+        ...prevTasks[task],
+        visibility: 'hidden'
+      },
+      "recycle bin": {
+        ...prevTasks["recycle bin"],
+        Icon: Shell3233
+      }
+    }));
+  }
   const positioningIcon = (task, x, y) => {
-    setIconPositions(prevTasks => ({
+    setIcons(prevTasks => ({
       ...prevTasks,
       [task]: {
         ...prevTasks[task],
@@ -94,15 +136,33 @@ const App = () => {
       },
     }));
   }
+  const teleportingIcon = (event) => {
+    const rect = binWindowRef.current.getBoundingClientRect();
+    const cursorX = event.clientX;
+    const cursorY = event.clientY;
+    if (
+      cursorX < rect.x || cursorX > rect.x + rect.width ||
+      cursorY < rect.y || cursorY > rect.y + rect.height
+    ) {
+      const task = Object.keys(icons).find(taskKey => icons[taskKey].binRef?.current?.contains(event.target));
 
-  const handleUp = (event) => {
-    if (teleporting) {
-      const rect = iconPositions['resume'].iconRef.current.getBoundingClientRect();
-      const cursorX = event.clientX;
-      const cursorY = event.clientY;
-      const offsetX = cursorX - rect.width;
-      const offsetY = cursorY - rect.height;
-      positioningIcon('resume', offsetX, offsetY)
+      if (task) {
+        const rect = icons[task].iconRef.current.getBoundingClientRect();
+        
+        const offsetX = cursorX - rect.width;
+        const offsetY = cursorY - rect.height;
+        positioningIcon(task, offsetX, offsetY)
+        setTimeout(() => {
+          setIcons(prevTasks => ({
+            ...prevTasks,
+            [task]: {
+              ...prevTasks[task],
+              visibility: 'visible'
+            }
+          }));
+        }, 0);
+        
+      }
     }
   }
   
@@ -115,6 +175,10 @@ const App = () => {
 
   const selectingIcon = (str) => {
     setSelectedIcon(str)
+  }
+
+  const selectingBinIcon = (str) => {
+    setSelectedBinIcon(str)
   }
 
   const settingProjectUrl = (url) => {
@@ -167,7 +231,7 @@ const App = () => {
     activiatingDockMenu(false)
     activatingWelcome(false)
     activatingTask(null)
-    const elementRefs = Object.values(iconPositions).map(task => task.elementRef);
+    const elementRefs = Object.values(icons).map(task => task.elementRef);
     if (elementRefs.some(ref => ref.current.contains(event.target))) {
       return;
     }
@@ -312,16 +376,18 @@ const App = () => {
       <GlobalStyles />
       <ThemeProvider theme={original}>
        
-          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={(event) => handleUp(event)} >
+          <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} >
             < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
 
-            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} iconPositions={iconPositions}/>
+            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} />
 
 
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
         <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
+        <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} selectingBinIcon={selectingBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} />
+
         <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} />
         { warnings >= 3 ?
           <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} activatingTask={activatingTask} />

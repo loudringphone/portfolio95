@@ -3,7 +3,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, iconPositions }) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, icons, recyclingIcon, activeTask }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
@@ -109,8 +109,8 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     if (task == 'recycle bin') {
       return
     }
-    const currentIconRef = iconPositions[task].iconRef;
-    const binRef = iconPositions["recycle bin"].iconRef
+    const currentIconRef = icons[task].iconRef;
+    const binRef = icons["recycle bin"].iconRef
     const isOverlapping = areRectsOverlapping(
       currentIconRef.current.getBoundingClientRect(),
       binRef.current.getBoundingClientRect()
@@ -122,29 +122,19 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
         displayingTask(true, 'warning')
         return issuingWarning()
       }
-      setTasks(prevTasks => ({
-        ...prevTasks,
-        [task]: {
-          ...prevTasks[task],
-          visibility: 'hidden'
-        },
-        "recycle bin": {
-          ...prevTasks["recycle bin"],
-          Icon: Shell3233
-        }
-      }));
+      recyclingIcon(task)
     }
   };
   return (
     <div className="desktop-icons">
-      {Object.entries(tasks).map(([task, data], index) => (
+      {Object.entries(icons).map(([task, data]) => (
         <Icon
           key={task}
           icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
           task={task}
-          elementRef={iconPositions[task].elementRef}
-          iconRef={iconPositions[task].iconRef}
-          iconPosition={iconPositions[task].position}
+          elementRef={data.elementRef}
+          iconRef={data.iconRef}
+          iconPosition={data.position}
           visibility={data.visibility}
           iconIndice={iconIndice}
           handleIcon={handleIcon}
@@ -154,6 +144,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           activiatingDockMenu={activiatingDockMenu}
           selectingIcon={selectingIcon}
           selectedIcon={selectedIcon}
+          activeTask={activeTask}
         />
       ))}
     </div>
