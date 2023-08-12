@@ -91,7 +91,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
   }
 
   return (
-    // <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}} ref={binWindowRef}>
     <Window className='recycle-bin-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
@@ -150,7 +150,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
     </Window>
   </Wrapper>
 
-//   </Draggable>
+  </Draggable>
 
   )
 }

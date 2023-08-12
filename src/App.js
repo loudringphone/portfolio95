@@ -25,6 +25,7 @@ import win95shutdownMobile from './assets/images/win95-shutdown-mobile.png';
 import safeTurnOff from './assets/images/safe-turn-off.jpeg';
 import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
 
+import {DndContext} from '@dnd-kit/core';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -379,7 +380,7 @@ const App = () => {
  
     
       <Helmet style={{height: "100vh", width: "100vw"}}>
-
+        <DndContext>
       <GlobalStyles />
       <ThemeProvider theme={original}>
        
@@ -408,6 +409,7 @@ const App = () => {
        
         
       </ThemeProvider>
+      </DndContext>
       </Helmet>
 
     
