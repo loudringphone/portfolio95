@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, elementRef, iconPosition }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, elementRef, iconPosition, activeTask }) => {
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
     setPosition(iconPosition)
@@ -18,7 +18,6 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     }
   });
   const onStart = () => {
-    elementRef.current.style.transition = 'none'
     activiatingDockMenu(false)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -29,7 +28,6 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
   const handleMouseDown = (task) => {
-    elementRef.current.style.transition = 'none'
     selectingIcon(task)
     handlePickingIcon(task)
   }
@@ -38,15 +36,9 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     handleIconMobile(event, task)
   }
   const handleDrag = (e, ui) => {
-    // setPosition({ x: position.x + ui.deltaX, y: position.y + ui.deltaY });
     setPosition({ x: position.x + ui.deltaX, y: position.y + ui.deltaY });
-
   };
 
-  const handleClick = () => {
-    selectingIcon(task)
-    console.log('dadas')
-  }
   return (
     <Draggable bounds="body" {...dragHandlers}
       onDrag={handleDrag}
@@ -80,7 +72,8 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
         onTouchEnd={() => handleLeavingIcon(task)}
         onMouseUp={() => handleLeavingIcon(task)}
       >
-        <div className="filter" style={{display: selectedIcon == task ? 'block' : 'none'}}></div>
+        <div className="filter-text" style={{display: selectedIcon == task && activeTask == null? 'block' : 'none'}}></div>
+        <div className="filter" style={{display: selectedIcon == task && activeTask ? 'block' : 'none'}}></div>
       <p>
         {taskName}
       </p>

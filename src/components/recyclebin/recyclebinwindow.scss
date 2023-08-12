@@ -1,0 +1,100 @@
+@media (max-width: 500px) {
+  .drag-recycle-bin {
+
+  }
+}
+.recycle-bin-window{
+  .bin-icons {
+    display: grid;
+    grid-template-columns: 90px 90px 90px;
+    grid-template-rows: 1fr 1fr;
+
+    justify-items: center;
+    gap: 1rem;
+
+    .icon {
+      display: flex;
+      width: 90px;
+      flex-direction: column;
+      align-items: center;
+      width: max-content;
+      text-align: -webkit-center;
+      cursor: pointer;
+
+      p {
+        text-align: center;
+        cursor: pointer;
+        padding: 0 0.25rem;
+        z-index: 1;
+        user-select: none;
+    }
+  }
+  
+}
+  .window-title {
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .toolbar {
+        button {
+          box-shadow: none;
+        }
+      }
+      .close-icon {
+        display: inline-block;
+        color: rgb(132, 133, 132) !important;
+        width: 16px;
+        height: 16px;
+        margin-left: -1px;
+        margin-top: -1px;
+        transform: rotateZ(45deg);
+        position: relative;
+        &:before,
+        &:after {
+          content: '';
+          position: absolute;
+        }
+        &:before {
+          height: 100%;
+          width: 3px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        &:after {
+          height: 3px;
+          width: 100%;
+          left: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+      .window {
+        display: flex;
+        
+      }
+   
+      .window-content {
+        display: flex;
+        background-color: white;
+        border: 1px solid gray;
+        flex-direction: column;
+        width: 300px;
+        height: 300px;
+        .warning {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+        }
+        button {
+          width: 100px;
+          height: 35px;
+          align-self: center;
+        }
+      }
+      .footer {
+        width: 99%;
+        margin: 0.5%;
+      }
+}

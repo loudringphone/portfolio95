@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, warnings}) => {
+const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, warnings}) => {
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
   const [state, setState] = useState({
