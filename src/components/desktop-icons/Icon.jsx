@@ -43,12 +43,23 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
 
   };
 
+  const handleClick = () => {
+    selectingIcon(task)
+    console.log('dadas')
+  }
   return (
     <Draggable bounds="body" {...dragHandlers}
       onDrag={handleDrag}
       position={position}
     >
     <div className='icon' ref={elementRef} style={{ zIndex: iconIndice[task], visibility: visibility, }}>
+      <div className="elementRef"
+        onDoubleClick={(event) => handleIcon(event, task)}
+        onTouchStart={(event) => handleTouchStart(event, task)}
+        onMouseDown={() => handleMouseDown(task)}
+        onTouchEnd={() => handleLeavingIcon(task)}
+        onMouseUp={() => handleLeavingIcon(task)}
+      ></div>
       <div
         className='icon-placeholder'
         ref={iconRef}
