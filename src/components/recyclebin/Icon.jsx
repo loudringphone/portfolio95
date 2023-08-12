@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Draggable from 'react-draggable';
-import {useDraggable} from '@dnd-kit/core';
+
 
 const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, handlePickingIcon, handleLeavingIcon, unrecyclingIcon, handleDisappearingIcon, activatingTask }) => {
   const [position, setPosition] = useState({x: 0, y: 0});
@@ -55,19 +55,15 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
   }
 
 
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: `draggable-${task}`,
-  });
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
-  
   return (
-    // <Draggable bounds={false} {...dragHandlers}
-    // onMouseDown={stopPropagation} onTouchStart={stopPropagation}
-    //   position={position}
-    // >
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+
+ 
+    <Draggable bounds={false} {...dragHandlers}
+     onMouseDown={stopPropagation} onTouchStart={stopPropagation}
+      position={position}
+    >
+
+
     <div className='icon' ref={binRef} style={{ zIndex: iconIndice[task], display: visibility == 'visible' ? 'none' : 'block', }}>
       <div className="elementRef"
         onTouchStart={() => handleDown(task)}
@@ -99,8 +95,8 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
       </p>
       </div>
     </div>
-    </div>
-  // </Draggable>
+
+  </Draggable>
   )
 }
 
