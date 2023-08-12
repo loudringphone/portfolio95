@@ -12,22 +12,18 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   const [tasks, setTasks] = useState({
     'resume': {
       Icon: Mailnews20,
-      iconRef: useRef(null),
       visibility: 'visible',
     },
     'portfolio': {
       Icon: Shell32167,
-      iconRef: useRef(null),
       visibility: 'visible',
     },
     'music': {
       Icon: MediaCd,
-      iconRef: useRef(null),
       visibility: 'visible',
     },
     'recycle bin': {
       Icon: Shell3232,
-      iconRef: useRef(null),
       visibility: 'visible',
     },
   })
@@ -113,8 +109,8 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     if (task == 'recycle bin') {
       return
     }
-    const currentIconRef = tasks[task].iconRef;
-    const binRef = tasks["recycle bin"].iconRef
+    const currentIconRef = iconPositions[task].iconRef;
+    const binRef = iconPositions["recycle bin"].iconRef
     const isOverlapping = areRectsOverlapping(
       currentIconRef.current.getBoundingClientRect(),
       binRef.current.getBoundingClientRect()
@@ -147,7 +143,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
           task={task}
           elementRef={iconPositions[task].elementRef}
-          iconRef={data.iconRef}
+          iconRef={iconPositions[task].iconRef}
           iconPosition={iconPositions[task].position}
           visibility={data.visibility}
           iconIndice={iconIndice}
