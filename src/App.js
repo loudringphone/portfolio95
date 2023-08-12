@@ -65,18 +65,22 @@ const App = () => {
   const [iconPositions, setIconPositions] = useState({
     'resume': {
       elementRef: useRef(null),
+      iconRef: useRef(null),
       position: { x: 0, y: 0 }
     },
     'portfolio': {
       elementRef: useRef(null),
+      iconRef: useRef(null),
       position: { x: 0, y: 0 }
     },
     'music': {
       elementRef: useRef(null),
+      iconRef: useRef(null),
       position: { x: 0, y: 0 }
     },
     'recycle bin': {
       elementRef: useRef(null),
+      iconRef: useRef(null),
       position: { x: 0, y: 0 }
     },
   })
@@ -93,7 +97,7 @@ const App = () => {
 
   const handleUp = (event) => {
     if (teleporting) {
-      const rect = iconPositions['resume'].elementRef.current.getBoundingClientRect();
+      const rect = iconPositions['resume'].iconRef.current.getBoundingClientRect();
       const cursorX = event.clientX;
       const cursorY = event.clientY;
       const offsetX = cursorX - rect.width;
