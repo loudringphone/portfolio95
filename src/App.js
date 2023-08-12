@@ -273,10 +273,8 @@ const App = () => {
   }, [activeTask]); 
 
   useEffect(() => {
-    const tasksToManage = ["portfolio", "resume", "browser", "music"];
-
+    const tasksToManage = ["portfolio", "resume", "browser", "music", "recycle bin"];
     const newStandybyTasks = new Set(standbyTasks);
-
     tasksToManage.forEach(task => {
       if (displayTasks.has(task) && !newStandybyTasks.has(task)) {
         newStandybyTasks.add(task);
