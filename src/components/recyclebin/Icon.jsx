@@ -1,8 +1,8 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, handlePickingIcon, handleLeavingIcon, unrecyclingIcon, handleDisappearingIcon }) => {
+const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, handlePickingIcon, handleLeavingIcon, unrecyclingIcon, handleDisappearingIcon, activatingTask }) => {
   const [position, setPosition] = useState({x: 0, y: 0});
   const [state, setState] = useState({
     activeDrags: 0,
@@ -13,8 +13,8 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
       x: -400, y: 200
     }
   });
-  const onStart = () => {
-    // activiatingDockMenu(false)
+  const onStart = (event) => {
+    event.stopPropagation();
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
   const onStop = () => {
@@ -24,23 +24,25 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
 
-  const handleMouseDown = (task) => {
+  const handleDown = (task) => {
+    handlePickingIcon(task)
+    activatingTask('recycle bin')
+    selectingBinIcon(task)
+  }
+
+  const handleUp = (event, task) => {
+    activatingTask('recycle bin')
     handlePickingIcon(task)
     selectingBinIcon(task)
-  }
-  const handleTouchStart = (event, task) => {
-    selectingBinIcon(task)
-  }
-  const handleUp = (event) => {
     handleDisappearingIcon(task)
-    const cursorX = event.clientX;
-    const cursorY = event.clientY;
+    const cursorX = event.clientX || event.changedTouches[0].clientX;
+    const cursorY = event.clientY || event.changedTouches[0].clientY;
     const rect = binWindowRef.current.getBoundingClientRect();
     if (
       cursorX < rect.x || cursorX > rect.x + rect.width ||
       cursorY < rect.y || cursorY > rect.y + rect.height
     ) {
-      unrecyclingIcon(task);
+      unrecyclingIcon();
       selectingBinIcon(null)
     }
     setTimeout(() => {
@@ -48,33 +50,38 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
     }, 0);
   }
 
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  }
+
   return (
     <Draggable bounds={false} {...dragHandlers}
+    onMouseDown={stopPropagation} onTouchStart={stopPropagation}
       position={position}
     >
     <div className='icon' ref={binRef} style={{ zIndex: iconIndice[task], display: visibility == 'visible' ? 'none' : 'block', }}>
       <div className="elementRef"
-        onTouchStart={(event) => handleTouchStart(event, task)}
-        onMouseDown={() => handleMouseDown(task)}
-        onMouseUp={(event) => handleUp(event)}
-        onTouchEnd={(event) => handleUp(event)}
+        onTouchStart={() => handleDown(task)}
+        onMouseDown={() => handleDown(task)}
+        onMouseUp={(event) => handleUp(event, task)}
+        onTouchEnd={(event) => handleUp(event, task)}
       ></div>
       <div
         className='icon-placeholder'
-        onTouchStart={(event) => handleTouchStart(event, task)}
-        onMouseDown={() => handleMouseDown(task)}
-        onMouseUp={(event) => handleUp(event)}
-        onTouchEnd={(event) => handleUp(event)}
+        onTouchStart={() => handleDown(task)}
+        onMouseDown={() => handleDown(task)}
+        onMouseUp={(event) => handleUp(event, task)}
+        onTouchEnd={(event) => handleUp(event, task)}
       >
         <div className="filter" style={{display: selectedBinIcon == task ? 'block' : 'none'}}></div>
         {icon}
       </div>
       <div
         className='text-placeholder'
-        onTouchStart={(event) => handleTouchStart(event, task)}
-        onMouseDown={() => handleMouseDown(task)}
-        onMouseUp={(event) => handleUp(event)}
-        onTouchEnd={(event) => handleUp(event)}
+        onTouchStart={() => handleDown(task)}
+        onMouseDown={() => handleDown(task)}
+        onMouseUp={(event) => handleUp(event, task)}
+        onTouchEnd={(event) => handleUp(event, task)}
       >
         <div className="filter-text" style={{display: selectedBinIcon == task && activeTask == 'recycle bin' ? 'block' : 'none'}}></div>
         <div className="filter" style={{display: selectedBinIcon == task && activeTask !== 'recycle bin' ? 'block' : 'none'}}></div>

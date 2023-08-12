@@ -44,7 +44,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     event.stopPropagation();
     const updatedTasksVisibility = {
       ...tasksVisibility,
-      resume: 'visible'
+      [task]: 'visible'
     };
     minimisingTasks(updatedTasksVisibility);
     activatingTask(task);
@@ -54,6 +54,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   }
   const handleIconMobile = (event, task) => {
     event.stopPropagation();
+
     activatingTask(null)
     const updatedIconIndice = {
       ...iconIndice,
