@@ -142,10 +142,9 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
       
       }
     </div>
-
       </WindowContent>
       <Frame variant='well' className='footer'>
-          Test
+          {selectedBinIcon ? <p>{selectedBinIcon.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')}</p> : <p>&nbsp;</p>}
         </Frame>
     </Window>
   </Wrapper>
