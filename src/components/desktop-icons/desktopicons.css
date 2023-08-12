@@ -11,6 +11,7 @@
 
 .desktop-icons .icon {
     display: flex;
+    position: absolute;
     width: 90px;
     flex-direction: column;
     align-items: center;
@@ -43,14 +44,22 @@
     margin-top: 5px;
     position: relative;
     display: flex;
+    justify-content: center;
+    width: max-content;
 }
-.filter {
+.filter, .filter-text {
     position: absolute;
-    background-color: black;
-    border: 1px solid white ;
-    opacity: 0.25;
     height: 100%;
     width: 100%;
+}
+.filter {
+    background-color: black;
+    border: 1px solid white;
+    opacity: 0.25;
+}
+.filter-text {
+    background-color: blue;
+    opacity: 1;
 }
 .icon-placeholder img {
     z-index: 1;
