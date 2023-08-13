@@ -40,7 +40,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
     }
   });
   
-  const [initialPosition, setInitialPosition] = useState({ x: 0, y: 20 })
+  const [initialPosition, setInitialPosition] = useState({ x: 20, y: 15 })
 
   const onStart = () => {
     activatingTask('recycle bin');
