@@ -270,7 +270,7 @@ const App = () => {
     activatingWelcome(false)
     activatingTask(null)
     const desktopRefs = Object.values(icons).map(task => task.desktopRef);
-    if (desktopRefs.some(ref => ref.current.contains(event.target))) {
+    if (desktopRefs.some(ref => ref.current?.contains(event.target))) {
       return;
     }
     selectingIcon(null)
@@ -302,8 +302,8 @@ const App = () => {
       setEnergyStar(false)
       setTimeout(() => {
         setLoading(false)
-      }, 1000);
-    }, 2500);
+      }, 10);
+    }, 20);
   }, []); 
   useEffect(() => {
     if (activeTask) {

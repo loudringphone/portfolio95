@@ -43,8 +43,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     }
   });
 
-  const [initialPosition, setInitialPosition] = useState({ x: 60, y: 60 })
-  const [initialPositionMobile, setInitialPositionMobile] = useState({ x: 15, y: 15 })
+  const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 })
   const [musicIndex, setMusicIndex] = useState(0)
   const [audio, setAudio] = useState(new Audio(music[0].source));
   const [countdownTime, setCountdownTime] = useState(music[0].duration);
@@ -191,7 +190,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   }
 
   return (
-    <Draggable defaultPosition={window.innerWidth <= 500 ? initialPositionMobile : initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-music" style={{zIndex: windowIndice['music'], display: displayTasks.has('music') ? 'block' : 'none', visibility: tasksVisibility.music}}>
     <Window className='music-window' onClick={handleClickInsideWindow} >
     <strong className="cursor"><WindowHeader  active={activeTask == 'music'} className='window-title'>
