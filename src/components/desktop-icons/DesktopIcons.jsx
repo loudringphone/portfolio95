@@ -133,7 +133,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           key={task}
           icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
           task={task}
-          elementRef={data.elementRef}
+          desktopRef={data.desktopRef}
           iconRef={data.iconRef}
           iconPosition={data.position}
           visibility={data.visibility}

@@ -70,7 +70,7 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
       position={position}
     >
     <div className='icon' ref={binRef} style={{ zIndex: iconIndice[task], display: iconDisplay, }}>
-      <div className="elementRef"
+      <div className="desktopRef"
         onMouseUp={(event) => handleUp(event, task)}
         onTouchEnd={(event) => handleUp(event, task)}
       ></div>
