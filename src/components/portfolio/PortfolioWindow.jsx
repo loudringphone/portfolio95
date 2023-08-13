@@ -35,7 +35,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
       x: -400, y: 200
     }
   });
-  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 70, y: 70 } : { x: 10, y: 15 })
+  const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 70 })
 
    const handleGo = (event) => {
     event.stopPropagation();
