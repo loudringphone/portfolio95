@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { Password1010 } from "@react95/icons";
 import ConditionalAnimatedWrapper from '../ConditionalAnimatedWrapper';
 import Draggable from 'react-draggable';
+import CloseFillIcon from 'remixicon-react/CloseFillIcon';
+
 import {
   Button,
   Window,
@@ -79,8 +81,14 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
     }
   }
  
-  const handleHelp = () => {
-    
+  const handleHelp = (event) => {
+    event?.stopPropagation();
+    activatingWelcome(false)
+    setSigninError(true)
+    setTimeout(() => {
+      activatingWelcome(true)
+      setSigninError(false)
+    }, 750);
   }
 
   const stopPropagation = (event) => {
@@ -95,11 +103,11 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
       <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
         <span>Welcome to Windows</span>
         <div className="buttons">
-        <Button onClick={handleHelp} onTouch={handleHelp}>
+        <Button onClick={handleHelp} onTouch={(event) => handleHelp(event)}>
           <span className='help-icon'>?</span>
         </Button>
-        <Button>
-          <span className='close-icon' />
+        <Button disabled={true} active={false}>
+          <CloseFillIcon />
         </Button>
         </div>
       </WindowHeader></strong>
@@ -122,7 +130,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
       </div>
       <div className="login-buttons">
         <Button type="submit" onClick={handleSubmit} onTouch={handleSubmit}>OK</Button>
-        <Button>Cancel</Button>
+        <Button onClick={handleHelp} onTouch={(event) => handleHelp(event)}>Cancel</Button>
       </div>
       </WindowContent>
     </Window>
