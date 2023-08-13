@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, handlePickingIcon, handleLeavingIcon, unrecyclingIcon, handleDisappearingIcon, activatingTask }) => {
+const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, handlePickingIcon, handleLeavingIcon, unrecyclingIcon, handleDisappearingIcon, activatingTask, teleportingIcon, isTouchDevice }) => {
   const [position, setPosition] = useState({x: 0, y: 0});
+  const [iconDisplay, setIconDisplay] = useState('none')
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -42,10 +43,14 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
       cursorX < rect.x || cursorX > rect.x + rect.width ||
       cursorY < rect.y || cursorY > rect.y + rect.height
     ) {
+      if (isTouchDevice) {
+        teleportingIcon(event)
+      }
       unrecyclingIcon();
       selectingBinIcon(null)
     }
     setTimeout(() => {
+      
     handleLeavingIcon(task)
     }, 0);
   }
@@ -54,7 +59,14 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
     event.stopPropagation();
   }
 
-
+  useEffect(() => {
+      if (visibility == 'visible') {
+        setIconDisplay('none')
+      } else {
+        setIconDisplay('block')
+      }
+  }, [visibility])
+  
   return (
 
  
@@ -62,9 +74,7 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
      onMouseDown={stopPropagation} onTouchStart={stopPropagation}
       position={position}
     >
-
-
-    <div className='icon' ref={binRef} style={{ zIndex: iconIndice[task], display: visibility == 'visible' ? 'none' : 'block', }}>
+    <div className='icon' ref={binRef} style={{ zIndex: iconIndice[task], display: iconDisplay, }}>
       <div className="elementRef"
         onTouchStart={() => handleDown(task)}
         onMouseDown={() => handleDown(task)}

@@ -99,3 +99,40 @@
         padding: 0 0.5rem;
       }
 }
+
+
+.recycle-bin-content {
+  background-color: transparent;
+  position: absolute;
+  z-index: 10;
+  height: 75%;
+  width: 100%;
+
+  .bin-icons {
+    margin: 21.5px;
+    display: grid;
+    grid-template-columns: 90px 90px 90px;
+    grid-template-rows: 1fr 1fr;
+
+    justify-items: center;
+    gap: 1rem;
+
+    .icon {
+      display: flex;
+      width: 90px;
+      flex-direction: column;
+      align-items: center;
+      width: max-content;
+      text-align: -webkit-center;
+      cursor: pointer;
+
+      p {
+        text-align: center;
+        cursor: pointer;
+        padding: 0 0.25rem;
+        z-index: 1;
+        user-select: none;
+    }
+  }
+}
+}

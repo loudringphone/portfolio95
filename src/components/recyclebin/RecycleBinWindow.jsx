@@ -25,7 +25,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, selectingBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef}) => {
+
+const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, selectingBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
     const [iconIndice, setIconIndice] = useState({
         'music': 0, 'portfolio': 0
       })
@@ -90,8 +91,12 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
       setIconIndice(updatedIconIndice)
   }
 
+  const handleDrag = (event) => {
+    settingCursorPosition({clientX: event.clientX, clientY: event.clientY})
+  }
+
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation} onDrag={handleDrag}>
     <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}} ref={binWindowRef}>
     <Window className='recycle-bin-window'onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
@@ -118,30 +123,35 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
         </Button>
       </Toolbar>
       <WindowContent className='window-content'>
-      <div className="bin-icons">
-      {Object.entries(icons).map(([task, data]) => (
-        task !== 'resume' && task !== 'recycle bin' && (
-        <Icon
-          key={task}
-          icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
-          task={task}
-          iconIndice={iconIndice}
-          visibility={data.visibility}
-          selectingBinIcon={selectingBinIcon}
-          selectedBinIcon={selectedBinIcon}
-          activeTask={activeTask}
-          binRef={data.binRef}
-          binWindowRef={binWindowRef}
-          activatingTask={activatingTask}
-          handlePickingIcon={handlePickingIcon}
-          handleLeavingIcon={handleLeavingIcon}
-          handleDisappearingIcon={handleDisappearingIcon}
-          unrecyclingIcon={unrecyclingIcon}
-        />
-      )))
-      
-      }
-    </div>
+        {
+          !isTouchDevice ?
+            <div className="bin-icons">
+            {Object.entries(icons).map(([task, data]) => (
+              task !== 'resume' && task !== 'recycle bin' && (
+                <Icon
+                  key={task}
+                  icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
+                  task={task}
+                  iconIndice={iconIndice}
+                  visibility={data.visibility}
+                  selectingBinIcon={selectingBinIcon}
+                  selectedBinIcon={selectedBinIcon}
+                  activeTask={activeTask}
+                  binRef={data.binRef}
+                  binWindowRef={binWindowRef}
+                  activatingTask={activatingTask}
+                  handlePickingIcon={handlePickingIcon}
+                  handleLeavingIcon={handleLeavingIcon}
+                  handleDisappearingIcon={handleDisappearingIcon}
+                  unrecyclingIcon={unrecyclingIcon}
+                  isTouchDevice={isTouchDevice}
+                />
+              )))
+            }
+            </div>
+          :
+            <></>
+        }
       </WindowContent>
       <Frame variant='well' className='footer'>
           {selectedBinIcon ? <p>{selectedBinIcon.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')}</p> : <p>&nbsp;</p>}

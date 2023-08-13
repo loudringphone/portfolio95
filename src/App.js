@@ -13,7 +13,7 @@ import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
 import MusicWindow from './components/music/MusicWindow';
 import WelcomeWindow from './components/welcome/WelcomeWindow';
-import RecycleBinWindow from './components/recyclebin/RecycleBin';
+import RecycleBinWindow from './components/recyclebin/RecycleBinWindow';
 import WarningWindow from './components/warning/WarningWindow';
 import BlueScreen from './components/bluescreen/BlueScreen';
 import win95energystar from './assets/images/win95-energystar.gif';
@@ -24,6 +24,7 @@ import win95shutdown from './assets/images/win95-shutdown.png';
 import win95shutdownMobile from './assets/images/win95-shutdown-mobile.png';
 import safeTurnOff from './assets/images/safe-turn-off.jpeg';
 import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
+import RecycleBinContent from './components/recyclebin/RecycleBinContent';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -45,6 +46,7 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
+  const [isTouchDevice, setIsTouchDevice] = useState('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   const [projectUrl, setProjectUrl] = useState(null)
   const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible', music: 'visible'})
   const [welcomeActive, setWelcomeActive] = useState(true)
@@ -93,6 +95,14 @@ const App = () => {
       position: { x: 0, y: 375 },
     },
   })
+
+  const [cursorPosition, setCursorPosition] = useState({clientX: null, clientY: null})
+
+  const settingCursorPosition = (obj) =>{ 
+    setCursorPosition(obj)
+  }
+
+
   const binWindowRef = useRef(null)
   const unrecyclingIcon = () => {
     const recycledTasks = Object.values(icons).reduce((count, task) => {
@@ -136,12 +146,13 @@ const App = () => {
     }));
   }
   const teleportingIcon = (event) => {
-    const rect = binWindowRef.current.getBoundingClientRect();
+    console.log('bbb')
+    const rect = binWindowRef.current?.getBoundingClientRect();
     const cursorX = event.clientX || event.changedTouches[0].clientX;
     const cursorY = event.clientY || event.changedTouches[0].clientY;
     if (
-      cursorX < rect.x || cursorX > rect.x + rect.width ||
-      cursorY < rect.y || cursorY > rect.y + rect.height
+      cursorX < rect?.x || cursorX > rect?.x + rect?.width ||
+      cursorY < rect?.y || cursorY > rect?.y + rect?.height
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].binRef?.current?.contains(event.target));
 
@@ -151,7 +162,6 @@ const App = () => {
         const offsetX = cursorX - rect.width;
         const offsetY = cursorY - rect.height;
         positioningIcon(task, offsetX, offsetY)
-        setTimeout(() => {
           setIcons(prevTasks => ({
             ...prevTasks,
             [task]: {
@@ -159,11 +169,11 @@ const App = () => {
               visibility: 'visible'
             }
           }));
-        }, 0);
-        
       }
     }
   }
+
+  
   
   const signingIn = (boolean) => {
     setSigned(boolean)
@@ -389,7 +399,7 @@ const App = () => {
         <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
         <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
-        <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} selectingBinIcon={selectingBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} />
+        <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} selectingBinIcon={selectingBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} settingCursorPosition={settingCursorPosition} isTouchDevice={isTouchDevice} />
 
         <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} activiatingDockMenu={activiatingDockMenu} />
         { warnings >= 3 ?
@@ -400,11 +410,18 @@ const App = () => {
 
       </div>
 
+        {
+          isTouchDevice ?
 
+          <RecycleBinContent binWindowRef={binWindowRef} cursorPosition={cursorPosition} windowIndice={windowIndice} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
+          activatingTask={activatingTask} indexingWindows={indexingWindows} icons={icons} selectingBinIcon={selectingBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon}isTouchDevice={isTouchDevice}/>
+          :
+          <></>
+        }
+       
        
         
       </ThemeProvider>
-
       
       </Helmet>
 
