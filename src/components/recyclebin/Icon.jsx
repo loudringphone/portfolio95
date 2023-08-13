@@ -16,6 +16,9 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
   });
   const onStart = (event) => {
     event.stopPropagation();
+    handlePickingIcon(task)
+    activatingTask('recycle bin')
+    selectingBinIcon(task)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
   const onStop = () => {
@@ -23,13 +26,6 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
   };
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
-
-
-  const handleDown = (task) => {
-    handlePickingIcon(task)
-    activatingTask('recycle bin')
-    selectingBinIcon(task)
-  }
 
   const handleUp = (event, task) => {
     activatingTask('recycle bin')
@@ -75,15 +71,11 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
     >
     <div className='icon' ref={binRef} style={{ zIndex: iconIndice[task], display: iconDisplay, }}>
       <div className="elementRef"
-        onTouchStart={() => handleDown(task)}
-        onMouseDown={() => handleDown(task)}
         onMouseUp={(event) => handleUp(event, task)}
         onTouchEnd={(event) => handleUp(event, task)}
       ></div>
       <div
         className='icon-placeholder'
-        onTouchStart={() => handleDown(task)}
-        onMouseDown={() => handleDown(task)}
         onMouseUp={(event) => handleUp(event, task)}
         onTouchEnd={(event) => handleUp(event, task)}
       >
@@ -92,8 +84,6 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
       </div>
       <div
         className='text-placeholder'
-        onTouchStart={() => handleDown(task)}
-        onMouseDown={() => handleDown(task)}
         onMouseUp={(event) => handleUp(event, task)}
         onTouchEnd={(event) => handleUp(event, task)}
       >

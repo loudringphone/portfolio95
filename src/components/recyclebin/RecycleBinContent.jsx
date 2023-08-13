@@ -52,7 +52,6 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
     const updateFollowerPosition = () => {
       if (binWindowRef.current) {
         const referenceRect = binWindowRef.current.getBoundingClientRect();
-        console.log( binWindowRef.current.getBoundingClientRect())
         setFollowerPosition({
           top: referenceRect.top + 75,
           left: referenceRect.left,
