@@ -68,13 +68,13 @@ const App = () => {
   const [icons, setIcons] = useState({
     'resume': {
       Icon: Mailnews20,
-      elementRef: useRef(null),
+      desktopRef: useRef(null),
       iconRef: useRef(null),
       position: { x: 0, y: 0 },
     },
     'portfolio': {
       Icon: Shell32167,
-      elementRef: useRef(null),
+      desktopRef: useRef(null),
       iconRef: useRef(null),
       binRef: useRef(null),
       position: { x: 0, y: 125 },
@@ -82,7 +82,7 @@ const App = () => {
     },
     'music': {
       Icon: MediaCd,
-      elementRef: useRef(null),
+      desktopRef: useRef(null),
       iconRef: useRef(null),
       binRef: useRef(null),
       position: { x: 0, y: 250 },
@@ -90,7 +90,7 @@ const App = () => {
     },
     'recycle bin': {
       Icon: Shell3232,
-      elementRef: useRef(null),
+      desktopRef: useRef(null),
       iconRef: useRef(null),
       position: { x: 0, y: 375 },
     },
@@ -170,6 +170,33 @@ const App = () => {
           }));
       }
     }
+    else if (
+      cursorX >= rect?.x && cursorX <= rect?.x + rect?.width &&
+      cursorY >= rect?.y && cursorY <= rect?.y + rect?.height
+    ) {
+      const task = Object.keys(icons).find(taskKey => icons[taskKey].desktopRef?.current?.contains(event.target));
+
+      if (task == 'portfolio' || task == 'music') {
+        const rect = icons[task].iconRef.current.getBoundingClientRect();
+        
+        const offsetX = cursorX - rect.width;
+        const offsetY = cursorY - rect.height;
+        positioningIcon(task, offsetX, offsetY)
+          setIcons(prevTasks => ({
+            ...prevTasks,
+            [task]: {
+              ...prevTasks[task],
+              visibility: 'hidden'
+            }
+          }));
+      }
+      else if (task == 'resume') {
+        activatingTask('warning')
+        indexingWindows('warning')
+        displayingTask(true, 'warning')
+        issuingWarning()
+      }
+    }
   }
 
   
@@ -239,8 +266,8 @@ const App = () => {
     activiatingDockMenu(false)
     activatingWelcome(false)
     activatingTask(null)
-    const elementRefs = Object.values(icons).map(task => task.elementRef);
-    if (elementRefs.some(ref => ref.current.contains(event.target))) {
+    const desktopRefs = Object.values(icons).map(task => task.desktopRef);
+    if (desktopRefs.some(ref => ref.current.contains(event.target))) {
       return;
     }
     selectingIcon(null)

@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, elementRef, iconPosition, activeTask }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, desktopRef, iconPosition, activeTask }) => {
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
     setPosition(iconPosition)
@@ -44,8 +44,8 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
       onDrag={handleDrag}
       position={position}
     >
-    <div className='icon' ref={elementRef} style={{ zIndex: iconIndice[task], visibility: visibility, }}>
-      <div className="elementRef"
+    <div className='icon' ref={desktopRef} style={{ zIndex: iconIndice[task], visibility: visibility, }}>
+      <div className="desktopRef"
         onDoubleClick={(event) => handleIcon(event, task)}
         onTouchStart={(event) => handleTouchStart(event, task)}
         onMouseDown={() => handleMouseDown(task)}

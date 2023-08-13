@@ -28,7 +28,7 @@
     z-index: 1;
     user-select: none;
 }
-.elementRef {
+.desktopRef {
     position: absolute;
     background-color: transparent;
     opacity: 0.5;
