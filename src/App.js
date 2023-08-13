@@ -146,7 +146,6 @@ const App = () => {
     }));
   }
   const teleportingIcon = (event) => {
-    console.log('bbb')
     const rect = binWindowRef.current?.getBoundingClientRect();
     const cursorX = event.clientX || event.changedTouches[0].clientX;
     const cursorY = event.clientY || event.changedTouches[0].clientY;
@@ -300,7 +299,7 @@ const App = () => {
     if (shutDown) {
       setTimeout(() => {
         setTurnOff(true)
-      }, 2000);
+      }, 2500);
     }
   },[shutDown])
 
