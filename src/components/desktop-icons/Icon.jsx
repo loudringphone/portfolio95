@@ -2,7 +2,8 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, desktopRef, iconPosition, activeTask }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon }) => {
+  const [resumeLastPos, setResumeLastPos] = useState(null)
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
     setPosition(iconPosition)
@@ -28,6 +29,12 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
   const handleMouseDown = (task) => {
+    if (task == 'resume') {
+      console.log(desktopRef.current?.getBoundingClientRect())
+      const x = desktopRef.current?.getBoundingClientRect().x
+      const y = desktopRef.current?.getBoundingClientRect().y
+      setResumeLastPos({x: x, y: y})
+    }
     selectingIcon(task)
     handlePickingIcon(task)
   }
@@ -39,6 +46,12 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     setPosition({ x: position.x + ui.deltaX, y: position.y + ui.deltaY });
   };
 
+  useEffect(() => {
+    if (resumeLastPos){
+      positioningIcon('resume', resumeLastPos.x - 35, resumeLastPos.y - 23.99)
+    }
+  }, [warnings])
+  
   return (
     <Draggable bounds="body" {...dragHandlers}
       onDrag={handleDrag}
