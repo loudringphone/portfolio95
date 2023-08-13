@@ -199,6 +199,9 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
+  }, [window.innerWidth])
   
   
   const signingIn = (boolean) => {
