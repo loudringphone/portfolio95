@@ -38,7 +38,14 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     selectingIcon(task)
     handlePickingIcon(task)
   }
+
   const handleTouchStart = (event, task) => {
+    if (task == 'resume') {
+      console.log(desktopRef.current?.getBoundingClientRect())
+      const x = desktopRef.current?.getBoundingClientRect().x
+      const y = desktopRef.current?.getBoundingClientRect().y
+      setResumeLastPos({x: x, y: y})
+    }
     selectingIcon(task)
     handleIconMobile(event, task)
   }
