@@ -43,6 +43,7 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
       cursorX < rect.x || cursorX > rect.x + rect.width ||
       cursorY < rect.y || cursorY > rect.y + rect.height
     ) {
+      setIconDisplay('none')
       if (isTouchDevice) {
         teleportingIcon(event)
       }
@@ -60,9 +61,7 @@ const Icon = ({ task, icon, iconIndice, visibility, selectingBinIcon, selectedBi
   }
 
   useEffect(() => {
-      if (visibility == 'visible') {
-        setIconDisplay('none')
-      } else {
+      if (visibility == 'hidden') {
         setIconDisplay('block')
       }
   }, [visibility])
