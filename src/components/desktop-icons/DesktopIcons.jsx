@@ -3,7 +3,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon }) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, settingBinLastPos }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
@@ -148,6 +148,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           activeTask={activeTask}
           warnings={warnings}
           positioningIcon={positioningIcon}
+          settingBinLastPos={settingBinLastPos}
         />
       ))}
     </div>

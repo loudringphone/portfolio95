@@ -65,6 +65,7 @@ const App = () => {
   const [shutDown, setShutDOwn] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
+  const [binLastPos, setBinLastPos] = useState(null)
   const [icons, setIcons] = useState({
     'resume': {
       Icon: Mailnews20,
@@ -96,6 +97,9 @@ const App = () => {
     },
   })
 
+  const settingBinLastPos = (obj) => {
+    setBinLastPos(obj)
+  }
   const [cursorPosition, setCursorPosition] = useState({clientX: null, clientY: null})
 
   const settingCursorPosition = (obj) =>{ 
@@ -177,11 +181,6 @@ const App = () => {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].desktopRef?.current?.contains(event.target));
 
       if (task == 'portfolio' || task == 'music') {
-        const rect = icons[task].iconRef.current.getBoundingClientRect();
-        
-        const offsetX = cursorX - rect.width;
-        const offsetY = cursorY - rect.height;
-        positioningIcon(task, offsetX, offsetY)
           setIcons(prevTasks => ({
             ...prevTasks,
             [task]: {
@@ -195,6 +194,9 @@ const App = () => {
         indexingWindows('warning')
         displayingTask(true, 'warning')
         issuingWarning()
+      }
+      else if (task == 'recycle bin' && binLastPos) {
+        positioningIcon(task, binLastPos.x - 28.29, binLastPos.y - 23.99)
       }
     }
   }
@@ -421,7 +423,7 @@ const App = () => {
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
             < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
 
-            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} />
+            <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} settingBinLastPos={settingBinLastPos} />
 
 
         <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, settingBinLastPos }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null)
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
@@ -30,10 +30,13 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
 
   const handleMouseDown = (task) => {
     if (task == 'resume') {
-      console.log(desktopRef.current?.getBoundingClientRect())
       const x = desktopRef.current?.getBoundingClientRect().x
       const y = desktopRef.current?.getBoundingClientRect().y
       setResumeLastPos({x: x, y: y})
+    } else if (task == 'recycle bin') {
+      const x = desktopRef.current?.getBoundingClientRect().x
+      const y = desktopRef.current?.getBoundingClientRect().y
+      settingBinLastPos({x: x, y: y})
     }
     selectingIcon(task)
     handlePickingIcon(task)
@@ -41,10 +44,13 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
 
   const handleTouchStart = (event, task) => {
     if (task == 'resume') {
-      console.log(desktopRef.current?.getBoundingClientRect())
       const x = desktopRef.current?.getBoundingClientRect().x
       const y = desktopRef.current?.getBoundingClientRect().y
       setResumeLastPos({x: x, y: y})
+    } else if (task == 'recycle bin') {
+      const x = desktopRef.current?.getBoundingClientRect().x
+      const y = desktopRef.current?.getBoundingClientRect().y
+      settingBinLastPos({x: x, y: y})
     }
     selectingIcon(task)
     handleIconMobile(event, task)
