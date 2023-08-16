@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
@@ -37,16 +37,16 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   });
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 70 })
 
-   const handleGo = (event) => {
-    event.stopPropagation();
-    settingProjectUrl(projects[projectSelected].site);
-    const newTasksVisibility = new Object(tasksVisibility)
-    newTasksVisibility.browser = 'visible'
-    minimisingTasks(newTasksVisibility)
-    activatingTask('browser')
-    indexingWindows('browser')
-    displayingTask(true, 'browser')
-   }
+  const handleGo = (event) => {
+  event.stopPropagation();
+  settingProjectUrl(projects[projectSelected].site);
+  const newTasksVisibility = new Object(tasksVisibility)
+  newTasksVisibility.browser = 'visible'
+  minimisingTasks(newTasksVisibility)
+  activatingTask('browser')
+  indexingWindows('browser')
+  displayingTask(true, 'browser')
+  }
   const selectingProject = (id) => {
     setProjectSelected(id)
   }
@@ -100,7 +100,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
        </Button>
     </div>
 
-    <ScrollView style={{ maxWidth: "350px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
+    <ScrollView key={projectSelected} style={{ maxWidth: "350px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
               <p>{projects[projectSelected].article}</p>
         </ScrollView>
         </div>
