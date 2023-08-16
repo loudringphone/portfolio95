@@ -304,8 +304,8 @@ const App = () => {
       setEnergyStar(false)
       setTimeout(() => {
         setLoading(false)
-      }, 10);
-    }, 20);
+      }, 1200);
+    }, 2250);
   }, []); 
   useEffect(() => {
     if (activeTask) {
