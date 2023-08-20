@@ -4,9 +4,6 @@ import Icon from './Icon';
 function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, activatingTask, indexingWindows, icons, selectingBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice}) {
 
     const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
-    const [iconIndice, setIconIndice] = useState({
-        'music': 0, 'portfolio': 0
-      })
 
     const handleClickInsideWindow = (event) => {
         event.stopPropagation();
@@ -20,34 +17,6 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
     
       };
     
-      const stopPropagation = (event) => {
-        event.stopPropagation();
-      }
-      
-      const handlePickingIcon = (task) => {
-        const updatedIconIndice = {
-          ...iconIndice,
-          [task]: 99
-        };
-        setIconIndice(updatedIconIndice)
-      }
-    
-      const handleLeavingIcon = (task) => {
-        const updatedIconIndice = {
-            ...iconIndice,
-            [task]: 0
-          };
-          setIconIndice(updatedIconIndice)
-      }
-      const handleDisappearingIcon = (task) => {
-        const updatedIconIndice = {
-            ...iconIndice,
-            [task]: -1
-          };
-          setIconIndice(updatedIconIndice)
-      }
-
-
   useEffect(() => {
     const updateFollowerPosition = () => {
       if (binWindowRef.current) {
@@ -84,7 +53,6 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
           key={task}
           icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
           task={task}
-          iconIndice={iconIndice}
           visibility={data.visibility}
           selectingBinIcon={selectingBinIcon}
           selectedBinIcon={selectedBinIcon}
@@ -92,12 +60,10 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
           binRef={data.binRef}
           binWindowRef={binWindowRef}
           activatingTask={activatingTask}
-          handlePickingIcon={handlePickingIcon}
-          handleLeavingIcon={handleLeavingIcon}
-          handleDisappearingIcon={handleDisappearingIcon}
           unrecyclingIcon={unrecyclingIcon}
           teleportingIcon={teleportingIcon}
           isTouchDevice={isTouchDevice}
+          indexingWindows={indexingWindows}
         />
       )))
       

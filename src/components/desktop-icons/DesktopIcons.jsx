@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react'
-import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
+import { Mailnews20, Shell32167, MediaCd, Shell3232 } from '@react95/icons'
 import './desktopicons.css'
 import Icon from './Icon';
 
@@ -8,24 +8,6 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
-  })
-  const [tasks, setTasks] = useState({
-    'resume': {
-      Icon: Mailnews20,
-      visibility: 'visible',
-    },
-    'portfolio': {
-      Icon: Shell32167,
-      visibility: 'visible',
-    },
-    'music': {
-      Icon: MediaCd,
-      visibility: 'visible',
-    },
-    'recycle bin': {
-      Icon: Shell3232,
-      visibility: 'visible',
-    },
   })
   
   const indexingIcons = (key) => {
@@ -78,7 +60,6 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     }
   }
   const handlePickingIcon = (task) => {
-    // event.stopPropagation();
     const updatedIconIndice = {
       ...iconIndice,
       [task]: 99
@@ -119,8 +100,8 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     if (isOverlapping) {
       if (task == 'resume') {
         activatingTask('warning')
-        indexingWindows('warning')
         displayingTask(true, 'warning')
+        indexingWindows('warning')
         return issuingWarning()
       }
       recyclingIcon(task)
