@@ -50,7 +50,7 @@ function getIds(item) {
 
 portfolio.forEach(getIds);
 
-const ProjectTree = ({selectingProject}) => {
+const ProjectTree = ({selectingProject, displayTasks}) => {
   const [selected, setSelected] = useState(null);
   const [expanded, setExpanded] = useState([]);
 
@@ -58,25 +58,20 @@ const ProjectTree = ({selectingProject}) => {
     selectingProject(selected)
   }, [selected])
 
+  useEffect(() => {
+    if (!displayTasks.has('portfolio')) {
+      setSelected(null)
+      setExpanded([])
+    }
+  }, [displayTasks])
+  
   const handleSelect = (_, id) => {
     setSelected(id)
   }
 
-  // const handleExpandClick = useCallback(() => {
-  //   setExpanded(oldExpanded => (oldExpanded.length === 0 ? allIds : []));
-  //   setSelected(null)
-  //   selectingProject(null)
-  // }, []);
-
   return (
     <Wrapper>
     <div style={{ width: '250px' }}>
-      {/* <Panel className="tree-button-area">
-        <Button onClick={handleExpandClick} fullWidth>
-          {expanded.length === 0 ? 'Expand all' : 'Collapse all'}
-        </Button>
-      </Panel> */}
-
       <GroupBox label='Portfolio'>
         <TreeView
           tree={portfolio}
