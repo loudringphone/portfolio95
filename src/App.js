@@ -129,6 +129,7 @@ const App = () => {
   }
 
   const recyclingIcon = (task) => {
+    displayingTask(false, task)
     setIcons(prevTasks => ({
       ...prevTasks,
       [task]: {
@@ -182,13 +183,14 @@ const App = () => {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].desktopRef?.current?.contains(event.target));
 
       if (task == 'portfolio' || task == 'music') {
-          setIcons(prevTasks => ({
-            ...prevTasks,
-            [task]: {
-              ...prevTasks[task],
-              visibility: 'hidden'
-            }
-          }));
+        displayingTask(false, task)
+        setIcons(prevTasks => ({
+          ...prevTasks,
+          [task]: {
+            ...prevTasks[task],
+            visibility: 'hidden'
+          }
+        }));
       }
       else if (task == 'resume') {
         activatingTask('warning')
@@ -427,7 +429,7 @@ const App = () => {
       <ThemeProvider theme={original}>
        
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
-            < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} />
+            < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} icons={icons} />
 
             <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} settingBinLastPos={settingBinLastPos} />
 

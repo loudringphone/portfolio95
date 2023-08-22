@@ -97,6 +97,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
       currentIconRef.current.getBoundingClientRect(),
       binRef.current.getBoundingClientRect()
     );
+
     if (isOverlapping) {
       if (task == 'resume') {
         activatingTask('warning')
