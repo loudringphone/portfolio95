@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
 import warning from '../../assets/images/warning.ico'
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
-
+import win95error from '../../assets/sounds/win95error.mp3'
 
 import {
   Button,
@@ -26,6 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, warnings}) => {
+  const [audio, setAudio] = useState(new Audio(win95error));
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
   const [state, setState] = useState({
@@ -59,6 +60,14 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
+
+
+  useEffect(() => {
+    if (displayTasks.has('warning')) {
+      audio.play()
+    }
+  }, [displayTasks])
+  
 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>

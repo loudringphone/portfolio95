@@ -6,7 +6,7 @@ import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010 } from '@react
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
-export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, activatingWelcome, standbyTasks, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, activatingWelcome, standbyTasks, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask, icons}) => {
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -83,14 +83,30 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
             <Mailnews20 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>R</span>esume</p>
             </MenuListItem>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'portfolio')}>
-            <Shell32167 style={{height:'30px', width:'30px'}}/>
-                <p><span className='underscore'>P</span>ortfolio</p>
-            </MenuListItem>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'music')}>
-            <MediaCd style={{height:'30px', width:'30px'}}/>
+
+            {
+              icons['portfolio']['visibility'] == 'visible' ?
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'portfolio')}>
+                <Shell32167 style={{height:'30px', width:'30px'}}/>
+                  <p><span className='underscore'>P</span>ortfolio</p>
+              </MenuListItem>
+
+              :
+              <></>
+            }
+            
+            {
+              icons['music']['visibility'] == 'visible' ?
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'music')}>
+                <MediaCd style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>M</span>usic</p>
-            </MenuListItem>
+              </MenuListItem>
+
+              :
+              <></>
+            }
+
+            
             <Separator/>
             <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleLogOff} >
                 <Password1010 style={{transform: 'rotate(-90deg)', height:'30px', width:'30px'}}/>
