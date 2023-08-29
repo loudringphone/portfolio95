@@ -36,7 +36,11 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
     }
   });
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 70 })
-
+  const handleGit = (event) => {
+    event.stopPropagation();
+    const newTab = window.open(projects[projectSelected].git, '_blank');
+    newTab.focus();
+    }
   const handleGo = (event) => {
   event.stopPropagation();
   settingProjectUrl(projects[projectSelected].site);
@@ -88,22 +92,34 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
     <ProjectTree selectingProject={selectingProject} displayTasks={displayTasks} />
     { projectSelected && projectSelected != "projects" ?
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
-      <div style={{ display: 'flex', marginBottom: '1rem' }}>
-      <TextInput
-        value={projects[projectSelected].site}
-        placeholder='Project URL'
-        readOnly={true}
-        fullWidth
-       />
-       <Button onClick={handleGo} style={{ marginLeft: 4 }}>
-         Go
-       </Button>
-    </div>
+        <div style={{ display: 'flex', marginBottom: '1rem' }}>
+          <TextInput
+            value={projects[projectSelected].site}
+            placeholder='Project URL'
+            readOnly={true}
+            fullWidth
+          />
+          <Button onClick={handleGo} style={{ marginLeft: 4 }}>
+            Go
+          </Button>
+        </div>
 
-    <ScrollView key={projectSelected} style={{ maxWidth: "350px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
+        <ScrollView key={projectSelected} style={{ maxWidth: "350px", height: "260px", overflowWrap: 'anywhere' }} className='project-article'>
               <p>{projects[projectSelected].article}</p>
         </ScrollView>
+
+        <div style={{ display: 'flex', marginTop: '1rem' }}>
+          <TextInput
+            value={projects[projectSelected].git}
+            placeholder='Project URL'
+            readOnly={true}
+            fullWidth
+          />
+          <Button onClick={handleGit} style={{ marginLeft: 4 }}>
+            Git
+          </Button>
         </div>
+    </div>
          :
          <></>
      }
