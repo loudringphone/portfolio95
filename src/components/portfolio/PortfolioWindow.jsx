@@ -89,7 +89,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ProjectTree selectingProject={selectingProject} displayTasks={displayTasks} />
+    <ProjectTree activeTask={activeTask} selectingProject={selectingProject} displayTasks={displayTasks} />
     { projectSelected && projectSelected != "projects" ?
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
