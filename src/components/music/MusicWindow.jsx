@@ -153,6 +153,16 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       }
     }
   }, [signed, signOff])
+
+  useEffect(() => {
+    if (audio) {
+      if (!displayTasks.has('music')) {
+        audio.pause();
+        return setPlaying(false)
+      }
+    }
+  }, [displayTasks])
+
   useEffect(() => {
     let countdownInterval;
     if (audio) {
