@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ResumePdf from './ResumePdf';
+import resume from '../../assets/pdfs/Resume.pdf'
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import './scrollview.scss';
@@ -60,6 +61,13 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     event.stopPropagation();
   }
 
+  const downloadResume = () => {
+    let a = document.createElement('a');
+    a.href = resume;
+    a.download = 'Resume - Winston Lau.pdf';
+    a.click();
+    window.open(resume, '_blank');
+  }
 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
@@ -69,6 +77,9 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
         <span>resume.exe</span>
 
         <div className="buttons">
+        <Button style={{width: 'auto', padding: '0 10px', marginRight: '5px'}} onClick={downloadResume} onTouchEnd={()=>{downloadResume()}}>
+          Download
+        </Button>
         <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
         <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchEnd={()=>{displayingTask(false, 'resume')}}>
           <span className='close-icon' />
@@ -78,7 +89,7 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ScrollView style={{ width: "100%", height: "500px", overflowWrap: 'anywhere' }}>
+    <ScrollView style={{ width: '100%', height: '500px', overflowWrap: 'anywhere' }}>
         <ResumePdf />
         </ScrollView>
       </WindowContent>
