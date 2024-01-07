@@ -101,7 +101,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
       <Wrapper className="drag-welcome">
-        <Helper helperDisplay={helperDisplay}/>
+        <Helper helperDisplay={helperDisplay} setHelperDisplay={setHelperDisplay}/>
         <ConditionalAnimatedWrapper animate={signinError}>
           <Window className='welcome-window' onClick={handleClickInsideWindow}>
             <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
