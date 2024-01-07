@@ -107,7 +107,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
             <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
               <span>Welcome to Windows</span>
               <div className="buttons">
-              <Button onClick={handleHelp} onTouch={handleHelp}>
+              <Button onClick={handleHelp} onTouchEnd={handleHelp}>
                 <span className='help-icon'>?</span>
               </Button>
               <Button disabled={true} active={false}>
