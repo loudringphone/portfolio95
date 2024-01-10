@@ -76,10 +76,6 @@ useEffect(() => {
     }
   }, [displayTasks])
   
-  const handleSelect = (_, id) => {
-    setSelected(id)
-  }
-
   return (
     <Wrapper>
     <div style={{ width: '250px' }}>
