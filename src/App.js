@@ -315,7 +315,7 @@ const App = () => {
   useEffect(() => {
     if (!desktopRef.current) return;
     const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
-    desktopRef.current.style.height = desktopHeight;
+    desktopRef.current.style.minHeight = desktopHeight;
     if (activeTask == 'bin warning') {
       displayingTask(true, 'bin warning');
       indexingWindows('bin warning');
