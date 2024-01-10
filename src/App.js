@@ -309,14 +309,18 @@ const App = () => {
         setLoading(false)
       }, 1200);
     }, 2250);
-  }, []); 
+  }, []);
+
+  const desktopRef = useRef(null)
   useEffect(() => {
-    if (activeTask) {
-      activiatingDockMenu(false)
-    }
+    if (!desktopRef.current) return;
+    const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
+    desktopRef.current.style.height = desktopHeight;
     if (activeTask == 'bin warning') {
-      displayingTask(true, 'bin warning')
-      indexingWindows('bin warning')
+      displayingTask(true, 'bin warning');
+      indexingWindows('bin warning');
+    } else if (activeTask) {
+      activiatingDockMenu(false)
     }
   }, [activeTask]); 
 
@@ -330,7 +334,6 @@ const App = () => {
         newStandybyTasks.delete(task);
       }
     });
-
     setStandbyTasks(newStandybyTasks);
   }, [displayTasks]); 
 
@@ -416,7 +419,7 @@ const App = () => {
     <Helmet>
     <GlobalStyles />
       <ThemeProvider theme={original}>
-        <div className="desktop" onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
+        <div className="desktop" ref={desktopRef} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
           <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} settingBinLastPos={settingBinLastPos} />
           <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
           <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />

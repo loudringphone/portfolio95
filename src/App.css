@@ -10,7 +10,7 @@
   grid-template-columns: repeat(48, 1fr);
   grid-template-rows: repeat(48, 1fr);
   background-color: #008080;
-  height: calc(100vh - 44px);
+  height: 100vh;
   width: 100vw;
 }
 .underscore {

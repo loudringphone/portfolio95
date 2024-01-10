@@ -50,7 +50,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
     if (currentTime - lastTouchTime <= 300) {
       const updatedTasksVisibility = {
         ...tasksVisibility,
-        resume: 'visible'
+        [task]: 'visible'
       };
       minimisingTasks(updatedTasksVisibility);
       activatingTask(task)
