@@ -312,17 +312,32 @@ const App = () => {
   }, []);
 
   const desktopRef = useRef(null)
+  const [portfolioHeight, setPortfolioHeight] = useState(null)
   useEffect(() => {
     if (!desktopRef.current) return;
-    const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
-    desktopRef.current.style.minHeight = desktopHeight;
     if (activeTask == 'bin warning') {
       displayingTask(true, 'bin warning');
       indexingWindows('bin warning');
     } else if (activeTask) {
       activiatingDockMenu(false)
     }
+    const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
+    if (portfolioHeight > 700) {
+      desktopRef.current.style.minHeight = '830px';
+    } else {
+      desktopRef.current.style.minHeight = desktopHeight;
+    }
   }, [activeTask]); 
+
+  useEffect(() => {
+    if (!desktopRef.current) return;
+    if (portfolioHeight > 700) {
+      desktopRef.current.style.minHeight = '830px';
+    } else {
+      const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
+      desktopRef.current.style.minHeight = desktopHeight;
+    }
+  },[portfolioHeight])
 
   useEffect(() => {
     const tasksToManage = ["portfolio", "resume", "browser", "music", "recycle bin"];
@@ -422,7 +437,7 @@ const App = () => {
         <div className="desktop" ref={desktopRef} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
           <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} settingBinLastPos={settingBinLastPos} />
           <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} />
-          <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
+          <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} setPortfolioHeight={setPortfolioHeight} />
           <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
           <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
           <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} selectingBinIcon={selectingBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} settingCursorPosition={settingCursorPosition} isTouchDevice={isTouchDevice} />

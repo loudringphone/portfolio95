@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
+const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, setPortfolioHeight}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -74,10 +74,23 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
+
+  const portfolioRef = useRef(null)
+  useEffect(() => {
+    setPortfolioHeight(portfolioRef.current.clientHeight)
+  }, [projectSelected])
+  useEffect(() => {
+    if (displayTasks.has('portfolio')) {
+      setPortfolioHeight(portfolioRef.current.clientHeight)
+    } else {
+      setPortfolioHeight(0)
+    }
+  }, [displayTasks])
+
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-portfolio" style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <Window className='portfolio-window' onClick={handleClickInsideWindow}>
+    <Window className='portfolio-window' ref={portfolioRef} onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
