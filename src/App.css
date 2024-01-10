@@ -1,8 +1,6 @@
-
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -12,27 +10,19 @@
   grid-template-columns: repeat(48, 1fr);
   grid-template-rows: repeat(48, 1fr);
   background-color: #008080;
+  height: calc(100vh - 44px);
+  width: 100vw;
 }
 .underscore {
   text-decoration: underline;
   text-decoration-thickness: 0.1rem;
 }
-/* .react-draggable {
-  height: 100%;
-  width: 100%;
-}
-.react-draggable-dragged {
-  height: 100%;
-  width: 100%;
-} */
 button {
   box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.3);
 }
-
 button:after {
   outline: none !important;
 }
-
 .start-up-background, .shut-down-background {
   background-color: black;
   width: 100vw;
@@ -56,21 +46,16 @@ button:after {
   width: 100%;
   object-fit: contain;
 }
-
 .shut-down-text {
   color: darkorange;
   font-size: large;
   font-weight: bold;
 }
-
-
 body {
   max-height: 100vh;
   max-width: 100vw;
   background-color: #008080;
-  /* overflow: hidden; */
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
