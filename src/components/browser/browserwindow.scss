@@ -1,7 +1,12 @@
 @media (max-width: 500px) {
-    .drag-browser{
+    .browser-window{
+      height: max-content !important;
+      padding-bottom: 15px !important;
     .window-content {
         width: 97.5% !important;
+    }
+    .iframe-screen {
+      height: 100% !important;
     }
   }
 }
