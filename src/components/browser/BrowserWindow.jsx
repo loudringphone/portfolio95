@@ -76,20 +76,18 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-      <div className='browser-screen' style={{display: activeTask == 'browser' ? "none" : "block"}}></div>
-      <iframe
-        src={projectUrl}
-        width="100%"
-        height="100%"
-        frameborder="0"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen
-        scrolling="yes"
-      />
-      
-        {/* </StyledScrollView> */}
-     
-        
+        <div className='browser-screen' style={{display: activeTask == 'browser' ? "none" : "block"}}></div>
+        <iframe
+          src={projectUrl}
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          scrolling="yes"
+        >
+          It seems the website could not be accessed through the iframe on your device. Please click <a href={projectUrl} target="_blank" rel="noopener noreferrer">here</a> to view it directly.
+        </iframe>
       </WindowContent>
      
     </Window>
