@@ -108,20 +108,25 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
         </Button>
         </div>
       </WindowHeader></strong>
-      <Toolbar className='toolbar'>
-        <Button variant='menu' size='sm'>
-          <span className='underscore'>F</span>ile
-        </Button>
-        <Button variant='menu' size='sm'>
-          <span className='underscore'>E</span>dit
-        </Button>
-        <Button variant='menu' size='sm'>
-          <span className='underscore'>V</span>iew
-        </Button>
-        <Button variant='menu' size='sm'>
-          <span className='underscore'>H</span>elp
-        </Button>
-      </Toolbar>
+      {
+        !isTouchDevice ?
+        <Toolbar className='toolbar'>
+          <Button variant='menu' size='sm'>
+            <span className='underscore'>F</span>ile
+          </Button>
+          <Button variant='menu' size='sm'>
+            <span className='underscore'>E</span>dit
+          </Button>
+          <Button variant='menu' size='sm'>
+            <span className='underscore'>V</span>iew
+          </Button>
+          <Button variant='menu' size='sm'>
+            <span className='underscore'>H</span>elp
+          </Button>
+        </Toolbar>
+        :
+        <></>
+      }
       <WindowContent className='window-content'>
         {
           !isTouchDevice ?
