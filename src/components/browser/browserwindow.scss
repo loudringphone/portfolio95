@@ -6,13 +6,23 @@
   }
 }
 
+@media (max-width: 600px) {
+  .browser-window {
+    min-width: 98vw;
+    height: max-content;
+  }
+  .iframe-screen {
+    height: max-content;
+  }
+}
+
 .drag-browser {
     grid-column: 11;
     grid-row: 5;
 }
 
-.browser-window{
-  height: max-content;
+.browser-window {
+  height: 450px;
   html {
     overflow: hidden;
   }
@@ -56,7 +66,7 @@
     display: flex;
     width: 600px;
     height: 500px;
-    gap: 15px;
+    padding: 5px;
   }
   .footer {
     display: block;
@@ -67,9 +77,12 @@
   }
   .browser-screen {
     position: absolute;
-    background-color: transparent;
-    width:  calc(100% - 40px);
-    height: calc(100% -  75px);
+    background-color: red;
+    width:  calc(100% - 20px);
+    height: calc(100% -  50px);
+  }
+  .iframe-screen {
+    height: 380px;
   }
   .iframe-text {
     font-size: x-small;

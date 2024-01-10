@@ -77,18 +77,19 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
       </WindowHeader></strong>
       <WindowContent className='window-content' style={{display: 'block'}}>
       <div className='browser-screen' style={{display: activeTask == 'browser' ? "none" : "block"}}></div>
-      <iframe
-        src={projectUrl}
-        width="100%"
-        height="97.5%"
-        frameBorder="0"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen
-        scrolling="yes"
-      />
-      
+      <div className="iframe-screen">
+        <iframe
+          src={projectUrl}
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          scrolling="yes"
+        />
+      </div>
       <p className='iframe-text'>
-        If the iframe does not load, please click <a href={projectUrl} target="_blank" rel="noopener noreferrer">here</a> to view it directly.
+        If the iframe is not loaded, please click <a href={projectUrl} target="_blank" rel="noopener noreferrer">here</a> to view it directly.
       </p>
      
         
