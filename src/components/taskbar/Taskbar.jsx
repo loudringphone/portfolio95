@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
@@ -7,6 +7,7 @@ import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
 export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, activatingWelcome, standbyTasks, windowIndice, turningoff, tasksVisibility, minimisingTasks, activatingTask, activeTask, icons}) => {
+  const [shutdownAudio, setShutdownAudio] = useState(new Audio(win95shutdown))
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -29,8 +30,9 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
   }
   const handleShutDown = () => {
     turningoff(true)
-    const audio = new Audio(win95shutdown);
-    audio.play();
+    setTimeout(() => {
+      shutdownAudio.play();
+    }, 500);
   }
  
   const stopPropagation = (event) => {
