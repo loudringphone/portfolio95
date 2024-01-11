@@ -60,10 +60,14 @@ const BinWarningWindow = ({displayTasks, displayingTask, activatingTask, activeT
     event.stopPropagation();
   }
 
+  const handleClick = () => {
+    displayingTask(false, 'bin warning')
+  }
+
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-warning" style={{zIndex: windowIndice['bin warning'], display: displayTasks.has('bin warning') ? 'block' : 'none'}}>
-    <Window className='warning-window'onClick={handleClickInsideWindow}>
+    <Window className='warning-window' onClick={handleClickInsideWindow}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'bin warning'} className='window-title'>
         <span>Warning</span>
 
@@ -84,7 +88,7 @@ const BinWarningWindow = ({displayTasks, displayingTask, activatingTask, activeT
             />
            To use this item, first drag it out of the Recycle Bin.
         </div>
-        <Button onClick={()=>{displayingTask(false, 'bin warning')}} onTouchStart={()=>{displayingTask(false, 'bin warning')}}> OK
+        <Button onClick={handleClick} onTouchStart={handleClick}> OK
         </Button>
       </WindowContent>
      

@@ -54,23 +54,34 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingTask('warning');
-    indexingWindows('warning')
+    indexingWindows('warning');
   };
 
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
 
+  const handleClick = () => {
+    displayingTask(false, 'warning');
+  }
+
+  const handleMouseDown = () => {
+    activatingTask('warning');
+    indexingWindows('warning');
+  }
+
 
   useEffect(() => {
-    errorAudio.play()
+    if (warnings > 0) {
+      errorAudio.play()
+    }
   }, [warnings])
   
 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-warning" style={{zIndex: windowIndice.warning, display: displayTasks.has('warning') ? 'block' : 'none'}}>
-    <Window className='warning-window'onClick={handleClickInsideWindow}>
+    <Window className='warning-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'warning'} className='window-title'>
         <span>Warning</span>
 
@@ -99,7 +110,7 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
               <p>Are you sure to throw away Winston's resume?</p>
             }
         </div>
-        <Button onClick={()=>{displayingTask(false, 'warning')}} onTouchStart={()=>{displayingTask(false, 'warning')}}> {warnings >= 2 ? 'Yes' :'No'}
+        <Button onClick={handleClick} onTouchStart={handleClick}> {warnings >= 2 ? 'Yes' :'No'}
         </Button>
       </WindowContent>
      

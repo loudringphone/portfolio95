@@ -40,7 +40,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
   }
 
   return (
-    <AppBar style={{ top: "unset", bottom: 0, zIndex: 98, userSelect: 'none',}} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
+    <AppBar style={{ top: "unset", bottom: 0, zIndex: 98, userSelect: 'none' }} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Toolbar style={{ justifyContent: "space-between" }}>
         <div style={{ position: "relative", display: "flex" }}>
         <Button

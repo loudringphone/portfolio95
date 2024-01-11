@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ResumePdf from './ResumePdf';
 import resume from '../../assets/pdfs/Resume.pdf'
 import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
+import WindowComponent from '../WindowComponent';
 import './scrollview.scss';
 
 import {
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks}) => {
+const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, isTouchDevice}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -51,11 +52,6 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    activatingTask('resume');
-    indexingWindows('resume')
-  };
 
   const stopPropagation = (event) => {
     event.stopPropagation();
@@ -69,13 +65,20 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     window.open(resume, '_blank');
   }
 
+  const [resumeHeight, setResumeHeight] = useState('100%')
+  useEffect(() => {
+    if (isTouchDevice) {
+      setResumeHeight('100%')
+    } else {
+      setResumeHeight('375px')
+    }
+  }, [isTouchDevice])
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has('resume') ? 'block' : 'none', visibility: tasksVisibility.resume}}>
-    <Window className='resume-window'onClick={handleClickInsideWindow}>
+    <WindowComponent task={'resume'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
         <span>resume.exe</span>
-
         <div className="buttons">
         <Button style={{width: 'auto', padding: '0 10px', marginRight: '5px'}} onClick={downloadResume} onTouchEnd={()=>{downloadResume()}}>
           Download
@@ -85,16 +88,14 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
           <span className='close-icon' />
         </Button>
         </div>
-
-        
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ScrollView style={{ width: '100%', height: '500px', overflowWrap: 'anywhere' }}>
+    <ScrollView style={{ width: '100%', height: resumeHeight, overflowWrap: 'anywhere' }}>
         <ResumePdf />
         </ScrollView>
       </WindowContent>
      
-    </Window>
+    </WindowComponent>
   </Wrapper>
 
   </Draggable>
