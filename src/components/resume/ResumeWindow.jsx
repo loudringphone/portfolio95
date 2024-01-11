@@ -38,7 +38,7 @@ const ResumeWindow = ({displayTasks, displayingTask, activatingTask, activeTask,
     }
   });
 
-  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 60, y: 60 } : { x: 5, y: 10 })
+  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 60, y: 25 } : { x: 5, y: 10 })
 
   const onStart = (event) => {
     event.stopPropagation();

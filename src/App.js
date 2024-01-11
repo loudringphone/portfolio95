@@ -115,11 +115,11 @@ const App = () => {
           },
           'music': {
             ...prevIcons['music'],
-            position: { x: 200, y: 0 },
+            position: { x: 0, y: 125 },
           },
           'recycle bin': {
             ...prevIcons['recycle bin'],
-            position: { x: 300, y: 0 },
+            position: { x: 100, y: 125 },
           },
         };
       });
