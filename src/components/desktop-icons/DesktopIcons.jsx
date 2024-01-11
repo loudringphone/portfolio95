@@ -1,5 +1,4 @@
-import React, {useState, useRef} from 'react'
-import { Mailnews20, Shell32167, MediaCd, Shell3232 } from '@react95/icons'
+import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 

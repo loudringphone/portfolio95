@@ -26,6 +26,7 @@ import win95shutdownMobile from './assets/images/win95-shutdown-mobile.png';
 import safeTurnOff from './assets/images/safe-turn-off.jpeg';
 import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
 import RecycleBinContent from './components/recyclebin/RecycleBinContent';
+import win95recycle from './assets/sounds/win95recycle.wav'
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -67,6 +68,7 @@ const App = () => {
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
   const [binLastPos, setBinLastPos] = useState(null)
+  const [recycleAudio, setRecycleAudio] = useState(new Audio(win95recycle))
   const [icons, setIcons] = useState({
     'resume': {
       Icon: Mailnews20,
@@ -167,6 +169,7 @@ const App = () => {
         Icon: Shell3233
       }
     }));
+    recycleAudio.play();
   }
   const positioningIcon = (task, x, y) => {
     setIcons(prevTasks => ({
