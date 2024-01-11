@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
+import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
-
-
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
 } from 'react95';
@@ -67,7 +65,7 @@ const BinWarningWindow = ({displayTasks, displayingTask, activatingTask, activeT
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-warning" style={{zIndex: windowIndice['bin warning'], display: displayTasks.has('bin warning') ? 'block' : 'none'}}>
-    <Window className='warning-window' onClick={handleClickInsideWindow}>
+    <WindowComponent task={'warning'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'bin warning'} className='window-title'>
         <span>Warning</span>
 
@@ -76,8 +74,6 @@ const BinWarningWindow = ({displayTasks, displayingTask, activatingTask, activeT
           <CloseFillIcon />
         </Button>
         </div>
-
-        
       </WindowHeader></strong>
       <WindowContent className='window-content'>
         <div className='warning'>
@@ -92,7 +88,7 @@ const BinWarningWindow = ({displayTasks, displayingTask, activatingTask, activeT
         </Button>
       </WindowContent>
      
-    </Window>
+    </WindowComponent>
   </Wrapper>
 
   </Draggable>

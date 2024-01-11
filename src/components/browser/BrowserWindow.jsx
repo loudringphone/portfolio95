@@ -3,7 +3,6 @@ import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
 } from 'react95';
@@ -47,11 +46,6 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    activatingTask('browser');
-    indexingWindows('browser')
-  };
 
   const handleClose = () => {
     displayingTask(false, 'browser')
