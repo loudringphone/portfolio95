@@ -98,6 +98,32 @@ const App = () => {
     },
   })
 
+  useEffect(() => {
+    if (!isTouchDevice) {
+      setIcons(prevIcons => {
+        return {
+          ...prevIcons,
+          'resume': {
+            ...prevIcons['resume'],
+            position: { x: 0, y: 0 },
+          },
+          'portfolio': {
+            ...prevIcons['portfolio'],
+            position: { x: 100, y: 0 },
+          },
+          'music': {
+            ...prevIcons['music'],
+            position: { x: 200, y: 0 },
+          },
+          'recycle bin': {
+            ...prevIcons['recycle bin'],
+            position: { x: 300, y: 0 },
+          },
+        };
+      });
+    }
+  }, [isTouchDevice])
+
   const settingBinLastPos = (obj) => {
     setBinLastPos(obj)
   }
