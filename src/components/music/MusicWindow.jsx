@@ -6,14 +6,13 @@ import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
 import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
 import SkipForwardMiniFillIcon from 'remixicon-react/SkipForwardMiniFillIcon';
 import SkipBackMiniFillIcon from 'remixicon-react/SkipBackMiniFillIcon';
-
 import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
+import WindowComponent from '../WindowComponent';
 import { formatTime } from '../../functions/formatTime';
 import { music } from './music'
 
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
 } from 'react95';
@@ -60,11 +59,6 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    activatingTask('music');
-    indexingWindows('music')
-  };
 
   const handleClose = () => {
     displayingTask(false, 'music')
@@ -202,7 +196,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-music" style={{zIndex: windowIndice['music'], display: displayTasks.has('music') ? 'block' : 'none', visibility: tasksVisibility.music}}>
-    <Window className='music-window' onClick={handleClickInsideWindow} >
+    <WindowComponent task={'music'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'music'} className='window-title'>
         <span>music.exe</span>
 
@@ -229,7 +223,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
       </div>
       </WindowContent>
      
-    </Window>
+    </WindowComponent>
   </Wrapper>
 
   </Draggable>

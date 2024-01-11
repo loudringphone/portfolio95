@@ -1,9 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Draggable from 'react-draggable';
+import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
   ScrollView,
@@ -66,11 +66,6 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   };
   const dragHandlers = { onStart, onStop };
 
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    activatingTask('portfolio');
-    indexingWindows('portfolio')
-  };
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
@@ -89,8 +84,8 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-portfolio" style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <Window className='portfolio-window' ref={portfolioRef} onClick={handleClickInsideWindow}>
+    <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
+    <WindowComponent task={'portfolio'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
@@ -139,7 +134,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
         
       </WindowContent>
      
-    </Window>
+    </WindowComponent>
   </Wrapper>
   </Draggable>
   )
