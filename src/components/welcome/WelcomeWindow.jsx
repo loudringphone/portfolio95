@@ -57,6 +57,9 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
     event.stopPropagation();
     activatingWelcome(true)
   };
+  const handleMouseDown = () => {
+    activatingWelcome(true)
+  }
   const handleUsername = (event) => {
     const value = event.target.value
     setUsername(value)
@@ -103,7 +106,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
       <Wrapper className="drag-welcome">
         <Helper helperDisplay={helperDisplay} setHelperDisplay={setHelperDisplay}/>
         <ConditionalAnimatedWrapper animate={signinError}>
-          <Window className='welcome-window' onClick={handleClickInsideWindow}>
+          <Window className='welcome-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
             <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
               <span>Welcome to Windows</span>
               <div className="buttons">

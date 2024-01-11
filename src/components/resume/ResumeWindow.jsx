@@ -8,7 +8,6 @@ import './scrollview.scss';
 
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
   ScrollView,

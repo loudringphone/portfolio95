@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import Draggable from 'react-draggable';
+import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
 import Icon from './Icon';
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
   Toolbar,
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, selectingBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice, issuingBinWarning}) => {
+const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, selectingBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
     const [iconIndice, setIconIndice] = useState({
         'music': 0, 'portfolio': 0
       })
@@ -52,17 +52,6 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    activatingTask('recycle bin');
-    indexingWindows('recycle bin')
-    const binRefs = Object.values(icons).map(task => task.binRef);
-    if (binRefs.some(ref => ref?.current?.contains(event.target))) {
-      return;
-    }
-    selectingBinIcon(null)
-
-  };
 
   const stopPropagation = (event) => {
     event.stopPropagation();
@@ -98,7 +87,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation} onDrag={handleDrag}>
     <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}} ref={binWindowRef}>
-    <Window className='recycle-bin-window'onClick={handleClickInsideWindow}>
+    <WindowComponent task={'recycle bin'} activatingTask={activatingTask} indexingWindows={indexingWindows} icons={icons} selectingBinIcon={selectingBinIcon}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
         <span>Recycle Bin</span>
         <div className="buttons">
@@ -162,7 +151,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
       <Frame variant='well' className='footer'>
           {selectedBinIcon ? <p>{selectedBinIcon.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')}</p> : <p>&nbsp;</p>}
         </Frame>
-    </Window>
+    </WindowComponent>
   </Wrapper>
 
   </Draggable>

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Draggable from 'react-draggable';
+import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
 import win95error from '../../assets/sounds/win95error.mp3'
@@ -51,11 +52,6 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
   };
   const dragHandlers = { onStart, onStop };
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    activatingTask('warning');
-    indexingWindows('warning');
-  };
 
   const stopPropagation = (event) => {
     event.stopPropagation();
@@ -81,17 +77,14 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-warning" style={{zIndex: windowIndice.warning, display: displayTasks.has('warning') ? 'block' : 'none'}}>
-    <Window className='warning-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
+    <WindowComponent task={'warning'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'warning'} className='window-title'>
         <span>Warning</span>
-
         <div className="buttons">
         <Button disabled={true} active={false}>
           <CloseFillIcon />
         </Button>
         </div>
-
-        
       </WindowHeader></strong>
       <WindowContent className='window-content'>
         <div className='warning'>
@@ -113,12 +106,9 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
         <Button onClick={handleClick} onTouchStart={handleClick}> {warnings >= 2 ? 'Yes' :'No'}
         </Button>
       </WindowContent>
-     
-    </Window>
+    </WindowComponent>
   </Wrapper>
-
   </Draggable>
-
   )
 }
 
