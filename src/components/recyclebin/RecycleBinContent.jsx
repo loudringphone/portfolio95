@@ -36,48 +36,39 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
     <div 
       className='recycle-bin-content'
       onClick={handleClickInsideWindow}
-      style={{height: binWindowRef.current?.clientHeight * 0.75,
-      width: binWindowRef.current?.clientWidth,
-      top: `${followerPosition.top}px`,
-      left: `${followerPosition.left}px`,
-      zIndex: windowIndice['recycle bin'],
-      display: displayTasks.has('recycle bin') ? 'block' : 'none',
-      visibility: tasksVisibility['recycle bin']
-      }}>
-
-
-<div className="bin-icons">
-      {Object.entries(icons).map(([task, data]) => (
-        task !== 'resume' && task !== 'recycle bin' && (
-        <Icon
-          key={task}
-          icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
-          task={task}
-          visibility={data.visibility}
-          selectingBinIcon={selectingBinIcon}
-          selectedBinIcon={selectedBinIcon}
-          activeTask={activeTask}
-          binRef={data.binRef}
-          binWindowRef={binWindowRef}
-          activatingTask={activatingTask}
-          unrecyclingIcon={unrecyclingIcon}
-          teleportingIcon={teleportingIcon}
-          isTouchDevice={isTouchDevice}
-          indexingWindows={indexingWindows}
-        />
-      )))
-      
-      }
-    </div>
-
-
-
-
-
-
-
-
-
+      style={{
+        height: binWindowRef.current?.clientHeight * 0.75,
+        width: binWindowRef.current?.clientWidth,
+        top: `${followerPosition.top}px`,
+        left: `${followerPosition.left}px`,
+        zIndex: windowIndice['recycle bin'],
+        display: displayTasks.has('recycle bin') ? 'block' : 'none',
+        visibility: tasksVisibility['recycle bin']
+      }}
+    >
+      <div className="bin-icons">
+        {Object.entries(icons).map(([task, data]) => (
+          task !== 'resume' && task !== 'recycle bin' && (
+          <Icon
+            key={task}
+            icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
+            task={task}
+            visibility={data.visibility}
+            selectingBinIcon={selectingBinIcon}
+            selectedBinIcon={selectedBinIcon}
+            activeTask={activeTask}
+            binRef={data.binRef}
+            binWindowRef={binWindowRef}
+            activatingTask={activatingTask}
+            unrecyclingIcon={unrecyclingIcon}
+            teleportingIcon={teleportingIcon}
+            isTouchDevice={isTouchDevice}
+            indexingWindows={indexingWindows}
+          />
+        )))
+        
+        }
+      </div>
     </div>
   )
 }
