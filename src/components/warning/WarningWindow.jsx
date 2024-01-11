@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, warnings}) => {
-  const [audio, setAudio] = useState(new Audio(win95error));
+  const [errorAudio, setErrorAudio] = useState(new Audio(win95error));
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
   const [state, setState] = useState({
@@ -63,10 +63,8 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
 
 
   useEffect(() => {
-    if (displayTasks.has('warning')) {
-      audio.play()
-    }
-  }, [displayTasks])
+    errorAudio.play()
+  }, [warnings])
   
 
   return (
