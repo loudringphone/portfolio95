@@ -1,9 +1,9 @@
-.desktop-icons {
+/* .desktop-icons {
     display: inherit;
     padding: 1.5rem;
     justify-items: center;
     width: 90px;
-}
+} */
 
 .desktop-icons .icon {
     display: flex;

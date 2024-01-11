@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, visibility, selectingBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, activatingTask, teleportingIcon, isTouchDevice, indexingWindows }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, activatingTask, teleportingIcon, isTouchDevice, indexingWindows }) => {
   const [position, setPosition] = useState({x: 0, y: 0});
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
@@ -23,7 +23,7 @@ const Icon = ({ task, icon, visibility, selectingBinIcon, selectedBinIcon, activ
     setIconZindex(99)
     indexingWindows('recycle bin')
     activatingTask('recycle bin')
-    selectingBinIcon(task)
+    setSelectedBinIcon(task)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
   const onStop = () => {
@@ -36,7 +36,7 @@ const Icon = ({ task, icon, visibility, selectingBinIcon, selectedBinIcon, activ
     activatingTask('recycle bin')
     setPicking(true)
     setIconZindex(99)
-    selectingBinIcon(task)
+    setSelectedBinIcon(task)
     setIconZindex(-1)
     const cursorX = event.clientX || event.changedTouches[0].clientX;
     const cursorY = event.clientY || event.changedTouches[0].clientY;
@@ -50,7 +50,7 @@ const Icon = ({ task, icon, visibility, selectingBinIcon, selectedBinIcon, activ
         teleportingIcon(event)
       }
       unrecyclingIcon();
-      selectingBinIcon(null)
+      setSelectedBinIcon(null)
     }
     setTimeout(() => {
       setIconZindex(0)

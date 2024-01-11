@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, selectingBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
+const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
     const [iconIndice, setIconIndice] = useState({
         'music': 0, 'portfolio': 0
       })
@@ -87,7 +87,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation} onDrag={handleDrag}>
     <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}} ref={binWindowRef}>
-    <WindowComponent task={'recycle bin'} activatingTask={activatingTask} indexingWindows={indexingWindows} icons={icons} selectingBinIcon={selectingBinIcon}>
+    <WindowComponent task={'recycle bin'} activatingTask={activatingTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
         <span>Recycle Bin</span>
         <div className="buttons">
@@ -128,7 +128,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
                   task={task}
                   iconIndice={iconIndice}
                   visibility={data.visibility}
-                  selectingBinIcon={selectingBinIcon}
+                  setSelectedBinIcon={setSelectedBinIcon}
                   selectedBinIcon={selectedBinIcon}
                   activeTask={activeTask}
                   binRef={data.binRef}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Window } from 'react95';
 
-const WindowComponent = ({ task, activatingTask, indexingWindows, icons, selectingBinIcon, children }) => {
+const WindowComponent = ({ task, activatingTask, indexingWindows, icons, setSelectedBinIcon, children }) => {
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     activatingTask(task);
@@ -12,7 +12,7 @@ const WindowComponent = ({ task, activatingTask, indexingWindows, icons, selecti
       if (binRefs.some(ref => ref?.current?.contains(event.target))) {
         return;
       }
-      selectingBinIcon(null)
+      setSelectedBinIcon(null)
     }
   };
   
