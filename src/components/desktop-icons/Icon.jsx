@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, selectingIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, settingBinLastPos }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null)
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
@@ -36,9 +36,9 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     } else if (task == 'recycle bin') {
       const x = desktopRef.current?.getBoundingClientRect().x
       const y = desktopRef.current?.getBoundingClientRect().y
-      settingBinLastPos({x: x, y: y})
+      setBinLastPos({x: x, y: y})
     }
-    selectingIcon(task)
+    setSelectedIcon(task)
     handlePickingIcon(task)
   }
 
@@ -50,9 +50,9 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     } else if (task == 'recycle bin') {
       const x = desktopRef.current?.getBoundingClientRect().x
       const y = desktopRef.current?.getBoundingClientRect().y
-      settingBinLastPos({x: x, y: y})
+      setBinLastPos({x: x, y: y})
     }
-    selectingIcon(task)
+    setSelectedIcon(task)
     handleIconMobile(event, task)
   }
   const handleDrag = (e, ui) => {

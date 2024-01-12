@@ -1,12 +1,12 @@
 import React from 'react'
 import { Button } from 'react95';
 import './buttons.css'
-const MinimisingButton = ({tasksVisibility, task, minimisingTasks, setActiveTask}) => {
+const MinimisingButton = ({tasksVisibility, task, setTasksVisibility, setActiveTask}) => {
     const handleClick = (event) => {
         event.stopPropagation();
         const newTasksVisibility = new Object(tasksVisibility);
         newTasksVisibility[task] = 'collapse';
-        minimisingTasks(newTasksVisibility);
+        setTasksVisibility(newTasksVisibility);
         setActiveTask(null);
     }
   return (

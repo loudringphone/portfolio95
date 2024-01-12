@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
+const RecycleBinWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, setCursorPosition, isTouchDevice}) => {
     const [iconIndice, setIconIndice] = useState({
         'music': 0, 'portfolio': 0
       })
@@ -81,7 +81,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
   }
 
   const handleDrag = (event) => {
-    settingCursorPosition({clientX: event.clientX, clientY: event.clientY})
+    setCursorPosition({clientX: event.clientX, clientY: event.clientY})
   }
 
   return (
@@ -91,7 +91,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
         <span>Recycle Bin</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
         <Button onClick={()=>{displayingTask(false, 'recycle bin')}} onTouchEnd={()=>{displayingTask(false, 'recycle bin')}}>
           <span className='close-icon' />
         </Button>

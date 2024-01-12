@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, isTouchDevice}) => {
+const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, isTouchDevice}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -82,7 +82,7 @@ const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, 
         <Button style={{width: 'auto', padding: '0 10px', marginRight: '5px'}} onClick={downloadResume} onTouchEnd={()=>{downloadResume()}}>
           Download
         </Button>
-        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
         <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchEnd={()=>{displayingTask(false, 'resume')}}>
           <span className='close-icon' />
         </Button>

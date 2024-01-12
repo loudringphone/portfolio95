@@ -6,7 +6,7 @@ import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010 } from '@react
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
-export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, activatingWelcome, standbyTasks, windowIndice, turningoff, tasksVisibility, minimisingTasks, setActiveTask, activeTask, icons}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndice, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons}) => {
   const [shutdownAudio, setShutdownAudio] = useState(new Audio(win95shutdown))
 
   const handleClick = (event) => {
@@ -18,14 +18,14 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
     activiatingDockMenu(false)
     const newTasksVisibility = new Object(tasksVisibility)
     newTasksVisibility[task] = 'visible'
-    minimisingTasks(newTasksVisibility)
+    setTasksVisibility(newTasksVisibility)
     setActiveTask(task);
     displayingTask(true, task)
     indexingWindows(task)
   }
 
   const handleLogOff = () => {
-    activatingWelcome(true)
+    setWelcomeActive(true)
     signingIn(false)
   }
   const handleShutDown = () => {
@@ -61,7 +61,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
             <Task
               key={i}
               task={task}
-              minimisingTasks={minimisingTasks}
+              setTasksVisibility={setTasksVisibility}
               tasksVisibility={tasksVisibility}
               activeTask={activeTask}
               setActiveTask={setActiveTask}

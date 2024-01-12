@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, setActiveTask, activeTask}) => {
+const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, setActiveTask, activeTask}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -49,7 +49,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
 
   const handleClose = () => {
     displayingTask(false, 'browser')
-    settingProjectUrl(null)
+    setProjectUrl(null)
   }
 
   const stopPropagation = (event) => {
@@ -63,7 +63,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
       <strong className="cursor"><WindowHeader  active={activeTask == 'browser'} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>

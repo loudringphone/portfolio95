@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks ,signed, signOff}) => {
+const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -201,7 +201,7 @@ const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, i
         <span>music.exe</span>
 
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='music' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='music' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>
