@@ -382,6 +382,16 @@ const App = () => {
     }
   },[shutDown])
 
+  useEffect(() => {
+    const preventPullToRefresh = (event) => {
+      event.preventDefault();
+    };
+    window.addEventListener('touchmove', preventPullToRefresh, { passive: false });
+    return () => {
+      window.removeEventListener('touchmove', preventPullToRefresh);
+    };
+  }, []);
+
   if (turnOff) {
     return (
       
