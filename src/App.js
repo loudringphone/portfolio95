@@ -188,20 +188,20 @@ const App = () => {
     }));
   }
   const teleportingIcon = (event) => {
-    const rect = binWindowRef.current?.getBoundingClientRect();
+    const binRect = binWindowRef.current?.getBoundingClientRect();
     const cursorX = event.clientX || event.changedTouches[0].clientX;
     const cursorY = event.clientY || event.changedTouches[0].clientY;
     if (
-      cursorX < rect?.x || cursorX > rect?.x + rect?.width ||
-      cursorY < rect?.y || cursorY > rect?.y + rect?.height
+      cursorX < binRect.x || cursorX > binRect?.x + binRect?.width ||
+      cursorY < binRect?.y || cursorY > binRect?.y + binRect?.height
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].binRef?.current?.contains(event.target));
 
       if (task) {
-        const rect = icons[task].iconRef.current.getBoundingClientRect();
-        
-        const offsetX = cursorX - rect.width;
-        const offsetY = cursorY - rect.height;
+        const iconRect = icons[task].iconRef.current.getBoundingClientRect();
+
+        const offsetX = cursorX - iconRect.width/2;
+        const offsetY = cursorY - iconRect.height/2;
         positioningIcon(task, offsetX, offsetY)
         setTimeout(() => {
           setIcons(prevTasks => ({
@@ -216,8 +216,8 @@ const App = () => {
       }
     }
     else if (
-      cursorX >= rect?.x && cursorX <= rect?.x + rect?.width &&
-      cursorY >= rect?.y && cursorY <= rect?.y + rect?.height
+      cursorX >= binRect?.x && cursorX <= binRect?.x + binRect?.width &&
+      cursorY >= binRect?.y && cursorY <= binRect?.y + binRect?.height
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].desktopRef?.current?.contains(event.target));
 
@@ -241,7 +241,7 @@ const App = () => {
         issuingWarning()
       }
       else if (task == 'recycle bin' && binLastPos) {
-        positioningIcon(task, binLastPos.x - 28.29, binLastPos.y - 23.99)
+        positioningIcon(task, binLastPos.x, binLastPos.y)
         setActiveTask('recycle warning')
         displayingTask(true, 'recycle warning');
         errorAudio.play();

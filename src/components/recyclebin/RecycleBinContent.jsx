@@ -51,7 +51,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
           task !== 'resume' && task !== 'recycle bin' && (
           <Icon
             key={task}
-            icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
+            icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
             task={task}
             visibility={data.visibility}
             setSelectedBinIcon={setSelectedBinIcon}

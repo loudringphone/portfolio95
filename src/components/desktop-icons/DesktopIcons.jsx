@@ -112,7 +112,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
       {Object.entries(icons).map(([task, data]) => (
         <Icon
           key={task}
-          icon={<data.Icon style={{ height: '60px', width: '60px', padding: '0.25rem' }} />}
+          icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
           task={task}
           desktopRef={data.desktopRef}
           iconRef={data.iconRef}
