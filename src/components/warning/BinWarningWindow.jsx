@@ -77,7 +77,7 @@ const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
             alt="warning"
             style={{ height: "40px"}}
             />
-           To use this item, first drag it out of the Recycle Bin.
+           Drag this item out of the Recycle Bin to use it.
         </div>
         <Button onClick={handleClick} onTouchStart={handleClick}> OK
         </Button>

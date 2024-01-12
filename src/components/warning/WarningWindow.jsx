@@ -97,7 +97,7 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
               warnings >= 2 ?
               <p>Hiring Winston would be a good decision!</p>
               :
-              <p>Are you sure to throw away Winston's resume?</p>
+              <p>Confirm discarding Winston's resume?</p>
             }
         </div>
         <Button onClick={handleClick} onTouchStart={handleClick}> {warnings >= 2 ? 'Yes' :'No'}
