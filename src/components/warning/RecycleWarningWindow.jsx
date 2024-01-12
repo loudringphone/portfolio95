@@ -77,7 +77,7 @@ const RecycleWarningWindow = ({displayTasks, displayingTask, setActiveTask, acti
             alt="warning"
             style={{ height: "40px"}}
             />
-           Recycle the recycle bin? It will break the machine!
+           You can't recycle the recycle bin!
         </div>
         <Button onClick={handleClick} onTouchStart={handleClick}> OK
         </Button>
