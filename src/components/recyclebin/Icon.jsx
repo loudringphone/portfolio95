@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows, setIconDragPoint }) => {
   const [position, setPosition] = useState({x: 0, y: 0});
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
@@ -40,10 +40,10 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setIconZindex(-1)
     const cursorX = event.clientX || event.changedTouches[0].clientX;
     const cursorY = event.clientY || event.changedTouches[0].clientY;
-    const rect = binWindowRef.current.getBoundingClientRect();
+    const binrect = binWindowRef.current.getBoundingClientRect();
     if (
-      cursorX < rect.x || cursorX > rect.x + rect.width ||
-      cursorY < rect.y || cursorY > rect.y + rect.height
+      cursorX < binrect.x || cursorX > binrect.x + binrect.width ||
+      cursorY < binrect.y || cursorY > binrect.y + binrect.height
     ) {
       setIconDisplay('none')
       if (isTouchDevice) {
@@ -67,12 +67,27 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       }
   }, [visibility])
   
+  const handleDown = (event) => {
+    const { clientX, clientY } = event;
+    const elementRect = event.currentTarget.getBoundingClientRect();
+    const relativeX = clientX - elementRect.left;
+    const relativeY = clientY - elementRect.top;
+    setIconDragPoint({x: relativeX, y: relativeY})
+  }
+
   const handleOpen = (event) => {
     if (event.type == 'dblclick') {
       setTimeout(() => {
         setActiveTask('bin warning')
       }, 200);
       return
+    }
+    if (event.touches.length === 1) {
+      const { clientX, clientY } = event.touches[0];
+      const elementRect = event.currentTarget.getBoundingClientRect();
+      const relativeX = clientX - elementRect.left;
+      const relativeY = clientY - elementRect.top;
+      setIconDragPoint({x: relativeX, y: relativeY})
     }
     const currentTime = new Date().getTime();
     setLastTouchTime(currentTime);
@@ -91,29 +106,18 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       position={position}
     >
     <div className='icon' ref={binRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
-      <div className="desktopRef"
+      <div className='icon-whole'
+        onMouseDown={handleDown}
         onMouseUp={(event) => handleUp(event, task)}
         onTouchEnd={(event) => handleUp(event, task)}
         onTouchStartCapture={(event) => handleOpen(event)}
         onDoubleClick={(event) => handleOpen(event)}
       ></div>
-      <div
-        className='icon-placeholder'
-        onMouseUp={(event) => handleUp(event, task)}
-        onTouchEnd={(event) => handleUp(event, task)}
-        onTouchStartCapture={(event) => handleOpen(event)}
-        onDoubleClick={(event) => handleOpen(event)}
-      >
+      <div className='icon-placeholder'>
         <div className="filter" style={{display: selectedBinIcon == task ? 'block' : 'none'}}></div>
         {icon}
       </div>
-      <div
-        className='text-placeholder'
-        onMouseUp={(event) => handleUp(event, task)}
-        onTouchEnd={(event) => handleUp(event, task)}
-        onTouchStartCapture={(event) => handleOpen(event)}
-        onDoubleClick={(event) => handleOpen(event)}
-      >
+      <div className='text-placeholder'>
         <div className="filter-text" style={{display: selectedBinIcon == task && activeTask == 'recycle bin' ? 'block' : 'none'}}></div>
         <div className="filter" style={{display: selectedBinIcon == task && activeTask !== 'recycle bin' ? 'block' : 'none'}}></div>
       <p style={{color: selectedBinIcon == task && activeTask == 'recycle bin' ? 'white' : 'black'}}>

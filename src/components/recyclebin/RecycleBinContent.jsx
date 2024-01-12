@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice}) {
+function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint}) {
 
     const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
 
@@ -64,6 +64,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
             teleportingIcon={teleportingIcon}
             isTouchDevice={isTouchDevice}
             indexingWindows={indexingWindows}
+            setIconDragPoint={setIconDragPoint}
           />
         )))
         
