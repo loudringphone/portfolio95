@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
+const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.025, y: 20} : { x: (window.innerWidth - 650)/2, y: 80 })
   const [helperDisplay, setHelperDisplay] = useState('none')
   const [username, setUsername] = useState('Admin')
@@ -45,7 +45,7 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
 
   const onStart = () => {
     setHelperDisplay('none')
-    activatingWelcome(true)
+    setWelcomeActive(true)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -55,10 +55,10 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingWelcome(true)
+    setWelcomeActive(true)
   };
   const handleMouseDown = () => {
-    activatingWelcome(true)
+    setWelcomeActive(true)
   }
   const handleUsername = (event) => {
     const value = event.target.value
@@ -79,10 +79,10 @@ const WelcomeWindow = ({activatingWelcome, welcomeActive, signingIn}) => {
       audio.play();
     } else {
       event?.stopPropagation();
-      activatingWelcome(false)
+      setWelcomeActive(false)
       setSigninError(true)
       setTimeout(() => {
-        activatingWelcome(true)
+        setWelcomeActive(true)
         setSigninError(false)
         setHelperDisplay('block')
       }, 750);

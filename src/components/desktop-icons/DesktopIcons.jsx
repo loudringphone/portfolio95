@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, setActiveTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, settingBinLastPos }) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
@@ -27,7 +27,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
       ...tasksVisibility,
       [task]: 'visible'
     };
-    minimisingTasks(updatedTasksVisibility);
+    setTasksVisibility(updatedTasksVisibility);
     setActiveTask(task);
     displayingTask(true, task);
     indexingWindows(task);
@@ -51,7 +51,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
         ...tasksVisibility,
         [task]: 'visible'
       };
-      minimisingTasks(updatedTasksVisibility);
+      setTasksVisibility(updatedTasksVisibility);
       setActiveTask(task)
       displayingTask(true, task)
       indexingWindows(task)
@@ -124,12 +124,12 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
           handlePickingIcon={handlePickingIcon}
           handleLeavingIcon={handleLeavingIcon}
           activiatingDockMenu={activiatingDockMenu}
-          selectingIcon={selectingIcon}
+          setSelectedIcon={setSelectedIcon}
           selectedIcon={selectedIcon}
           activeTask={activeTask}
           warnings={warnings}
           positioningIcon={positioningIcon}
-          settingBinLastPos={settingBinLastPos}
+          setBinLastPos={setBinLastPos}
         />
       ))}
     </div>

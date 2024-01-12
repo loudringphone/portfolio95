@@ -3,18 +3,18 @@ import './taskbar.css'
 import { Button } from "react95";
 
 
-function Task({task, activeTask, setActiveTask, windowIndice, indexingWindows, tasksVisibility, minimisingTasks}) {
+function Task({task, activeTask, setActiveTask, windowIndice, indexingWindows, tasksVisibility, setTasksVisibility}) {
   const handleClick = (event) => {
     event.stopPropagation();
     if (activeTask == task) {
       const newTasksVisibility = new Object(tasksVisibility)
       newTasksVisibility[task] = 'collapse'
-      minimisingTasks(newTasksVisibility)
+      setTasksVisibility(newTasksVisibility)
       setActiveTask(null)
     } else {
       const newTasksVisibility = new Object(tasksVisibility)
       newTasksVisibility[task] = 'visible'
-      minimisingTasks(newTasksVisibility)
+      setTasksVisibility(newTasksVisibility)
       setActiveTask(task)
       indexingWindows(task)
     }

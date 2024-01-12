@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, setPortfolioHeight}) => {
+const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, setPortfolioHeight}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -43,10 +43,10 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, setAc
     }
   const handleGo = (event) => {
   event.stopPropagation();
-  settingProjectUrl(projects[projectSelected].site);
+  setProjectUrl(projects[projectSelected].site);
   const newTasksVisibility = new Object(tasksVisibility)
   newTasksVisibility.browser = 'visible'
-  minimisingTasks(newTasksVisibility)
+  setTasksVisibility(newTasksVisibility)
   setActiveTask('browser')
   indexingWindows('browser')
   displayingTask(true, 'browser')
@@ -89,7 +89,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, setAc
     <strong className="cursor"><WindowHeader active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
         <Button onClick={()=>{displayingTask(false, 'portfolio')}} onTouchEnd={()=>{displayingTask(false, 'portfolio')}}>
           <span className='close-icon' />
         </Button>
