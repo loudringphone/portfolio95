@@ -61,7 +61,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
 
   useEffect(() => {
     if (resumeLastPos){
-      positioningIcon('resume', resumeLastPos.x - 35, resumeLastPos.y - 23.99)
+      positioningIcon('resume', resumeLastPos.x, resumeLastPos.y)
     }
   }, [warnings])
   
