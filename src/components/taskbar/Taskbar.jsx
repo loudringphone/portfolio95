@@ -7,7 +7,7 @@ import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 
 export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndice, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons}) => {
-  const [shutdownAudio, setShutdownAudio] = useState(new Audio(win95shutdown))
+  const shutdownAudio = new Audio(win95shutdown)
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -41,36 +41,36 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
 
   return (
     <AppBar style={{ top: "unset", bottom: 0, zIndex: 98, userSelect: 'none' }} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Toolbar style={{ justifyContent: "space-between" }}>
+      <Toolbar style={{ justifyContent: "space-between" }}>
         <div style={{ position: "relative", display: "flex" }}>
-        <Button
-          className="start-button"
-          onClick={handleClick}
-          active={dockMenuActive}
-          style={{ fontWeight: "bold" }}
-        >
+          <Button
+            className="start-button"
+            onClick={handleClick}
+            active={dockMenuActive}
+            style={{ fontWeight: "bold" }}
+          >
             <img
             src={win95logo}
             alt="Start"
             style={{ height: "22px", marginRight: 2, marginLeft: -2, transform: "rotate(-20deg)"}}
             />
             Start
-        </Button>
-        {
-          [...standbyTasks].map((task, i) => (
-            <Task
-              key={i}
-              task={task}
-              setTasksVisibility={setTasksVisibility}
-              tasksVisibility={tasksVisibility}
-              activeTask={activeTask}
-              setActiveTask={setActiveTask}
-              indexingWindows={indexingWindows}
-              windowIndice={windowIndice}
-              />
-          ))
-        }
-        {dockMenuActive && (
+          </Button>
+          {
+            [...standbyTasks].map((task, i) => (
+              <Task
+                key={i}
+                task={task}
+                setTasksVisibility={setTasksVisibility}
+                tasksVisibility={tasksVisibility}
+                activeTask={activeTask}
+                setActiveTask={setActiveTask}
+                indexingWindows={indexingWindows}
+                windowIndice={windowIndice}
+                />
+            ))
+          }
+          {dockMenuActive && (
             <MenuList
                 style={{
                 position: "absolute",
@@ -82,46 +82,43 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
                 onClick={handleClick}
             >
               <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'resume')}>
-            <Mailnews20 style={{height:'30px', width:'30px'}}/>
+                <Mailnews20 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>R</span>esume</p>
-            </MenuListItem>
-
-            {
-              icons['portfolio']['visibility'] == 'visible' ?
-              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'portfolio')}>
-                <Shell32167 style={{height:'30px', width:'30px'}}/>
-                  <p><span className='underscore'>P</span>ortfolio</p>
               </MenuListItem>
 
-              :
-              <></>
-            }
-            
-            {
-              icons['music']['visibility'] == 'visible' ?
-              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'music')}>
-                <MediaCd style={{height:'30px', width:'30px'}}/>
-                <p><span className='underscore'>M</span>usic</p>
-              </MenuListItem>
+              {
+                icons['portfolio']['visibility'] == 'visible' ?
+                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'portfolio')}>
+                  <Shell32167 style={{height:'30px', width:'30px'}}/>
+                    <p><span className='underscore'>P</span>ortfolio</p>
+                </MenuListItem>
 
               :
-              <></>
-            }
+                <></>
+              }
+              {
+                icons['music']['visibility'] == 'visible' ?
+                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'music')}>
+                  <MediaCd style={{height:'30px', width:'30px'}}/>
+                  <p><span className='underscore'>M</span>usic</p>
+                </MenuListItem>
 
-            
-            <Separator/>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleLogOff} >
+              :
+                <></>
+              }
+              <Separator/>
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleLogOff}>
                 <Password1010 style={{transform: 'rotate(-90deg)', height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>L</span>og Off User</p>
-            </MenuListItem>
-            <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleShutDown}>
+              </MenuListItem>
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleShutDown}>
                 <Computer4 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>S</span>hut Down</p>
-            </MenuListItem>
+              </MenuListItem>
             </MenuList>
-        )}
+          )}
         </div>
-    </Toolbar>
+      </Toolbar>
     </AppBar>
   );
 };

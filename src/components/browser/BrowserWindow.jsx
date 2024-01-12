@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import Draggable from 'react-draggable';
+import React from 'react';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
   Button,
@@ -7,6 +6,7 @@ import {
   WindowHeader,
 } from 'react95';
 import styled from 'styled-components';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import './browserwindow.scss'
 const Wrapper = styled.div`
@@ -23,54 +23,29 @@ const Wrapper = styled.div`
 `;
 
 const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, setActiveTask, activeTask}) => {
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-
-  const onStart = (event) => {
-    event.stopPropagation();
-    setActiveTask('browser');
-    indexingWindows('browser')
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-
-  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 })
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
+  const task = 'browser'
+  const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
 
   const handleClose = () => {
-    displayingTask(false, 'browser')
+    displayingTask(false, task)
     setProjectUrl(null)
   }
 
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
-
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: displayTasks.has('browser') ? 'block' : 'none', visibility: tasksVisibility.browser}}>
-    <WindowComponent task={'browser'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-      <strong className="cursor"><WindowHeader  active={activeTask == 'browser'} className='window-title'>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.browser}}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+      <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content' style={{display: 'block'}}>
-        <div className='browser-screen' style={{display: activeTask == 'browser' ? "none" : "block"}}></div>
+        <div className='browser-screen' style={{display: activeTask == task ? "none" : "block"}}></div>
         <div className="iframe-screen">
           <iframe
             src={projectUrl}
@@ -88,7 +63,7 @@ const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask,
       </WindowContent>
     </WindowComponent>
   </Wrapper>
-  </Draggable>
+  </DraggableComponent>
   )
 }
 

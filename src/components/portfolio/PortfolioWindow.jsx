@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import Draggable from 'react-draggable';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
@@ -25,17 +25,10 @@ const Wrapper = styled.div`
 `;
 
 const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, setPortfolioHeight}) => {
+  const task = 'portfolio'
+  const initialPosition = window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 }
+
   const [projectSelected, setProjectSelected] = useState(null)
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-  const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 })
   const handleGit = (event) => {
     event.stopPropagation();
     const newTab = window.open(projects[projectSelected].git, '_blank');
@@ -51,24 +44,6 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   indexingWindows('browser')
   displayingTask(true, 'browser')
   }
-  const selectingProject = (id) => {
-    setProjectSelected(id)
-  }
-  const onStart = (event) => {
-    event.stopPropagation();
-    setActiveTask('portfolio')
-    indexingWindows('portfolio', windowIndice)
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
-
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
 
   const portfolioRef = useRef(null)
   useEffect(() => {
@@ -83,21 +58,21 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   }, [displayTasks])
 
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <WindowComponent task={'portfolio'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <strong className="cursor"><WindowHeader active={activeTask == 'portfolio'} className='window-title'>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndice[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
-        <Button onClick={()=>{displayingTask(false, 'portfolio')}} onTouchEnd={()=>{displayingTask(false, 'portfolio')}}>
+        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+        <Button onClick={()=>{displayingTask(false, task)}} onTouchEnd={()=>{displayingTask(false, task)}}>
           <span className='close-icon' />
         </Button>
         </div>
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ProjectTree activeTask={activeTask} selectingProject={selectingProject} displayTasks={displayTasks} />
+    <ProjectTree activeTask={activeTask} setProjectSelected={setProjectSelected} displayTasks={displayTasks} />
     { projectSelected && projectSelected != "projects" ?
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
@@ -136,7 +111,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
      
     </WindowComponent>
   </Wrapper>
-  </Draggable>
+  </DraggableComponent>
   )
 }
 

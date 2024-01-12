@@ -50,6 +50,8 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
+  const recycleAudio = new Audio(win95recycle);
+  const errorAudio = new Audio(win95error);
   const [isTouchDevice, setIsTouchDevice] = useState('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   const [projectUrl, setProjectUrl] = useState(null)
   const [tasksVisibility, setTasksVisibility] = useState({resume: 'visible', portfolio: 'visible', browser: 'visible', music: 'visible'})
@@ -70,8 +72,6 @@ const App = () => {
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
   const [binLastPos, setBinLastPos] = useState(null)
-  const [recycleAudio, setRecycleAudio] = useState(new Audio(win95recycle))
-  const [errorAudio, setErrorAudio] = useState(new Audio(win95error))
   const [iconDragPoint, setIconDragPoint] = useState({x: 0, y: 0})
   const [icons, setIcons] = useState({
     'resume': {

@@ -21,12 +21,12 @@ function Task({task, activeTask, setActiveTask, windowIndice, indexingWindows, t
   }
   return (
     <Button
-            className="task"
-            active={activeTask == task}
-            style={{ fontWeight: "bold" }}
-            onClick={handleClick}
-        >
-            {window.innerWidth <= 500? task : `${task}.exe`}
+      className="task"
+      active={activeTask == task}
+      style={{ fontWeight: "bold" }}
+      onClick={handleClick}
+    >
+      {window.innerWidth <= 500? task : `${task}.exe`}
     </Button>
   )
 }

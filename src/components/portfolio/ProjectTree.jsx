@@ -30,7 +30,7 @@ function getIds(item) {
 
 portfolio.forEach(getIds);
 
-const ProjectTree = ({activeTask, selectingProject, displayTasks}) => {
+const ProjectTree = ({activeTask, setProjectSelected, displayTasks}) => {
   const [selected, setSelected] = useState(null);
   const [expanded, setExpanded] = useState([]);
   const theme = useContext(ThemeContext);
@@ -66,7 +66,7 @@ useEffect(() => {
 }, [activeTask])
 
   useEffect(() => {
-    selectingProject(selected)
+    setProjectSelected(selected)
   }, [selected])
 
   useEffect(() => {

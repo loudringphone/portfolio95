@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Draggable from 'react-draggable';
+import React from 'react';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
@@ -24,70 +24,43 @@ const Wrapper = styled.div`
 `;
 
 const RecycleWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice}) => {
+  const task = 'recycle warning'
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-
-  const [initialPosition, setInitialPosition] = useState({ x: centerX - 180, y: centerY - 135 })
-
-  const onStart = () => {
-    setActiveTask('recycle warning');
-    indexingWindows('recycle warning')
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
-
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
+  const initialPosition = { x: centerX - 180, y: centerY - 135 }
 
   const handleClick = () => {
-    displayingTask(false, 'recycle warning')
+    displayingTask(false, task)
   }
 
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-warning" style={{zIndex: windowIndice['recycle warning'], display: displayTasks.has('recycle warning') ? 'block' : 'none'}}>
-    <WindowComponent task={'recycle warning'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'recycle warning'} className='window-title'>
-        <span>Warning</span>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+      <Wrapper className="drag-warning" style={{zIndex: windowIndice[task], display: displayTasks.has(task) ? 'block' : 'none'}}>
+        <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+          <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
+            <span>Warning</span>
 
-        <div className="buttons">
-        <Button disabled={true} active={false}>
-          <CloseFillIcon />
-        </Button>
-        </div>
-      </WindowHeader></strong>
-      <WindowContent className='window-content'>
-        <div className='warning'>
-        <img
-            src={warning}
-            alt="warning"
-            style={{ height: "40px"}}
-            />
-           You can't recycle the recycle bin!
-        </div>
-        <Button onClick={handleClick} onTouchStart={handleClick}> OK
-        </Button>
-      </WindowContent>
-     
-    </WindowComponent>
-  </Wrapper>
-
-  </Draggable>
-
+            <div className="buttons">
+            <Button disabled={true} active={false}>
+              <CloseFillIcon />
+            </Button>
+            </div>
+          </WindowHeader></strong>
+          <WindowContent className='window-content'>
+            <div className='warning'>
+            <img
+                src={warning}
+                alt="warning"
+                style={{ height: "40px"}}
+                />
+              You can't recycle the recycle bin!
+            </div>
+            <Button onClick={handleClick} onTouchStart={handleClick}> OK
+            </Button>
+          </WindowContent>
+        </WindowComponent>
+      </Wrapper>
+    </DraggableComponent>
   )
 }
 

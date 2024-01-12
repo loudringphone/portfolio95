@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import Draggable from 'react-draggable';
+import React, { useEffect } from 'react';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
@@ -25,44 +25,14 @@ const Wrapper = styled.div`
 `;
 
 const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, warnings, errorAudio}) => {
+  const task = 'warning'
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-
-  const [initialPosition, setInitialPosition] = useState({ x: centerX - 180, y: centerY - 165 })
-
-  const onStart = () => {
-    setActiveTask('warning');
-    indexingWindows('warning')
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
-
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
+  const initialPosition = { x: centerX - 180, y: centerY - 165 }
 
   const handleClick = () => {
-    displayingTask(false, 'warning');
+    displayingTask(false, task);
   }
-
-  const handleMouseDown = () => {
-    setActiveTask('warning');
-    indexingWindows('warning');
-  }
-
 
   useEffect(() => {
     if (warnings > 0) {
@@ -72,10 +42,10 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
   
 
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-warning" style={{zIndex: windowIndice.warning, display: displayTasks.has('warning') ? 'block' : 'none'}}>
-    <WindowComponent task={'warning'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'warning'} className='window-title'>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <Wrapper className="drag-warning" style={{zIndex: windowIndice.warning, display: displayTasks.has(task) ? 'block' : 'none'}}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>Warning</span>
         <div className="buttons">
         <Button disabled={true} active={false}>
@@ -105,7 +75,7 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
       </WindowContent>
     </WindowComponent>
   </Wrapper>
-  </Draggable>
+  </DraggableComponent>
   )
 }
 
