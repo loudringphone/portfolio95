@@ -13,8 +13,6 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
         if (binRefs.some(ref => ref?.current?.contains(event.target))) {
           return;
         }
-        // setSelectedBinIcon(null)
-    
       };
     
   useEffect(() => {

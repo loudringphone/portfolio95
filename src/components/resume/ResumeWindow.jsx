@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ResumePdf from './ResumePdf';
 import resume from '../../assets/pdfs/Resume.pdf'
-import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import './scrollview.scss';
 
@@ -28,33 +28,8 @@ const Wrapper = styled.div`
 `;
 
 const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, isTouchDevice}) => {
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-
-  const [initialPosition, setInitialPosition] = useState(window.innerWidth > 500 ? { x: 60, y: 25 } : { x: 5, y: 10 })
-
-  const onStart = (event) => {
-    event.stopPropagation();
-    setActiveTask('resume');
-    indexingWindows('resume')
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
-
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
+  const task = 'resume'
+  const initialPosition = window.innerWidth > 500 ? { x: 60, y: 25 } : { x: 5, y: 10 }
 
   const downloadResume = () => {
     let a = document.createElement('a');
@@ -73,32 +48,29 @@ const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, 
     }
   }, [isTouchDevice])
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has('resume') ? 'block' : 'none', visibility: tasksVisibility.resume}}>
-    <WindowComponent task={'resume'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'resume'} className='window-title'>
-        <span>resume.exe</span>
-        <div className="buttons">
-        <Button style={{width: 'auto', padding: '0 10px', marginRight: '5px'}} onClick={downloadResume} onTouchEnd={()=>{downloadResume()}}>
-          Download
-        </Button>
-        <MinimisingButton tasksVisibility={tasksVisibility} task='resume' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
-        <Button onClick={()=>{displayingTask(false, 'resume')}} onTouchEnd={()=>{displayingTask(false, 'resume')}}>
-          <span className='close-icon' />
-        </Button>
-        </div>
-      </WindowHeader></strong>
-      <WindowContent className='window-content'>
-    <ScrollView style={{ width: '100%', height: resumeHeight, overflowWrap: 'anywhere' }}>
-        <ResumePdf />
-        </ScrollView>
-      </WindowContent>
-     
-    </WindowComponent>
-  </Wrapper>
-
-  </Draggable>
-
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+      <Wrapper className="drag-resume" style={{zIndex: windowIndice.resume, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.resume}}>
+        <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+          <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
+            <span>resume.exe</span>
+            <div className="buttons">
+            <Button style={{width: 'auto', padding: '0 10px', marginRight: '5px'}} onClick={downloadResume} onTouchEnd={()=>{downloadResume()}}>
+              Download
+            </Button>
+            <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+            <Button onClick={()=>{displayingTask(false, task)}} onTouchEnd={()=>{displayingTask(false, task)}}>
+              <span className='close-icon' />
+            </Button>
+            </div>
+          </WindowHeader></strong>
+          <WindowContent className='window-content'>
+            <ScrollView style={{ width: '100%', height: resumeHeight, overflowWrap: 'anywhere' }}>
+              <ResumePdf />
+            </ScrollView>
+          </WindowContent>
+        </WindowComponent>
+      </Wrapper>
+    </DraggableComponent>
   )
 }
 

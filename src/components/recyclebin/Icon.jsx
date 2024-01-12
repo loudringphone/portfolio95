@@ -3,9 +3,8 @@ import Draggable from 'react-draggable';
 
 
 const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows, setIconDragPoint }) => {
-  const [position, setPosition] = useState({x: 0, y: 0});
+  const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
-  const [picking, setPicking] = useState(false)
   const [iconDisplay, setIconDisplay] = useState('none')
   const [iconZindex, setIconZindex] = useState(0)
   const [state, setState] = useState({
@@ -19,7 +18,6 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   });
   const onStart = (event) => {
     event.stopPropagation();
-    setPicking(true)
     setIconZindex(99)
     indexingWindows('recycle bin')
     setActiveTask('recycle bin')
@@ -34,16 +32,15 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
 
   const handleUp = (event, task) => {
     setActiveTask('recycle bin')
-    setPicking(true)
     setIconZindex(99)
     setSelectedBinIcon(task)
     setIconZindex(-1)
     const cursorX = event.clientX || event.changedTouches[0].clientX;
     const cursorY = event.clientY || event.changedTouches[0].clientY;
-    const binrect = binWindowRef.current.getBoundingClientRect();
+    const binRect = binWindowRef.current.getBoundingClientRect();
     if (
-      cursorX < binrect.x || cursorX > binrect.x + binrect.width ||
-      cursorY < binrect.y || cursorY > binrect.y + binrect.height
+      cursorX < binRect.x || cursorX > binRect.x + binRect.width ||
+      cursorY < binRect.y || cursorY > binRect.y + binRect.height
     ) {
       setIconDisplay('none')
       if (isTouchDevice) {

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Draggable from 'react-draggable';
 import MinimisingButton from '../buttons/MinimisingButton';
 import TextScroller from './TextScroller';
 import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
@@ -7,6 +6,7 @@ import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
 import SkipForwardMiniFillIcon from 'remixicon-react/SkipForwardMiniFillIcon';
 import SkipBackMiniFillIcon from 'remixicon-react/SkipBackMiniFillIcon';
 import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import { formatTime } from '../../functions/formatTime';
 import { music } from './music'
@@ -32,36 +32,17 @@ const Wrapper = styled.div`
 `;
 
 const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff}) => {
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
+  const task = 'music'
 
-  const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 })
+  const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
   const [musicIndex, setMusicIndex] = useState(0)
   const [audio, setAudio] = useState(new Audio(music[0].source));
   const [countdownTime, setCountdownTime] = useState(music[0].duration);
   const [playing, setPlaying] = useState(false)
   const [isSkipped, setIsSkipped] = useState(false)
-  const onStart = (event) => {
-    event.stopPropagation();
-    setActiveTask('music');
-    indexingWindows('music')
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
-  };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
-  const dragHandlers = { onStart, onStop };
 
   const handleClose = () => {
-    displayingTask(false, 'music')
+    displayingTask(false, task)
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -150,7 +131,7 @@ const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, i
 
   useEffect(() => {
     if (audio) {
-      if (!displayTasks.has('music')) {
+      if (!displayTasks.has(task)) {
         audio.pause();
         return setPlaying(false)
       }
@@ -189,44 +170,37 @@ const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, i
    
   }, [audio, playing]);
   
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
-
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-music" style={{zIndex: windowIndice['music'], display: displayTasks.has('music') ? 'block' : 'none', visibility: tasksVisibility.music}}>
-    <WindowComponent task={'music'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'music'} className='window-title'>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <Wrapper className="drag-music" style={{zIndex: windowIndice[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.music}}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+      <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>music.exe</span>
 
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='music' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
-        <Button onClick={handleClose} onTouchEnd={handleClose}>
-          <span className='close-icon' />
-        </Button>
+          <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+          <Button onClick={handleClose} onTouchEnd={handleClose}>
+            <span className='close-icon' />
+          </Button>
         </div>
-
-        
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-      <div className="music-title-container">
-      <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
-      <div className='count-down'>{formatTime(countdownTime)}</div>
-      </div>
-      <div className="buttons">
-        <Button onClick={handleBack}><SkipBackMiniFillIcon /></Button>
-        <Button onClick={handlePlay} disabled={playing}><PlayMiniFillIcon /></Button>
-        <Button onClick={handlePause} disabled={!playing}><PauseMiniFillIcon /></Button>
-        <Button onClick={handleStop}><StopMiniFillIcon /></Button>
-        <Button onClick={handleForward}><SkipForwardMiniFillIcon /></Button>
-      </div>
+        <div className="music-title-container">
+          <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
+          <div className='count-down'>{formatTime(countdownTime)}</div>
+        </div>
+        <div className="buttons">
+          <Button onClick={handleBack}><SkipBackMiniFillIcon /></Button>
+          <Button onClick={handlePlay} disabled={playing}><PlayMiniFillIcon /></Button>
+          <Button onClick={handlePause} disabled={!playing}><PauseMiniFillIcon /></Button>
+          <Button onClick={handleStop}><StopMiniFillIcon /></Button>
+          <Button onClick={handleForward}><SkipForwardMiniFillIcon /></Button>
+        </div>
       </WindowContent>
-     
     </WindowComponent>
   </Wrapper>
 
-  </Draggable>
+  </DraggableComponent>
 
   )
 }

@@ -28,6 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
+  const startupAudio = new Audio(win95startup);
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.025, y: 20} : { x: (window.innerWidth - 650)/2, y: 80 })
   const [helperDisplay, setHelperDisplay] = useState('none')
   const [username, setUsername] = useState('Admin')
@@ -75,8 +76,7 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
     setHelperDisplay('none')
     if (username == 'Admin' && password == 'admin') {
       signingIn(true)
-      const audio = new Audio(win95startup);
-      audio.play();
+      startupAudio.play();
     } else {
       event?.stopPropagation();
       setWelcomeActive(false)
