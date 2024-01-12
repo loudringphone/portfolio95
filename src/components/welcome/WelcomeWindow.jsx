@@ -34,25 +34,12 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
   const [username, setUsername] = useState('Admin')
   const [password, setPassword] = useState('admin')
   const [signinError, setSigninError] = useState(false)
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: 0, y: 0
-    }
-  });
 
   const onStart = () => {
     setHelperDisplay('none')
     setWelcomeActive(true)
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
+  const onStop = () => {};
   const dragHandlers = { onStart, onStop };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();

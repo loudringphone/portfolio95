@@ -9,22 +9,10 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     setPosition(iconPosition)
   }, [iconPosition])
   
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
   const onStart = () => {
     activiatingDockMenu(false)
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
+  const onStop = () => {};
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
