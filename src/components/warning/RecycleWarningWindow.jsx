@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice}) => {
+const RecycleWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice}) => {
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
   const [state, setState] = useState({
@@ -36,11 +36,11 @@ const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
     }
   });
 
-  const [initialPosition, setInitialPosition] = useState({ x: centerX - 200, y: centerY - 165 })
+  const [initialPosition, setInitialPosition] = useState({ x: centerX - 180, y: centerY - 135 })
 
   const onStart = () => {
-    setActiveTask('bin warning');
-    indexingWindows('bin warning')
+    setActiveTask('recycle warning');
+    indexingWindows('recycle warning')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
 
@@ -54,14 +54,14 @@ const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
   }
 
   const handleClick = () => {
-    displayingTask(false, 'bin warning')
+    displayingTask(false, 'recycle warning')
   }
 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
-    <Wrapper className="drag-warning" style={{zIndex: windowIndice['bin warning'], display: displayTasks.has('bin warning') ? 'block' : 'none'}}>
-    <WindowComponent task={'bin warning'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <strong className="cursor"><WindowHeader  active={activeTask == 'bin warning'} className='window-title'>
+    <Wrapper className="drag-warning" style={{zIndex: windowIndice['recycle warning'], display: displayTasks.has('recycle warning') ? 'block' : 'none'}}>
+    <WindowComponent task={'recycle warning'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <strong className="cursor"><WindowHeader  active={activeTask == 'recycle warning'} className='window-title'>
         <span>Warning</span>
 
         <div className="buttons">
@@ -77,7 +77,7 @@ const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
             alt="warning"
             style={{ height: "40px"}}
             />
-           To use this item, first drag it out of the Recycle Bin.
+           Recycle the recycle bin? It will break the machine!
         </div>
         <Button onClick={handleClick} onTouchStart={handleClick}> OK
         </Button>
@@ -91,4 +91,4 @@ const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
   )
 }
 
-export default BinWarningWindow
+export default RecycleWarningWindow

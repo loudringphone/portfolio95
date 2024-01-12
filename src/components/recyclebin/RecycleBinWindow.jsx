@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
+const RecycleBinWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, settingCursorPosition, isTouchDevice}) => {
     const [iconIndice, setIconIndice] = useState({
         'music': 0, 'portfolio': 0
       })
@@ -43,7 +43,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
   const [initialPosition, setInitialPosition] = useState({ x: 20, y: 15 })
 
   const onStart = () => {
-    activatingTask('recycle bin');
+    setActiveTask('recycle bin');
     indexingWindows('recycle bin')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -86,18 +86,18 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation} onDrag={handleDrag}>
-    <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}} ref={binWindowRef}>
-    <WindowComponent task={'recycle bin'} activatingTask={activatingTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
+    <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}}>
+    <WindowComponent task={'recycle bin'} setActiveTask={setActiveTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
         <span>Recycle Bin</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
         <Button onClick={()=>{displayingTask(false, 'recycle bin')}} onTouchEnd={()=>{displayingTask(false, 'recycle bin')}}>
           <span className='close-icon' />
         </Button>
         </div>
       </WindowHeader></strong>
-      {
+      {/* {
         !isTouchDevice ?
         <Toolbar className='toolbar'>
           <Button variant='menu' size='sm'>
@@ -115,8 +115,8 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
         </Toolbar>
         :
         <></>
-      }
-      <WindowContent className='window-content'>
+      } */}
+      <WindowContent className='window-content' ref={binWindowRef}>
         {
           !isTouchDevice ?
             <div className="bin-icons">
@@ -133,7 +133,7 @@ const RecycleBinWindow = ({displayTasks, displayingTask, activatingTask, activeT
                   activeTask={activeTask}
                   binRef={data.binRef}
                   binWindowRef={binWindowRef}
-                  activatingTask={activatingTask}
+                  setActiveTask={setActiveTask}
                   handlePickingIcon={handlePickingIcon}
                   handleLeavingIcon={handleLeavingIcon}
                   handleDisappearingIcon={handleDisappearingIcon}

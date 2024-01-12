@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, activatingTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice}) {
+function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice}) {
 
     const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
 
     const handleClickInsideWindow = (event) => {
         event.stopPropagation();
-        activatingTask('recycle bin');
+        setActiveTask('recycle bin');
         indexingWindows('recycle bin')
         const binRefs = Object.values(icons).map(task => task.binRef);
         if (binRefs.some(ref => ref?.current?.contains(event.target))) {
@@ -22,7 +22,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
       if (binWindowRef.current) {
         const referenceRect = binWindowRef.current.getBoundingClientRect();
         setFollowerPosition({
-          top: referenceRect.top + 75,
+          top: referenceRect.top,
           left: referenceRect.left,
         });
       }
@@ -37,7 +37,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
       className='recycle-bin-content'
       onClick={handleClickInsideWindow}
       style={{
-        height: binWindowRef.current?.clientHeight * 0.75,
+        height: binWindowRef.current?.clientHeight,
         width: binWindowRef.current?.clientWidth,
         top: `${followerPosition.top}px`,
         left: `${followerPosition.left}px`,
@@ -59,7 +59,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
             activeTask={activeTask}
             binRef={data.binRef}
             binWindowRef={binWindowRef}
-            activatingTask={activatingTask}
+            setActiveTask={setActiveTask}
             unrecyclingIcon={unrecyclingIcon}
             teleportingIcon={teleportingIcon}
             isTouchDevice={isTouchDevice}

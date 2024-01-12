@@ -16,6 +16,7 @@ import WelcomeWindow from './components/welcome/WelcomeWindow';
 import RecycleBinWindow from './components/recyclebin/RecycleBinWindow';
 import WarningWindow from './components/warning/WarningWindow';
 import BinWarningWindow from './components/warning/BinWarningWindow';
+import RecycleWarningWindow from './components/warning/RecycleWarningWindow';
 import BlueScreen from './components/bluescreen/BlueScreen';
 import win95energystar from './assets/images/win95-energystar.gif';
 import win95energystarMobile from './assets/images/win95-energystar-mobile.gif';
@@ -27,6 +28,7 @@ import safeTurnOff from './assets/images/safe-turn-off.jpeg';
 import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/icons'
 import RecycleBinContent from './components/recyclebin/RecycleBinContent';
 import win95recycle from './assets/sounds/win95recycle.wav'
+import win95error from './assets/sounds/win95error.mp3'
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -69,6 +71,8 @@ const App = () => {
   const [energyStar, setEnergyStar] = useState(true)
   const [binLastPos, setBinLastPos] = useState(null)
   const [recycleAudio, setRecycleAudio] = useState(new Audio(win95recycle))
+  const [errorAudio, setErrorAudio] = useState(new Audio(win95error))
+
   const [icons, setIcons] = useState({
     'resume': {
       Icon: Mailnews20,
@@ -235,16 +239,21 @@ const App = () => {
           }
         }));
         setSelectedBinIcon(task)
+        recycleAudio.play();
         setActiveTask('recycle bin')
       }
       else if (task == 'resume') {
-        activatingTask('warning')
+        setActiveTask('warning')
         indexingWindows('warning')
         displayingTask(true, 'warning')
         issuingWarning()
       }
       else if (task == 'recycle bin' && binLastPos) {
         positioningIcon(task, binLastPos.x - 28.29, binLastPos.y - 23.99)
+        setActiveTask('recycle warning')
+        displayingTask(true, 'recycle warning');
+        errorAudio.play();
+        indexingWindows('recycle warning')
       }
     }
   }
@@ -285,10 +294,6 @@ const App = () => {
     setWelcomeActive(boolean)
   }
 
-  const activatingTask = (str) => {
-    setActiveTask(str)
-  }
-
   const displayingTask = (boolean, str) => {
     const newDisplayTasks = new Set(displayTasks)
     if (boolean) {
@@ -306,14 +311,14 @@ const App = () => {
   const activiatingDockMenu = (boolean) => {
     setDockMenuActive(boolean)
     if (boolean) {
-      activatingTask(null)
+      setActiveTask(null)
     }
   }
 
   const handleDown = (event) => {
     activiatingDockMenu(false)
     activatingWelcome(false)
-    activatingTask(null)
+    setActiveTask(null)
     const desktopRefs = Object.values(icons).map(task => task.desktopRef);
     if (desktopRefs.some(ref => ref.current?.contains(event.target))) {
       return;
@@ -476,17 +481,18 @@ const App = () => {
     <GlobalStyles />
       <ThemeProvider theme={original}>
         <div className="desktop" ref={desktopRef} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
-          <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} settingBinLastPos={settingBinLastPos} />
-          <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} isTouchDevice={isTouchDevice}/>
-          <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} setPortfolioHeight={setPortfolioHeight} />
-          <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activatingTask={activatingTask} activeTask={activeTask} />
-          <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
-          <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} settingCursorPosition={settingCursorPosition} isTouchDevice={isTouchDevice} />
-          <BinWarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice} />
-          <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} activatingTask={activatingTask} activeTask={activeTask} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice} />
+          <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} selectingIcon={selectingIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} settingBinLastPos={settingBinLastPos} />
+          <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} isTouchDevice={isTouchDevice}/>
+          <PortfolioWindow displayingTask={displayingTask} settingProjectUrl={settingProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} setActiveTask={setActiveTask} activeTask={activeTask} setPortfolioHeight={setPortfolioHeight} />
+          <BrowserWindow settingProjectUrl={settingProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} setActiveTask={setActiveTask} activeTask={activeTask} />
+          <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} signed={signed} signOff={signOff} />
+          <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} settingCursorPosition={settingCursorPosition} isTouchDevice={isTouchDevice} />
+          <BinWarningWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice}/>
+          <RecycleWarningWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice} selectedIcon={selectedIcon}/>
+          <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} tasksVisibility={tasksVisibility} minimisingTasks={minimisingTasks} warnings={warnings} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice} errorAudio={errorAudio} />
         </div>
         { warnings >= 3 ?
-          <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} activatingTask={activatingTask} />
+          <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} setActiveTask={setActiveTask} />
           :
           <></>
         }
@@ -494,12 +500,12 @@ const App = () => {
         {
           isTouchDevice ?
           <RecycleBinContent binWindowRef={binWindowRef} cursorPosition={cursorPosition} windowIndice={windowIndice} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
-          activatingTask={activatingTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon}isTouchDevice={isTouchDevice} />
+          setActiveTask={setActiveTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon}isTouchDevice={isTouchDevice} />
           :
           <></>
         }
        
-       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} activatingTask={activatingTask} activeTask={activeTask} icons={icons} />
+       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} activatingWelcome={activatingWelcome} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} minimisingTasks={minimisingTasks} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} />
       </ThemeProvider>
     </Helmet>
   )

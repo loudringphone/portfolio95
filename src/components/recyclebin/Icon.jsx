@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, activatingTask, teleportingIcon, isTouchDevice, indexingWindows }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows }) => {
   const [position, setPosition] = useState({x: 0, y: 0});
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
@@ -22,7 +22,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setPicking(true)
     setIconZindex(99)
     indexingWindows('recycle bin')
-    activatingTask('recycle bin')
+    setActiveTask('recycle bin')
     setSelectedBinIcon(task)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -33,7 +33,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
   const handleUp = (event, task) => {
-    activatingTask('recycle bin')
+    setActiveTask('recycle bin')
     setPicking(true)
     setIconZindex(99)
     setSelectedBinIcon(task)
@@ -70,7 +70,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   const handleOpen = (event) => {
     if (event.type == 'dblclick') {
       setTimeout(() => {
-        activatingTask('bin warning')
+        setActiveTask('bin warning')
       }, 200);
       return
     }
@@ -78,7 +78,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setLastTouchTime(currentTime);
     if (currentTime - lastTouchTime <= 300) {
       setTimeout(() => {
-        activatingTask('bin warning')
+        setActiveTask('bin warning')
       }, 200);
     };
   }
