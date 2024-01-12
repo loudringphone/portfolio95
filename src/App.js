@@ -72,7 +72,7 @@ const App = () => {
   const [binLastPos, setBinLastPos] = useState(null)
   const [recycleAudio, setRecycleAudio] = useState(new Audio(win95recycle))
   const [errorAudio, setErrorAudio] = useState(new Audio(win95error))
-
+  const [iconDragPoint, setIconDragPoint] = useState({x: 0, y: 0})
   const [icons, setIcons] = useState({
     'resume': {
       Icon: Mailnews20,
@@ -198,10 +198,8 @@ const App = () => {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].binRef?.current?.contains(event.target));
 
       if (task) {
-        const iconRect = icons[task].iconRef.current.getBoundingClientRect();
-
-        const offsetX = cursorX - iconRect.width/2;
-        const offsetY = cursorY - iconRect.height/2;
+        const offsetX = cursorX - iconDragPoint.x;
+        const offsetY = cursorY - iconDragPoint.y;
         positioningIcon(task, offsetX, offsetY)
         setTimeout(() => {
           setIcons(prevTasks => ({
@@ -472,7 +470,7 @@ const App = () => {
           <PortfolioWindow displayingTask={displayingTask} setProjectUrl={setProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} setPortfolioHeight={setPortfolioHeight} />
           <BrowserWindow setProjectUrl={setProjectUrl} projectUrl={projectUrl} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} />
           <MusicWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} signed={signed} signOff={signOff} />
-          <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} setCursorPosition={setCursorPosition} isTouchDevice={isTouchDevice} />
+          <RecycleBinWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} setCursorPosition={setCursorPosition} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint}/>
           <BinWarningWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice}/>
           <RecycleWarningWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice} selectedIcon={selectedIcon}/>
           <WarningWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} warnings={warnings} activiatingDockMenu={activiatingDockMenu} indexingWindows={indexingWindows} windowIndice={windowIndice} errorAudio={errorAudio} />
@@ -486,7 +484,7 @@ const App = () => {
         {
           isTouchDevice ?
           <RecycleBinContent binWindowRef={binWindowRef} cursorPosition={cursorPosition} windowIndice={windowIndice} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
-          setActiveTask={setActiveTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon}isTouchDevice={isTouchDevice} />
+          setActiveTask={setActiveTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} />
           :
           <></>
         }
