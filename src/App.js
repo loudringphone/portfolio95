@@ -107,11 +107,11 @@ const App = () => {
           ...prevIcons,
           'resume': {
             ...prevIcons['resume'],
-            position: { x: 25, y: 25 },
+            position: { x: 125, y: 25 },
           },
           'portfolio': {
             ...prevIcons['portfolio'],
-            position: { x: 125, y: 25 },
+            position: { x: 25, y: 25 },
           },
           'music': {
             ...prevIcons['music'],
@@ -119,7 +119,7 @@ const App = () => {
           },
           'recycle bin': {
             ...prevIcons['recycle bin'],
-            position: { x: 125, y: 150 },
+            position: { x: 25, y: 275 },
           },
         };
       });
