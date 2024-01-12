@@ -1,28 +1,13 @@
-import React, { useState } from 'react'
+import React  from 'react'
 import Draggable from 'react-draggable';
 
 const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingWindows, children }) => {
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
-
   const onStart = () => {
     setActiveTask(task);
     indexingWindows(task)
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
-
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
+  const onStop = () => {};
   const dragHandlers = { onStart, onStop };
-
   const stopPropagation = (event) => {
     event.stopPropagation();
   }

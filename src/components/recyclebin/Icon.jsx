@@ -7,26 +7,15 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
   const [iconZindex, setIconZindex] = useState(0)
-  const [state, setState] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0, y: 0
-    },
-    controlledPosition: {
-      x: -400, y: 200
-    }
-  });
+  
   const onStart = (event) => {
     event.stopPropagation();
     setIconZindex(99)
     indexingWindows('recycle bin')
     setActiveTask('recycle bin')
     setSelectedBinIcon(task)
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
-  const onStop = () => {
-    setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags - 1 }));
-  };
+  const onStop = () => {};
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
