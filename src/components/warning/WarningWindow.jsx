@@ -3,11 +3,9 @@ import Draggable from 'react-draggable';
 import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
-import win95error from '../../assets/sounds/win95error.mp3'
 
 import {
   Button,
-  Window,
   WindowContent,
   WindowHeader,
 } from 'react95';
@@ -26,8 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, warnings}) => {
-  const [errorAudio, setErrorAudio] = useState(new Audio(win95error));
+const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, warnings, errorAudio}) => {
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
   const [state, setState] = useState({
@@ -43,7 +40,7 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
   const [initialPosition, setInitialPosition] = useState({ x: centerX - 180, y: centerY - 165 })
 
   const onStart = () => {
-    activatingTask('warning');
+    setActiveTask('warning');
     indexingWindows('warning')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -62,7 +59,7 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
   }
 
   const handleMouseDown = () => {
-    activatingTask('warning');
+    setActiveTask('warning');
     indexingWindows('warning');
   }
 
@@ -77,7 +74,7 @@ const WarningWindow = ({displayTasks, displayingTask, activatingTask, activeTask
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-warning" style={{zIndex: windowIndice.warning, display: displayTasks.has('warning') ? 'block' : 'none'}}>
-    <WindowComponent task={'warning'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
+    <WindowComponent task={'warning'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'warning'} className='window-title'>
         <span>Warning</span>
         <div className="buttons">

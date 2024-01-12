@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, activatingTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, settingBinLastPos }) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimisingTasks, setActiveTask, issuingWarning, activiatingDockMenu, selectingIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, settingBinLastPos }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
@@ -28,7 +28,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
       [task]: 'visible'
     };
     minimisingTasks(updatedTasksVisibility);
-    activatingTask(task);
+    setActiveTask(task);
     displayingTask(true, task);
     indexingWindows(task);
     indexingIcons(task);
@@ -36,7 +36,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
   const handleIconMobile = (event, task) => {
     event.stopPropagation();
 
-    activatingTask(null)
+    setActiveTask(null)
     const updatedIconIndice = {
       ...iconIndice,
       [task]: 99
@@ -52,7 +52,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
         [task]: 'visible'
       };
       minimisingTasks(updatedTasksVisibility);
-      activatingTask(task)
+      setActiveTask(task)
       displayingTask(true, task)
       indexingWindows(task)
       indexingIcons(task)
@@ -99,7 +99,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, minimi
 
     if (isOverlapping) {
       if (task == 'resume') {
-        activatingTask('warning')
+        setActiveTask('warning')
         displayingTask(true, 'warning')
         indexingWindows('warning')
         return issuingWarning()

@@ -1,10 +1,10 @@
 import React from 'react'
 import './bluescreen.css'
 
-const BlueScreen = ({displayBSOD, displayingBSOD, activatingTask, resettingWarnings}) => {
+const BlueScreen = ({displayBSOD, displayingBSOD, setActiveTask, resettingWarnings}) => {
   const handleClick = () => {
     displayingBSOD(false)
-    activatingTask('warning')
+    setActiveTask('warning')
   }
   return (
     <div className='blue-screen' onClick={handleClick} style={{display: displayBSOD}}>

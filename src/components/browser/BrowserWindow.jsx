@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, activatingTask, activeTask}) => {
+const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, setActiveTask, activeTask}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -35,7 +35,7 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
 
   const onStart = (event) => {
     event.stopPropagation();
-    activatingTask('browser');
+    setActiveTask('browser');
     indexingWindows('browser')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -59,11 +59,11 @@ const BrowserWindow = ({settingProjectUrl, projectUrl, displayTasks, displayingT
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-browser" style={{zIndex: windowIndice.browser, display: displayTasks.has('browser') ? 'block' : 'none', visibility: tasksVisibility.browser}}>
-    <WindowComponent task={'browser'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
+    <WindowComponent task={'browser'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
       <strong className="cursor"><WindowHeader  active={activeTask == 'browser'} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='browser' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>

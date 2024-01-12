@@ -1,10 +1,10 @@
 import React from 'react'
 import { Window } from 'react95';
 
-const WindowComponent = ({ task, activatingTask, indexingWindows, icons, setSelectedBinIcon, children }) => {
+const WindowComponent = ({ task, setActiveTask, indexingWindows, icons, setSelectedBinIcon, children }) => {
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    activatingTask(task);
+    setActiveTask(task);
     indexingWindows(task);
 
     if (task == 'recycle bin') {
@@ -17,7 +17,7 @@ const WindowComponent = ({ task, activatingTask, indexingWindows, icons, setSele
   };
   
   const handleMouseDown = () => {
-    activatingTask(task);
+    setActiveTask(task);
     indexingWindows(task);
   }
 

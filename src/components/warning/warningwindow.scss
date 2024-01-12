@@ -2,7 +2,7 @@
   .drag-warning {
   }
 }
-.warning-window{
+.warning-window, .bin-warning-window, .recycle-warning-window {
   .window-title {
         user-select: none;
         display: flex;

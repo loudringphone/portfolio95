@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks ,signed, signOff}) => {
+const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks ,signed, signOff}) => {
   const [state, setState] = useState({
     activeDrags: 0,
     deltaPosition: {
@@ -50,7 +50,7 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   const [isSkipped, setIsSkipped] = useState(false)
   const onStart = (event) => {
     event.stopPropagation();
-    activatingTask('music');
+    setActiveTask('music');
     indexingWindows('music')
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -196,12 +196,12 @@ const MusicWindow = ({displayTasks, displayingTask, activatingTask, activeTask, 
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-music" style={{zIndex: windowIndice['music'], display: displayTasks.has('music') ? 'block' : 'none', visibility: tasksVisibility.music}}>
-    <WindowComponent task={'music'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
+    <WindowComponent task={'music'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader  active={activeTask == 'music'} className='window-title'>
         <span>music.exe</span>
 
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='music' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='music' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>

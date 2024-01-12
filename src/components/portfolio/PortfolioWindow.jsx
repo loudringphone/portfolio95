@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activatingTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, setPortfolioHeight}) => {
+const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, minimisingTasks, setPortfolioHeight}) => {
   const [projectSelected, setProjectSelected] = useState(null)
   const [state, setState] = useState({
     activeDrags: 0,
@@ -47,7 +47,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   const newTasksVisibility = new Object(tasksVisibility)
   newTasksVisibility.browser = 'visible'
   minimisingTasks(newTasksVisibility)
-  activatingTask('browser')
+  setActiveTask('browser')
   indexingWindows('browser')
   displayingTask(true, 'browser')
   }
@@ -56,7 +56,7 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   }
   const onStart = (event) => {
     event.stopPropagation();
-    activatingTask('portfolio')
+    setActiveTask('portfolio')
     indexingWindows('portfolio', windowIndice)
     setState(prevState => ({ ...prevState, activeDrags: prevState.activeDrags + 1 }));
   };
@@ -85,11 +85,11 @@ const PortfolioWindow = ({displayingTask, settingProjectUrl, displayTasks, activ
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
     <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndice['portfolio'], display: displayTasks.has('portfolio') ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <WindowComponent task={'portfolio'} activatingTask={activatingTask} indexingWindows={indexingWindows}>
+    <WindowComponent task={'portfolio'} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
     <strong className="cursor"><WindowHeader active={activeTask == 'portfolio'} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} activatingTask={activatingTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task='portfolio' minimisingTasks={minimisingTasks} setActiveTask={setActiveTask}/>
         <Button onClick={()=>{displayingTask(false, 'portfolio')}} onTouchEnd={()=>{displayingTask(false, 'portfolio')}}>
           <span className='close-icon' />
         </Button>

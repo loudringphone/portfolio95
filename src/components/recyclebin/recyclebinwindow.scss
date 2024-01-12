@@ -81,7 +81,7 @@
         border: 1px solid gray;
         flex-direction: column;
         width: 300px;
-        height: 300px;
+        height: 250px;
         .warning {
           display: flex;
           gap: 1rem;
@@ -105,7 +105,7 @@
   background-color: transparent;
   position: absolute;
   z-index: 10;
-  height: 75%;
+  height: 85%;
   width: 100%;
 
   .bin-icons {
