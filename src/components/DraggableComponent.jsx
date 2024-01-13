@@ -1,7 +1,7 @@
 import React  from 'react'
 import Draggable from 'react-draggable';
 
-const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingWindows, children }) => {
+const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingWindows, handleDrag, children }) => {
   const onStart = () => {
     setActiveTask(task);
     indexingWindows(task)
@@ -12,6 +12,14 @@ const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingWind
     event.stopPropagation();
   }
   
+  if (handleDrag) {
+    return (
+      <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation} onDrag={handleDrag}>
+        {children}
+      </Draggable>
+    )
+  }
+
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
       {children}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Window } from 'react95';
 
-const WindowComponent = ({ task, setTouchStartY, setDocumentPosition, setActiveTask, indexingWindows, icons, setSelectedBinIcon, children }) => {
+const WindowComponent = ({ task, handleTouchStart, setActiveTask, indexingWindows, icons, setSelectedBinIcon, children }) => {
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     setActiveTask(task);
@@ -20,6 +20,14 @@ const WindowComponent = ({ task, setTouchStartY, setDocumentPosition, setActiveT
     indexingWindows(task);
   }
 
+  if (handleTouchStart) {
+    return (
+      <Window className={`${task.replaceAll(' ', '-')}-window`} onClick={handleClickInsideWindow} onMouseDown={handleMouseDown} onTouchStartCapture={handleTouchStart}>
+      {children}
+    </Window>
+    )
+  }
+  
   return (
     <Window className={`${task.replaceAll(' ', '-')}-window`} onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
       {children}

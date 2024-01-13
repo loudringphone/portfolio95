@@ -3,7 +3,6 @@ import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
-  Window,
   Button,
   WindowContent,
   WindowHeader,
@@ -76,7 +75,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
     <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndice[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <Window className='portfolio-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown} onTouchStartCapture={handleTouchStart}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows} handleTouchStart={handleTouchStart}>
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
@@ -124,8 +123,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
      }
         
       </WindowContent>
-     
-    </Window>
+    </WindowComponent>
   </Wrapper>
   </DraggableComponent>
   )
