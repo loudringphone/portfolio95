@@ -81,8 +81,8 @@ const ProjectTree = ({ activeTask, setProjectSelected, displayTasks, setTouchSta
   }, [displayTasks])
   
   return (
-    <Wrapper onTouchStartCapture={handleTouchStart}>
-    <div style={{ width: '250px' }}>
+    <Wrapper>
+    <div style={{ width: '250px' }} onTouchStartCapture={handleTouchStart}>
       <GroupBox label='Portfolio'>
         <TreeView
           tree={portfolio}
