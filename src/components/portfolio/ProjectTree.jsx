@@ -41,8 +41,8 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
 
   return (
     <div style={{ width: '250px' }} ref={treeRef} onTouchStartCapture={handleTouchStart}>
-      <GroupBox label='Portfolio' onTouchStartCapture={handleTouchStart}>
-        <TreeView onTouchStartCapture={handleTouchStart}
+      <GroupBox label='Portfolio'>
+        <TreeView
           tree={portfolio}
           onNodeSelect={(_, id) => setSelected(id)}
           onNodeToggle={(_, ids) => setExpanded(ids)}
