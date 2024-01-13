@@ -343,11 +343,20 @@ const App = () => {
   const desktopRef = useRef(null)
   const portfolioRef = useRef(null)
   useEffect(() => {
+    if (!desktopRef.current) return;
+    window.removeEventListener('touchmove', handleTouchMove)
     if (activeTask == 'bin warning') {
       displayingTask(true, 'bin warning');
       indexingWindows('bin warning');
     } else if (activeTask) {
       activiatingDockMenu(false)
+    }
+    const portfolioWindow = portfolioRef.current
+    if (portfolioWindow && portfolioWindow.clientHeight >= 700) {
+      desktopRef.current.style.minHeight = '900px';
+    } else {
+      const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
+      desktopRef.current.style.minHeight = '100vh';
     }
   }, [activeTask]); 
 
@@ -357,6 +366,7 @@ const App = () => {
     if (portfolioWindow && portfolioWindow.clientHeight >= 700) {
       desktopRef.current.style.minHeight = '900px';
     } else {
+      const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
       desktopRef.current.style.minHeight = '100vh';
     }
   },[portfolioRef])
