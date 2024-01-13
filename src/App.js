@@ -103,6 +103,7 @@ const App = () => {
       position: { x: 25, y: 400 },
     },
   })
+  const [iconsInBin, setIconsInBin] = useState(new Set())
 
   useEffect(() => {
     if (!isTouchDevice) {
@@ -478,7 +479,7 @@ const App = () => {
     <Helmet>
     <GlobalStyles />
       <ThemeProvider theme={original}>
-        <div className="desktop" ref={desktopRef} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon}>
+        <div className="desktop" ref={desktopRef} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon} onTouchStartCapture={handleTouchStart}>
           <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} setSelectedIcon={setSelectedIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} setBinLastPos={setBinLastPos} />
           <ResumeWindow displayingTask={displayingTask} displayTasks={displayTasks} setActiveTask={setActiveTask} activeTask={activeTask} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} isTouchDevice={isTouchDevice}/>
           <PortfolioWindow displayingTask={displayingTask} setProjectUrl={setProjectUrl} displayTasks={displayTasks} indexingWindows={indexingWindows} windowIndice={windowIndice} tasksVisibility={tasksVisibility} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} setPortfolioHeight={setPortfolioHeight} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition}/>
