@@ -72,7 +72,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ProjectTree activeTask={activeTask} setProjectSelected={setProjectSelected} displayTasks={displayTasks} />
+    <ProjectTree activeTask={activeTask} setProjectSelected={setProjectSelected} displayTasks={displayTasks} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition}/>
     { projectSelected && projectSelected != "projects" ?
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
