@@ -29,11 +29,11 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
     }
   };
   useEffect(() => {
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    // window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
-    return () => {
-      window.removeEventListener('touchmove', handleTouchMove)
-    };
+    // return () => {
+    //   window.removeEventListener('touchmove', handleTouchMove)
+    // };
   }, [touchStartY, documentPosition]);
 
   return (

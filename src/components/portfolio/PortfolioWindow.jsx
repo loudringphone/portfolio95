@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition}) => {
+const PortfolioWindow = ({portfolioRef, displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, setTouchStartY, setDocumentPosition}) => {
   const task = 'portfolio'
   const initialPosition = window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 }
 
@@ -48,15 +48,6 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   indexingWindows('browser')
   displayingTask(true, 'browser')
   }
-
-  const portfolioRef = useRef(null)
-  useEffect(() => {
-    if (displayTasks.has(task)) {
-      setPortfolioHeight(portfolioRef.current.clientHeight);
-    } else {
-      setPortfolioHeight(0);
-    }
-  }, [projectSelected, displayTasks]);
 
   const handleTouchStart = (event) => {
     setTouchStartY(event.touches[0].clientY);
