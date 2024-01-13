@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GroupBox, TreeView } from 'react95';
 import { portfolio } from './portfolio';
+import { debounce } from '../../functions/debounce';
 
 const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, expanded, setExpanded }) => {
   const treeRef = useRef(null)
@@ -28,7 +29,7 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
     if (documentPosition === 0 && touchEndY > touchStartY) {
       event.preventDefault();
     }
-  });
+  }, 100);
   useEffect(() => {
     const tree = treeRef.current
     if (tree) {
