@@ -30,7 +30,7 @@ function getIds(item) {
 
 portfolio.forEach(getIds);
 
-const ProjectTree = ({ activeTask, setProjectSelected, displayTasks, setTouchStartY, setDocumentPosition }) => {
+const ProjectTree = ({ activeTask, setProjectSelected, displayTasks }) => {
   const [selected, setSelected] = useState(null);
   const [expanded, setExpanded] = useState([]);
   const theme = useContext(ThemeContext);
@@ -53,11 +53,6 @@ const ProjectTree = ({ activeTask, setProjectSelected, displayTasks, setTouchSta
   }
   `;
 
-  const handleTouchStart = (event) => {
-    setTouchStartY(event.touches[0].clientY);
-    setDocumentPosition(document.documentElement.scrollTop);
-  };
-
   useEffect(() => {
     if (activeTask === 'portfolio') {
       setSelectedBackgroundColor(() => theme.headerBackground)
@@ -79,11 +74,33 @@ const ProjectTree = ({ activeTask, setProjectSelected, displayTasks, setTouchSta
       setExpanded([])
     }
   }, [displayTasks])
+
+  const [touchStartY, setTouchStartY] = useState(null)
+  const [documentPosition, setDocumentPosition] = useState(null)
+  const handleTouchStart = (event) => {
+    setTouchStartY(event.touches[0].clientY);
+    setDocumentPosition(document.documentElement.scrollTop);
+  };
+  const handleTouchMove = (event) => {
+    const touchEndY = event.touches[0].clientY;
+    if (documentPosition === 0 && touchEndY > touchStartY) {
+      event.preventDefault();
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove)
+    };
+  }, [touchStartY, documentPosition]);
   
   return (
     <Wrapper>
-    <div style={{ width: '250px' }} onTouchStartCapture={handleTouchStart}>
-      <GroupBox label='Portfolio' onTouchStartCapture={handleTouchStart}>
+    <div style={{ width: '250px' }} onTouchStartCapture={handleTouchStart} onTouchMove={handleTouchMove}>
+      <GroupBox label='Portfolio'>
         <TreeView
           tree={portfolio}
           onNodeSelect={(_, id) => setSelected(id)}
@@ -91,7 +108,6 @@ const ProjectTree = ({ activeTask, setProjectSelected, displayTasks, setTouchSta
           expanded={expanded}
           selected={selected}
           className="custom-tree-view"
-          onTouchStartCapture={handleTouchStart}
         />
       </GroupBox>
     </div>
