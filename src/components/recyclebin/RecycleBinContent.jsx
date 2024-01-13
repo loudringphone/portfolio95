@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint}) {
+function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
 
     const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
 
@@ -9,9 +9,8 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
         event.stopPropagation();
         setActiveTask('recycle bin');
         indexingWindows('recycle bin')
-        const binRefs = Object.values(icons).map(task => task.binRef);
-        if (binRefs.some(ref => ref?.current?.contains(event.target))) {
-          return;
+        if (event.target.className != 'icon-whole') {
+          setSelectedBinIcon(null)
         }
       };
     
@@ -50,7 +49,12 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
             task !== 'resume' && task !== 'recycle bin' && (
             <Icon
               key={task}
-              icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
+              icon={
+                React.createElement(
+                  data.Icon,
+                  { style: { height: '60px', width: '60px', padding: '4px' } }
+                )
+              }
               task={task}
               visibility={data.visibility}
               setSelectedBinIcon={setSelectedBinIcon}
@@ -64,6 +68,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
               isTouchDevice={isTouchDevice}
               indexingWindows={indexingWindows}
               setIconDragPoint={setIconDragPoint}
+              settingIconsInBin={settingIconsInBin}
             />
           )))
         }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows, setIconDragPoint }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows, setIconDragPoint, settingIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
@@ -32,6 +32,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       cursorY < binRect.y || cursorY > binRect.y + binRect.height
     ) {
       setIconDisplay('none')
+      settingIconsInBin(false, task)
       if (isTouchDevice) {
         teleportingIcon(event)
       }
@@ -50,6 +51,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   useEffect(() => {
       if (visibility == 'hidden') {
         setIconDisplay('block')
+        settingIconsInBin(true, task)
       }
   }, [visibility])
   
