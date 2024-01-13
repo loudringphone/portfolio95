@@ -30,13 +30,12 @@ function getIds(item) {
 
 portfolio.forEach(getIds);
 
-const ProjectTree = ({activeTask, setProjectSelected, displayTasks}) => {
+const ProjectTree = ({ activeTask, setProjectSelected, displayTasks, setTouchStartY, setDocumentPosition }) => {
   const [selected, setSelected] = useState(null);
   const [expanded, setExpanded] = useState([]);
   const theme = useContext(ThemeContext);
   const [selectedBackgroundColor, setSelectedBackgroundColor] = useState(() => theme.headerBackground);
   const [selectedFontColor, setSelectedFontColor] = useState('#FFFFFF');
-
   const Wrapper = styled.div`
   background: ${({ theme }) => theme.material};
   .tree-button-area {
@@ -52,18 +51,23 @@ const ProjectTree = ({activeTask, setProjectSelected, displayTasks}) => {
     background-color: ${selectedBackgroundColor};
     color: ${selectedFontColor};
   }
-`;
+  `;
 
-useEffect(() => {
-  if (activeTask === 'portfolio') {
-    setSelectedBackgroundColor(() => theme.headerBackground)
-    setSelectedFontColor('#FFFFFF')
-  } else {
-    setSelectedBackgroundColor('#7f787f')
-    setSelectedFontColor('#c6c6c6')
+  const handleTouchStart = (event) => {
+    setTouchStartY(event.touches[0].clientY);
+    setDocumentPosition(document.documentElement.scrollTop);
+  };
 
-  }
-}, [activeTask])
+  useEffect(() => {
+    if (activeTask === 'portfolio') {
+      setSelectedBackgroundColor(() => theme.headerBackground)
+      setSelectedFontColor('#FFFFFF')
+    } else {
+      setSelectedBackgroundColor('#7f787f')
+      setSelectedFontColor('#c6c6c6')
+
+    }
+  }, [activeTask])
 
   useEffect(() => {
     setProjectSelected(selected)
@@ -77,7 +81,7 @@ useEffect(() => {
   }, [displayTasks])
   
   return (
-    <Wrapper>
+    <Wrapper onTouchStartCapture={handleTouchStart}>
     <div style={{ width: '250px' }}>
       <GroupBox label='Portfolio'>
         <TreeView
