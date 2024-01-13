@@ -388,12 +388,12 @@ const App = () => {
     setTouchStartY(event.touches[0].clientY);
     setDocumentPosition(document.documentElement.scrollTop);
   };
-  const handleTouchMove = (event) => {
+  const handleTouchMove = debounce((event) => {
     const touchEndY = event.touches[0].clientY;
     if (documentPosition === 0 && touchEndY > touchStartY) {
       event.preventDefault();
     }
-  };
+  });
   useEffect(() => {
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
