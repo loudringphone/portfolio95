@@ -51,6 +51,9 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
         ...tasksVisibility,
         [task]: 'visible'
       };
+      if (task == 'recycle bin') {
+        setBinLastPos(null)
+      }
       setTasksVisibility(updatedTasksVisibility);
       setActiveTask(task)
       displayingTask(true, task)
