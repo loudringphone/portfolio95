@@ -29,6 +29,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import RecycleBinContent from './components/recyclebin/RecycleBinContent';
 import win95recycle from './assets/sounds/win95recycle.wav'
 import win95error from './assets/sounds/win95error.mp3'
+import { debounce } from './functions/debounce';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -393,7 +394,7 @@ const App = () => {
     if (documentPosition === 0 && touchEndY > touchStartY) {
       event.preventDefault();
     }
-  });
+  }, 100);
   useEffect(() => {
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
