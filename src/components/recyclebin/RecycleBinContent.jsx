@@ -45,27 +45,27 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
       }}
     >
       <div className="bin-icons">
-        {Object.entries(icons).map(([task, data]) => (
-          task !== 'resume' && task !== 'recycle bin' && (
-          <Icon
-            key={task}
-            icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
-            task={task}
-            visibility={data.visibility}
-            setSelectedBinIcon={setSelectedBinIcon}
-            selectedBinIcon={selectedBinIcon}
-            activeTask={activeTask}
-            binRef={data.binRef}
-            binWindowRef={binWindowRef}
-            setActiveTask={setActiveTask}
-            unrecyclingIcon={unrecyclingIcon}
-            teleportingIcon={teleportingIcon}
-            isTouchDevice={isTouchDevice}
-            indexingWindows={indexingWindows}
-            setIconDragPoint={setIconDragPoint}
-          />
-        )))
-        
+        {
+          Object.entries(icons).map(([task, data]) => (
+            task !== 'resume' && task !== 'recycle bin' && (
+            <Icon
+              key={task}
+              icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
+              task={task}
+              visibility={data.visibility}
+              setSelectedBinIcon={setSelectedBinIcon}
+              selectedBinIcon={selectedBinIcon}
+              activeTask={activeTask}
+              binRef={data.binRef}
+              binWindowRef={binWindowRef}
+              setActiveTask={setActiveTask}
+              unrecyclingIcon={unrecyclingIcon}
+              teleportingIcon={teleportingIcon}
+              isTouchDevice={isTouchDevice}
+              indexingWindows={indexingWindows}
+              setIconDragPoint={setIconDragPoint}
+            />
+          )))
         }
       </div>
     </div>

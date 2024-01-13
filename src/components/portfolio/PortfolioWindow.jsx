@@ -57,16 +57,6 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
     }
   }, [displayTasks])
 
-  const handleClickInsideWindow = (event) => {
-    event.stopPropagation();
-    setActiveTask(task);
-    indexingWindows(task);
-  };
-  const handleMouseDown = () => {
-    setActiveTask(task);
-    indexingWindows(task);
-  }
-
   const handleTouchStart = (event) => {
     setTouchStartY(event.touches[0].clientY);
     setDocumentPosition(document.documentElement.scrollTop);
