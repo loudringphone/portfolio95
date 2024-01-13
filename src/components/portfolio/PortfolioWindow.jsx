@@ -1,4 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
+import ActiveProjectTree from './ActiveProjectTree';
+import InactiveProjectTree from './InactiveProjectTree';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
@@ -10,7 +12,6 @@ import {
   TextInput
 } from 'react95';
 import styled from 'styled-components';
-import ProjectTree from './ProjectTree';
 import { projects } from './projects';
 import './portfoliowindow.scss'
 
@@ -29,6 +30,9 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   const initialPosition = window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 }
 
   const [projectSelected, setProjectSelected] = useState(null)
+  const [selected, setSelected] = useState(null);
+  const [expanded, setExpanded] = useState([]);
+
   const handleGit = (event) => {
     event.stopPropagation();
     const newTab = window.open(projects[projectSelected].git, '_blank');
@@ -77,7 +81,12 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
         
       </WindowHeader></strong>
       <WindowContent className='window-content'>
-    <ProjectTree activeTask={activeTask} setProjectSelected={setProjectSelected} displayTasks={displayTasks}/>
+    {
+      activeTask == task ?
+      <ActiveProjectTree setProjectSelected={setProjectSelected} displayTasks={displayTasks} selected={selected} setSelected={setSelected} expanded={expanded} setExpanded={setExpanded}/>
+    :
+      <InactiveProjectTree setProjectSelected={setProjectSelected} displayTasks={displayTasks} selected={selected} setSelected={setSelected} expanded={expanded} setExpanded={setExpanded}/>
+    }
     { projectSelected && projectSelected != "projects" ?
     <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
