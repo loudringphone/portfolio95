@@ -1,38 +1,37 @@
 .start-button {
-    margin-right: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 @media (min-width: 500px) {
-    .task {
-        width: 200px !important;
-    }
+	.task {
+			width: 200px !important;
+	}
 }
 @media (max-width: 500px) {
-    .task {
-        width: 20vw !important;
-    }
+	.task {
+			width: 20vw !important;
+	}
 }
 .task {
-    justify-content: flex-start !important;
-    background-image: none !important;
-    white-space: nowrap;
-    overflow: hidden; 
+	justify-content: flex-start !important;
+	background-image: none !important;
+	white-space: nowrap;
+	overflow: hidden; 
 }
 
 .jrwZug:not(:first-child) {
-    background-color: rgb(245, 245, 245);
+	background-color: rgb(245, 245, 245);
 }
 
 .start-button {
-    background-image: none !important;
-    background-color: rgb(185, 185, 185) !important;
+	background-image: none !important;
+	background-color: rgb(185, 185, 185) !important;
 }
 .start-button:active {
-    outline:2px dotted #0a0a0a !important;
-    outline-offset:-8px;
+	outline:2px dotted #0a0a0a !important;
+	outline-offset:-8px;
 }
 .jrwZug:first-child:after {
-    outline:2px dotted #0a0a0a !important;
-    outline-offset:-8px;
-
+	outline:2px dotted #0a0a0a !important;
+	outline-offset:-8px;
 }
