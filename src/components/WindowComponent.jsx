@@ -8,11 +8,10 @@ const WindowComponent = ({ task, handleTouchStart, setActiveTask, indexingWindow
     indexingWindows(task);
 
     if (task == 'recycle bin') {
-      const binRefs = Object.values(icons).map(task => task.binRef);
-      if (binRefs.some(ref => ref?.current?.contains(event.target))) {
-        return;
+      const elementClass = event.target.className
+      if (elementClass.includes('window-content') || elementClass == 'bin-icons') {
+        setSelectedBinIcon(null)
       }
-      setSelectedBinIcon(null)
     }
   };
   const handleMouseDown = () => {
@@ -27,7 +26,7 @@ const WindowComponent = ({ task, handleTouchStart, setActiveTask, indexingWindow
     </Window>
     )
   }
-  
+
   return (
     <Window className={`${task.replaceAll(' ', '-')}-window`} onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
       {children}
