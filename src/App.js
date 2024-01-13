@@ -226,6 +226,10 @@ const App = () => {
           [task]: {
             ...prevTasks[task],
             visibility: 'hidden'
+          },
+          "recycle bin": {
+            ...prevTasks["recycle bin"],
+            Icon: Shell3233
           }
         }));
         setSelectedBinIcon(task)
