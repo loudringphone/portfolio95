@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Draggable from 'react-draggable';
+import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
 import Icon from './Icon';
@@ -32,16 +32,6 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
   const initialPosition = { x: 20, y: 15 }
   const [iconIndice, setIconIndice] = useState({ 'music': 0, 'portfolio': 0 })
 
-  const onStart = () => {
-    setActiveTask(task);
-    indexingWindows(task)
-  };
-  const onStop = () => {};
-  const dragHandlers = { onStart, onStop };
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  }
-
   const handlePickingIcon = (task) => {
     const updatedIconIndice = {
       ...iconIndice,
@@ -69,7 +59,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
   }
 
   return (
-    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation} onDrag={handleDrag}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows} handleDrag={handleDrag}>
       <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}}>
         <WindowComponent task={'recycle bin'} setActiveTask={setActiveTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
           <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
@@ -138,7 +128,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
         </Frame>
       </WindowComponent>
     </Wrapper>
-  </Draggable>
+  </DraggableComponent>
   )
 }
 
