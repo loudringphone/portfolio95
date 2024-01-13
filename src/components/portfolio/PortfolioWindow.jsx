@@ -7,7 +7,7 @@ import {
   WindowContent,
   WindowHeader,
   ScrollView,
-  TextInput,
+  TextInput
 } from 'react95';
 import styled from 'styled-components';
 import ProjectTree from './ProjectTree';
