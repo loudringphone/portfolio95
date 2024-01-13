@@ -381,14 +381,30 @@ const App = () => {
   },[shutDown])
 
   useEffect(() => {
-    const preventPullToRefresh = (event) => {
-      event.preventDefault();
+    let touchStartY;
+
+    const handleTouchStart = (event) => {
+      touchStartY = event.touches[0].clientY;
     };
-    window.addEventListener('touchmove', preventPullToRefresh, { passive: false });
+
+    const handleTouchMove = (event) => {
+      const touchEndY = event.changedTouches[0].clientY;
+      const scrollY = window.scrollY || window.pageYOffset;
+
+      if (scrollY === 0 && touchEndY > touchStartY) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
     return () => {
-      window.removeEventListener('touchmove', preventPullToRefresh);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, []);
+
 
   if (turnOff) {
     return (
