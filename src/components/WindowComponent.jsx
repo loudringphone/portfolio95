@@ -21,8 +21,8 @@ const WindowComponent = ({ task, setTouchStartY, setDocumentPosition, setActiveT
   }
 
   const handleTouchStart = (event) => {
-    // setTouchStartY(event.touches[0].clientY);
-    // setDocumentPosition(document.documentElement.scrollTop);
+    setTouchStartY(event.touches[0].clientY);
+    setDocumentPosition(document.documentElement.scrollTop);
   };
   
   return (
