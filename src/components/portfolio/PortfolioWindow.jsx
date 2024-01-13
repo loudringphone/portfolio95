@@ -51,15 +51,12 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
 
   const portfolioRef = useRef(null)
   useEffect(() => {
-    setPortfolioHeight(portfolioRef.current.clientHeight)
-  }, [projectSelected])
-  useEffect(() => {
     if (displayTasks.has(task)) {
-      setPortfolioHeight(portfolioRef.current.clientHeight)
+      setPortfolioHeight(portfolioRef.current.clientHeight);
     } else {
-      setPortfolioHeight(0)
+      setPortfolioHeight(0);
     }
-  }, [displayTasks])
+  }, [projectSelected, displayTasks]);
 
   const handleTouchStart = (event) => {
     setTouchStartY(event.touches[0].clientY);
