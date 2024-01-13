@@ -20,13 +20,8 @@ const WindowComponent = ({ task, setTouchStartY, setDocumentPosition, setActiveT
     indexingWindows(task);
   }
 
-  const handleTouchStart = (event) => {
-    setTouchStartY(event.touches[0].clientY);
-    setDocumentPosition(document.documentElement.scrollTop);
-  };
-  
   return (
-    <Window className={`${task.replaceAll(' ', '-')}-window`} onClick={handleClickInsideWindow} onMouseDown={handleMouseDown} onTouchStartCapture={handleTouchStart}>
+    <Window className={`${task.replaceAll(' ', '-')}-window`} onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
       {children}
     </Window>
   )
