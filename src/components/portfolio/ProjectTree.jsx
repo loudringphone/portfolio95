@@ -88,11 +88,9 @@ const ProjectTree = ({ activeTask, setProjectSelected, displayTasks }) => {
     }
   };
   useEffect(() => {
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove)
     };
   }, [touchStartY, documentPosition]);
