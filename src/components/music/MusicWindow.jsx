@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff}) => {
+const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff, isTouchDevice}) => {
   const task = 'music'
 
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
@@ -186,7 +186,11 @@ const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, i
       </WindowHeader></strong>
       <WindowContent className='window-content'>
         <div className="music-title-container">
-          <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
+          { isTouchDevice && activeTask != task && displayTasks.has('portfolio') ?
+            <p className='music-title'>{music[musicIndex].title}</p>
+          :
+            <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
+          }
           <div className='count-down'>{formatTime(countdownTime)}</div>
         </div>
         <div className="buttons">
