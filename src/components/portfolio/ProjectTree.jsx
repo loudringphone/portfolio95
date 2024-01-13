@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GroupBox, TreeView } from 'react95';
 import { portfolio } from './portfolio';
 
 const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, expanded, setExpanded }) => {
+  const treeRef = useRef(null)
 
   useEffect(() => {
     setProjectSelected(selected)
@@ -29,15 +30,17 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
     }
   };
   useEffect(() => {
-    // window.addEventListener('touchmove', handleTouchMove, { passive: false });
-
-    // return () => {
-    //   window.removeEventListener('touchmove', handleTouchMove)
-    // };
+    const tree = treeRef.current
+    if (tree) {
+      tree.addEventListener('touchmove', handleTouchMove, { passive: false });
+      return () => {
+        tree.removeEventListener('touchmove', handleTouchMove)
+      };
+    }
   }, [touchStartY, documentPosition]);
 
   return (
-    <div style={{ width: '250px' }} onTouchStartCapture={handleTouchStart}>
+    <div style={{ width: '250px' }} ref={treeRef} onTouchStartCapture={handleTouchStart}>
       <GroupBox label='Portfolio' onTouchStartCapture={handleTouchStart}>
         <TreeView onTouchStartCapture={handleTouchStart}
           tree={portfolio}
