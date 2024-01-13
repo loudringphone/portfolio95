@@ -350,18 +350,12 @@ const App = () => {
     } else if (activeTask) {
       activiatingDockMenu(false)
     }
-    const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
-    if (portfolioHeight > 700) {
-      desktopRef.current.style.minHeight = '830px';
-    } else {
-      desktopRef.current.style.minHeight = desktopHeight;
-    }
   }, [activeTask]); 
 
   useEffect(() => {
     if (!desktopRef.current) return;
     if (portfolioHeight > 700) {
-      desktopRef.current.style.minHeight = '830px';
+      desktopRef.current.style.minHeight = '900px';
     } else {
       const desktopHeight = activeTask ? 'calc(100vh - 44px)' : '100vh';
       desktopRef.current.style.minHeight = desktopHeight;
