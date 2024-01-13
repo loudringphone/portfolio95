@@ -53,7 +53,7 @@ const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask,
             height="100%"
             frameBorder="0"
             allow="autoplay; encrypted-media; picture-in-picture"
-            allowfullscreen
+            allowFullScreen
             scrolling="yes"
           />
         </div>
