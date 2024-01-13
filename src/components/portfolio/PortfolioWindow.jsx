@@ -3,6 +3,7 @@ import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import MinimisingButton from '../buttons/MinimisingButton';
 import {
+  Window,
   Button,
   WindowContent,
   WindowHeader,
@@ -50,17 +51,32 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
     setPortfolioHeight(portfolioRef.current.clientHeight)
   }, [projectSelected])
   useEffect(() => {
-    if (displayTasks.has('portfolio')) {
+    if (displayTasks.has(task)) {
       setPortfolioHeight(portfolioRef.current.clientHeight)
     } else {
       setPortfolioHeight(0)
     }
   }, [displayTasks])
 
+  const handleClickInsideWindow = (event) => {
+    event.stopPropagation();
+    setActiveTask(task);
+    indexingWindows(task);
+  };
+  const handleMouseDown = () => {
+    setActiveTask(task);
+    indexingWindows(task);
+  }
+
+  const handleTouchStart = (event) => {
+    setTouchStartY(event.touches[0].clientY);
+    setDocumentPosition(document.documentElement.scrollTop);
+  };
+
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
     <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndice[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition}>
+    <Window className='portfolio-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown} onTouchStartCapture={handleTouchStart}>
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
@@ -109,7 +125,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
         
       </WindowContent>
      
-    </WindowComponent>
+    </Window>
   </Wrapper>
   </DraggableComponent>
   )
