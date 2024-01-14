@@ -24,18 +24,18 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
     setTouchStartY(event.touches[0].clientY);
     setDocumentPosition(document.documentElement.scrollTop);
   };
-  const handleTouchMove = debounce((event) => {
+  const handleTouchMove = (event) => {
     const touchEndY = event.touches[0].clientY;
     if (documentPosition === 0 && touchEndY > touchStartY) {
       event.preventDefault();
     }
-  }, 100);
+  };
   useEffect(() => {
     const tree = treeRef.current
     if (tree) {
-      tree.addEventListener('touchmove', handleTouchMove, { passive: false });
+      tree.addEventListener('touchendcapture', handleTouchMove, { passive: false });
       return () => {
-        tree.removeEventListener('touchmove', handleTouchMove)
+        tree.removeEventListener('touchendcapture', handleTouchMove)
       };
     }
   }, [touchStartY, documentPosition]);
