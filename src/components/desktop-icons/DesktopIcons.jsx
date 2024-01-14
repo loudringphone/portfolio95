@@ -8,7 +8,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
   })
-
+  
   const indexingIcons = (key) => {
     const newIconIndice = new Object(iconIndice)
     delete newIconIndice[key];
@@ -24,7 +24,11 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
   const handleIcon = (event, task) => {
     event.stopPropagation();
     if (task == 'git') {
-      return window.open('https://github.com/loudringphone/portfolio95', '_blank');
+      const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
+      if (confirmRedirect) {
+        window.open('https://github.com/loudringphone/portfolio95', '_blank');
+      }
+      return
     }
     const updatedTasksVisibility = {
       ...tasksVisibility,
@@ -51,7 +55,11 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
 
     if (currentTime - lastTouchTime <= 300) {
       if (task == 'git') {
-        return window.open('https://github.com/loudringphone/portfolio95', '_blank');
+        const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
+        if (confirmRedirect) {
+          window.open('https://github.com/loudringphone/portfolio95', '_blank');
+        }
+        return
       }
       const updatedTasksVisibility = {
         ...tasksVisibility,
