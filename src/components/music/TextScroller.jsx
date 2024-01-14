@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 
-const TextScroller = ({ text, isSkipped, resettingText }) => {
+const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
   const [restartAnimation, setRestartAnimation] = useState(false);
   const duration = 10000
   const api = useSpring({
     from: { transform: "translate(100%,0)" },
-    to: { transform: "translate(-250%,0)" },
+    to: { transform: "translate(-225%,0)" },
     config: { duration: duration },
     reset: restartAnimation,
     onRest: () => {
@@ -30,6 +30,14 @@ const TextScroller = ({ text, isSkipped, resettingText }) => {
       window.removeEventListener("touchend", handleResume);
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      api.transform.resume()
+    } else {
+      api.transform.pause()
+    }
+  }, [isOpen])
 
   useEffect(() => {
     if (isSkipped) {
