@@ -6,6 +6,7 @@ import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010, Shell3232, Sh
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 import GitIcon from "../GitIcon";
+import { redirectGitHub } from "../../functions/customFunctions";
 
 export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndice, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
   const shutdownAudio = new Audio(win95shutdown)
@@ -38,13 +39,6 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
  
   const stopPropagation = (event) => {
     event.stopPropagation();
-  }
-
-  const handleGit = () => {
-    const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
-    if (confirmRedirect) {
-      window.open('https://github.com/loudringphone/portfolio95', '_blank');
-    }
   }
 
   return (
@@ -95,8 +89,8 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
               </MenuListItem>
               {
                 icons['git']['visibility'] == 'visible' ?
-                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleGit}>
-                  <GitIcon style={{height:'30px', width:'30px'}}/>
+                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={redirectGitHub}>
+                  <GitIcon menuList={true}/>
                     <p><span className='underscore'>G</span>it</p>
                 </MenuListItem>
               :

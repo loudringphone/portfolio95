@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
-
+import { redirectGitHub } from '../../functions/customFunctions';
 const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [picking, setPicking] = useState(false)
@@ -24,11 +24,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
   const handleIcon = (event, task) => {
     event.stopPropagation();
     if (task == 'git') {
-      const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
-      if (confirmRedirect) {
-        window.open('https://github.com/loudringphone/portfolio95', '_blank');
-      }
-      return
+      return redirectGitHub()
     }
     const updatedTasksVisibility = {
       ...tasksVisibility,
@@ -55,11 +51,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
 
     if (currentTime - lastTouchTime <= 300) {
       if (task == 'git') {
-        const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
-        if (confirmRedirect) {
-          window.open('https://github.com/loudringphone/portfolio95', '_blank');
-        }
-        return
+        return redirectGitHub()
       }
       const updatedTasksVisibility = {
         ...tasksVisibility,
