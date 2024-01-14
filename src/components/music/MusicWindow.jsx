@@ -8,7 +8,7 @@ import SkipBackMiniFillIcon from 'remixicon-react/SkipBackMiniFillIcon';
 import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
-import { formatTime } from '../../functions/formatTime';
+import { formatTime } from '../../functions/customFunctions';
 import { music } from './music'
 
 import {
