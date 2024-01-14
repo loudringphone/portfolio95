@@ -33,9 +33,9 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
   useEffect(() => {
     const tree = treeRef.current
     if (tree) {
-      tree.addEventListener('touchendcapture', handleTouchMove, { passive: false });
+      tree.addEventListener('touchend', handleTouchMove, { passive: false });
       return () => {
-        tree.removeEventListener('touchendcapture', handleTouchMove)
+        tree.removeEventListener('touchend', handleTouchMove)
       };
     }
   }, [touchStartY, documentPosition]);

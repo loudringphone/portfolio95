@@ -396,10 +396,10 @@ const App = () => {
     }
   }
   useEffect(() => {
-    window.addEventListener('touchendcapture', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchMove, { passive: false });
 
     return () => {
-      window.removeEventListener('touchendcapture', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchMove)
     };
   }, [touchStartY, documentPosition]);
 
