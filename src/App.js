@@ -355,7 +355,7 @@ const App = () => {
   useEffect(() => {
     if (!desktopRef.current) return;
     if (portfolioHeight > 700) {
-      desktopRef.current.style.minHeight = '900px';
+      desktopRef.current.style.minHeight = '850px';
     } else {
       desktopRef.current.style.minHeight = '100vh';
     }
