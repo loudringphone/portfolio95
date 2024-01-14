@@ -389,17 +389,17 @@ const App = () => {
     setTouchStartY(event.touches[0].clientY);
     setDocumentPosition(document.documentElement.scrollTop);
   };
-  const handleTouchMove = debounce((event) => {
+  const handleTouchMove = (event) => {
     const touchEndY = event.touches[0].clientY;
     if (documentPosition === 0 && touchEndY > touchStartY) {
       event.preventDefault();
     }
-  }, 100);
+  }
   useEffect(() => {
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchendcapture', handleTouchMove, { passive: false });
 
     return () => {
-      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchendcapture', handleTouchMove)
     };
   }, [touchStartY, documentPosition]);
 
