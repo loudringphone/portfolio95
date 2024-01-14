@@ -350,9 +350,7 @@ const App = () => {
       setTimeout(() => {
         setLoading(false)
       }, 1200);
-    // }, 2250);
-  }, 2);
-
+    }, 2000);
   }, []);
 
   const desktopRef = useRef(null)
