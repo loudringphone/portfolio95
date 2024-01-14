@@ -4,12 +4,9 @@ import { GroupBox, TreeView } from 'react95';
 import { portfolio } from './portfolio';
 
 const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, expanded, setExpanded }) => {
-  const treeRef = useRef(null)
-
   useEffect(() => {
     setProjectSelected(selected)
   }, [selected])
-
   useEffect(() => {
     if (!displayTasks.has('portfolio')) {
       setSelected(null)
@@ -17,6 +14,7 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
     }
   }, [displayTasks])
 
+  const treeRef = useRef(null)
   const [documentPosition, setDocumentPosition] = useState(0);
   const [touchStartY, setTouchStartY] = useState(null);
   const handleTouchStart = (event) => {
