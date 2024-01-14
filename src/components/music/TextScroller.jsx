@@ -3,7 +3,7 @@ import { useSpring, animated } from "react-spring";
 
 const TextScroller = ({ text, isSkipped, resettingText }) => {
   const [restartAnimation, setRestartAnimation] = useState(false);
-  const duration = 7500
+  const duration = 10000
   const api = useSpring({
     from: { transform: "translate(100%,0)" },
     to: { transform: "translate(-250%,0)" },
