@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 
 const TextScroller = ({ text, isSkipped, resettingText }) => {
-  const [animationComplete, setAnimationComplete] = useState(false);
-  const duration = 20000
-  const [key, setKey] = useState(1);
-
-  const [styles, api] = useSpring(() => ({
+  const [restartAnimation, setRestartAnimation] = useState(false);
+  const duration = 7500
+  const api = useSpring({
     from: { transform: "translate(100%,0)" },
     to: { transform: "translate(-250%,0)" },
     config: { duration: duration },
-    reset: animationComplete,
-    //reverse: key % 2 == 0,
+    reset: restartAnimation,
     onRest: () => {
-      setKey(key + 1);
+      setRestartAnimation(true);
     }
-  }));
+  });
 
+  const scrollRef = useRef(null)
   const handlePause = () => {
-    api.pause()
+    api.transform.pause()
   };
   const handleResume = () => {
-    api.resume()
+    api.transform.resume()
   };
 
   useEffect(() => {
@@ -34,28 +32,18 @@ const TextScroller = ({ text, isSkipped, resettingText }) => {
   }, []);
 
   useEffect(() => {
-    let timeoutId = null;
     if (isSkipped) {
       resettingText();
-      setAnimationComplete(true);
-      setKey(1);
-    } else if (!animationComplete) {
-      timeoutId = setTimeout(() => {
-        setAnimationComplete(true);
-      }, duration);
-    } else {
-      setAnimationComplete(false);
+      setRestartAnimation(true);
     }
-    return () => {
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [animationComplete, isSkipped]); 
+    if (restartAnimation) {
+      setRestartAnimation(false);
+    }
+  }, [restartAnimation, isSkipped]); 
 
   return (
-    <div key={key} className="music-title">
-      <animated.div style={styles}>{text}</animated.div>
+    <div className="music-title">
+      <animated.div ref={scrollRef} style={api}>{text}</animated.div>
     </div>
   );
 };
