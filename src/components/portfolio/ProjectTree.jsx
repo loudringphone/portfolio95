@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GroupBox, TreeView } from 'react95';
 import { portfolio } from './portfolio';
-import { debounce } from '../../functions/debounce';
 
 const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, expanded, setExpanded }) => {
   const treeRef = useRef(null)
@@ -29,13 +28,13 @@ const ProjectTree = ({ setProjectSelected, displayTasks, selected, setSelected, 
     if (documentPosition === 0 && touchEndY > touchStartY) {
       event.preventDefault();
     }
-  };
+  }
   useEffect(() => {
     const tree = treeRef.current
     if (tree) {
-      tree.addEventListener('touchend', handleTouchMove, { passive: false });
+      tree.addEventListener('touchmove', handleTouchMove, { passive: false });
       return () => {
-        tree.removeEventListener('touchend', handleTouchMove)
+        tree.removeEventListener('touchmove', handleTouchMove)
       };
     }
   }, [touchStartY, documentPosition]);

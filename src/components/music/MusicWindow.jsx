@@ -186,11 +186,7 @@ const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, i
       </WindowHeader></strong>
       <WindowContent className='window-content'>
         <div className="music-title-container">
-          {/* { isTouchDevice && activeTask != task && displayTasks.has('portfolio') ?
-            <p className='music-title'>{music[musicIndex].title}</p>
-          : */}
-            <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
-          {/* } */}
+          <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} />
           <div className='count-down'>{formatTime(countdownTime)}</div>
         </div>
         <div className="buttons">

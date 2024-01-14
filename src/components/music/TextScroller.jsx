@@ -22,6 +22,7 @@ const TextScroller = ({ text, isSkipped, resettingText }) => {
     if (isSkipped) {
       resettingText();
       setAnimationComplete(true);
+      setKey(1);
     } else if (!animationComplete) {
       timeoutId = setTimeout(() => {
         setAnimationComplete(true);
