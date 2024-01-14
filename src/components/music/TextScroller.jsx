@@ -6,7 +6,7 @@ const TextScroller = ({ text, isSkipped, resettingText }) => {
   const duration = 20000
   const [key, setKey] = useState(1);
 
-  const scrolling = useSpring({
+  const [styles, api] = useSpring(() => ({
     from: { transform: "translate(100%,0)" },
     to: { transform: "translate(-250%,0)" },
     config: { duration: duration },
@@ -15,7 +15,23 @@ const TextScroller = ({ text, isSkipped, resettingText }) => {
     onRest: () => {
       setKey(key + 1);
     }
-  });
+  }));
+
+  const handlePause = () => {
+    api.pause()
+  };
+  const handleResume = () => {
+    api.resume()
+  };
+
+  useEffect(() => {
+    window.addEventListener("touchmove", handlePause);
+    window.addEventListener("touchend", handleResume);
+    return () => {
+      window.removeEventListener("touchmove", handlePause);
+      window.removeEventListener("touchend", handleResume);
+    };
+  }, []);
 
   useEffect(() => {
     let timeoutId = null;
@@ -39,7 +55,7 @@ const TextScroller = ({ text, isSkipped, resettingText }) => {
 
   return (
     <div key={key} className="music-title">
-      <animated.div style={scrolling}>{text}</animated.div>
+      <animated.div style={styles}>{text}</animated.div>
     </div>
   );
 };
