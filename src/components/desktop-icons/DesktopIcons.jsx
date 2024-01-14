@@ -8,7 +8,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
   })
-  
+
   const indexingIcons = (key) => {
     const newIconIndice = new Object(iconIndice)
     delete newIconIndice[key];
@@ -23,6 +23,9 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
   }
   const handleIcon = (event, task) => {
     event.stopPropagation();
+    if (task == 'git') {
+      return window.open('https://github.com/loudringphone/portfolio95', '_blank');
+    }
     const updatedTasksVisibility = {
       ...tasksVisibility,
       [task]: 'visible'
@@ -47,6 +50,9 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
     setLastTouchTime(currentTime);
 
     if (currentTime - lastTouchTime <= 300) {
+      if (task == 'git') {
+        return window.open('https://github.com/loudringphone/portfolio95', '_blank');
+      }
       const updatedTasksVisibility = {
         ...tasksVisibility,
         [task]: 'visible'
