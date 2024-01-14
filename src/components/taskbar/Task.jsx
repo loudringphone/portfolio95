@@ -3,7 +3,7 @@ import './taskbar.css'
 import { Button } from "react95";
 
 
-function Task({task, activeTask, setActiveTask, windowIndice, indexingWindows, tasksVisibility, setTasksVisibility}) {
+function Task({task, activeTask, setActiveTask, indexingWindows, tasksVisibility, setTasksVisibility}) {
   const handleClick = (event) => {
     event.stopPropagation();
     if (activeTask == task) {
