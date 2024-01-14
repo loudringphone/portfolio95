@@ -29,6 +29,7 @@ import { Mailnews20, Shell32167, MediaCd, Shell3232, Shell3233 } from '@react95/
 import RecycleBinContent from './components/recyclebin/RecycleBinContent';
 import win95recycle from './assets/sounds/win95recycle.wav'
 import win95error from './assets/sounds/win95error.mp3'
+import GitIcon from './components/GitIcon';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -78,14 +79,14 @@ const App = () => {
       Icon: Mailnews20,
       desktopRef: useRef(null),
       iconRef: useRef(null),
-      position: { x: 25, y: 25 },
+      position: { x: 125, y: 25 },
     },
-    'portfolio': {
-      Icon: Shell32167,
+    'git': {
+      Icon: GitIcon,
       desktopRef: useRef(null),
       iconRef: useRef(null),
       binRef: useRef(null),
-      position: { x: 25, y: 150 },
+      position: { x: 125, y: 150 },
       visibility: 'visible',
     },
     'music': {
@@ -93,14 +94,22 @@ const App = () => {
       desktopRef: useRef(null),
       iconRef: useRef(null),
       binRef: useRef(null),
-      position: { x: 25, y: 275 },
+      position: { x: 25, y: 150 },
+      visibility: 'visible',
+    },
+    'portfolio': {
+      Icon: Shell32167,
+      desktopRef: useRef(null),
+      iconRef: useRef(null),
+      binRef: useRef(null),
+      position: { x: 25, y: 25 },
       visibility: 'visible',
     },
     'recycle bin': {
       Icon: Shell3232,
       desktopRef: useRef(null),
       iconRef: useRef(null),
-      position: { x: 25, y: 400 },
+      position: { x: 25, y: 275 },
     },
   })
   const [iconsInBin, setIconsInBin] = useState(new Set())
@@ -113,6 +122,10 @@ const App = () => {
           'resume': {
             ...prevIcons['resume'],
             position: { x: 125, y: 25 },
+          },
+          'git': {
+            ...prevIcons['git'],
+            position: { x: 125, y: 150 },
           },
           'portfolio': {
             ...prevIcons['portfolio'],
@@ -224,7 +237,7 @@ const App = () => {
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].desktopRef?.current?.contains(event.target));
 
-      if (task == 'portfolio' || task == 'music') {
+      if (task == 'portfolio' || task == 'music' || task =='git') {
         displayingTask(false, task)
         setIcons(prevTasks => ({
           ...prevTasks,
@@ -337,7 +350,9 @@ const App = () => {
       setTimeout(() => {
         setLoading(false)
       }, 1200);
-    }, 2250);
+    // }, 2250);
+  }, 2);
+
   }, []);
 
   const desktopRef = useRef(null)
@@ -507,7 +522,7 @@ const App = () => {
           <></>
         }
        
-       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} setWelcomeActive={setWelcomeActive} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} />
+       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingWindows={indexingWindows} signingIn={signingIn} setWelcomeActive={setWelcomeActive} standbyTasks={standbyTasks} windowIndice={windowIndice} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
       </ThemeProvider>
     </Helmet>
   )

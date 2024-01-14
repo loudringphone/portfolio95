@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
-import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010 } from '@react95/icons'
+import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010, Shell3232, Shell3233 } from '@react95/icons'
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
+import GitIcon from "../GitIcon";
 
-export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndice, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndice, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
   const shutdownAudio = new Audio(win95shutdown)
 
   const handleClick = (event) => {
@@ -37,6 +38,10 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
  
   const stopPropagation = (event) => {
     event.stopPropagation();
+  }
+
+  const handleGit = () => {
+    window.open('https://github.com/loudringphone/portfolio95', '_blank');
   }
 
   return (
@@ -85,7 +90,15 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
                 <Mailnews20 style={{height:'30px', width:'30px'}}/>
                 <p><span className='underscore'>R</span>esume</p>
               </MenuListItem>
-
+              {
+                icons['git']['visibility'] == 'visible' ?
+                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleGit}>
+                  <GitIcon style={{height:'30px', width:'30px'}}/>
+                    <p><span className='underscore'>G</span>it</p>
+                </MenuListItem>
+              :
+                <></>
+              }
               {
                 icons['portfolio']['visibility'] == 'visible' ?
                 <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'portfolio')}>
@@ -106,6 +119,14 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
               :
                 <></>
               }
+              <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleTask(event, 'recycle bin')}>
+                { iconsInBin.size == 0 ?
+                  <Shell3232 style={{height:'30px', width:'30px'}}/>
+                :
+                  <Shell3233 style={{height:'30px', width:'30px'}}/>
+                }
+                <p><span className='underscore'>R</span>ecycle bin</p>
+              </MenuListItem>
               <Separator/>
               <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={handleLogOff}>
                 <Password1010 style={{transform: 'rotate(-90deg)', height:'30px', width:'30px'}}/>
