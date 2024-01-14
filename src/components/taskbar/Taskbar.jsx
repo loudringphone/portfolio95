@@ -41,7 +41,10 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
   }
 
   const handleGit = () => {
-    window.open('https://github.com/loudringphone/portfolio95', '_blank');
+    const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
+    if (confirmRedirect) {
+      window.open('https://github.com/loudringphone/portfolio95', '_blank');
+    }
   }
 
   return (
