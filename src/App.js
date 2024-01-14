@@ -404,58 +404,65 @@ const App = () => {
 
   if (turnOff) {
     return (
-      
-      <div className='shut-down-background'>
-        <ThemeProvider theme={original}>
-          <GlobalStyles />
-          {
-            window.innerWidth <= 600 ? 
-            <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
-            // <p className='shut-down-text'>It's now safe to turn off your computer.</p>
-            :
-            <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
-          }
-        </ThemeProvider>
-      </div>
+      <Helmet>
+        <div className='shut-down-background'>
+          <ThemeProvider theme={original}>
+            <GlobalStyles />
+            {
+              window.innerWidth <= 600 ? 
+              <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
+              // <p className='shut-down-text'>It's now safe to turn off your computer.</p>
+              :
+              <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
+            }
+          </ThemeProvider>
+        </div>
+      </Helmet>
     )
   }
   if (shutDown && signOff) {
     return (
-      <div className='shut-down-background'>
-        {
-          window.innerWidth <= 800 ?
-          <img className='shut-down-mobile' src={win95shutdownMobile} alt="shut down"/>
-          :
-          <img className='shut-down' src={win95shutdown} alt="shut down"/>
+      <Helmet>
+        <div className='shut-down-background'>
+          {
+            window.innerWidth <= 800 ?
+            <img className='shut-down-mobile' src={win95shutdownMobile} alt="shut down"/>
+            :
+            <img className='shut-down' src={win95shutdown} alt="shut down"/>
 
-        }
-      </div>
+          }
+        </div>
+      </Helmet>
     )
   }
   if (energyStar) {
     return (
-      <div className='start-up-background'>
-        {
-          window.innerWidth <= 800 ?
-          <img className='start-up' src={win95energystarMobile} alt="start up"/>
-          :
-          <img className='start-up' src={win95energystar} alt="start up"/>
+      <Helmet>
+        <div className='start-up-background'>
+          {
+            window.innerWidth <= 800 ?
+            <img className='start-up' src={win95energystarMobile} alt="start up"/>
+            :
+            <img className='start-up' src={win95energystar} alt="start up"/>
 
-        }
-      </div>
+          }
+        </div>
+      </Helmet>
     )
   }
   if (loading) {
     return (
-      <div className='start-up-background'>
-        {
-          window.innerWidth <= 800 ?
-          <img className='start-up-mobile' src={win95startupMobile} alt="start up"/>
-          :
-          <img className='start-up' src={win95startup} alt="start up"/>
+      <Helmet>
+        <div className='start-up-background'>
+          {
+            window.innerWidth <= 800 ?
+            <img className='start-up-mobile' src={win95startupMobile} alt="start up"/>
+            :
+            <img className='start-up' src={win95startup} alt="start up"/>
 
-        }
-      </div>
+          }
+        </div>
+      </Helmet>
     )
   } 
   if (!signed && signOff) {
@@ -472,9 +479,8 @@ const App = () => {
   }
 
   return (
-    
     <Helmet>
-    <GlobalStyles />
+      <GlobalStyles />
       <ThemeProvider theme={original}>
         <div className="desktop" ref={desktopRef} onMouseDown={handleDown} onTouchStart={handleDown} onMouseUp={teleportingIcon} onTouchEnd={teleportingIcon} onTouchStartCapture={handleTouchStart}>
           <DesktopIcons displayingTask={displayingTask} indexingWindows={indexingWindows} windowIndice={windowIndice} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} issuingWarning={issuingWarning} warnings={warnings} activiatingDockMenu={activiatingDockMenu} setSelectedIcon={setSelectedIcon} selectedIcon={selectedIcon} icons={icons} recyclingIcon={recyclingIcon} activeTask={activeTask} positioningIcon={positioningIcon} setBinLastPos={setBinLastPos} />
