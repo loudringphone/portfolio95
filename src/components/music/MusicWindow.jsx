@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff, isTouchDevice}) => {
+const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff }) => {
   const task = 'music'
 
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
@@ -130,8 +130,9 @@ const MusicWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, i
   }, [signed, signOff])
 
   useEffect(() => {
-    if (audio) {
-      if (!displayTasks.has(task)) {
+    if (!displayTasks.has(task)) {
+      setIsSkipped(true)
+      if (audio) {
         audio.pause();
         return setPlaying(false)
       }

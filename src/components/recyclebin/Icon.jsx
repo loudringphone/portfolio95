@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
-
+import win95error from '../../assets/sounds/win95error.mp3'
 
 const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingWindows, setIconDragPoint, settingIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
   const [iconZindex, setIconZindex] = useState(0)
-  
+  const errorAudio = new Audio(win95error);
+
   const onStart = (event) => {
     event.stopPropagation();
     setIconZindex(99)
@@ -66,8 +67,9 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   const handleOpen = (event) => {
     if (event.type == 'dblclick') {
       setTimeout(() => {
+        errorAudio.play();
         setActiveTask('bin warning')
-      }, 200);
+      }, 150);
       return
     }
     if (event.touches.length === 1) {
@@ -81,8 +83,9 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setLastTouchTime(currentTime);
     if (currentTime - lastTouchTime <= 300) {
       setTimeout(() => {
+        errorAudio.play();
         setActiveTask('bin warning')
-      }, 200);
+      }, 150);
     };
   }
 
