@@ -28,7 +28,6 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     }
     setSelectedIcon(task)
     handlePickingIcon(task)
-    onStop()
   }
 
   const handleTouchStart = (event, task) => {
