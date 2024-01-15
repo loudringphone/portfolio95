@@ -4,7 +4,7 @@ import { useSpring, animated } from "react-spring";
 const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
   const [restartAnimation, setRestartAnimation] = useState(false);
   const duration = 10000
-  const api = useSpring({
+  const scrolling = useSpring({
     from: { transform: "translate(100%,0)" },
     to: { transform: "translate(-225%,0)" },
     config: { duration: duration },
@@ -16,10 +16,10 @@ const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
 
   const scrollRef = useRef(null)
   const handlePause = () => {
-    api.transform.pause()
+    scrolling.transform.pause()
   };
   const handleResume = () => {
-    api.transform.resume()
+    scrolling.transform.resume()
   };
 
   useEffect(() => {
@@ -33,9 +33,9 @@ const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
 
   useEffect(() => {
     if (isOpen) {
-      api.transform.resume()
+      scrolling.transform.resume()
     } else {
-      api.transform.pause()
+      scrolling.transform.pause()
     }
   }, [isOpen])
 
@@ -51,7 +51,7 @@ const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
 
   return (
     <div className="music-title">
-      <animated.div ref={scrollRef} style={api}>{text}</animated.div>
+      <animated.div ref={scrollRef} style={scrolling}>{text}</animated.div>
     </div>
   );
 };

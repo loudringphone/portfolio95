@@ -4,7 +4,6 @@ import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';
 const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
-  const [picking, setPicking] = useState(false)
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
   })
@@ -44,7 +43,6 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
       ...iconIndice,
       [task]: 99
     };
-    setPicking(true)
     setIconIndice(updatedIconIndice)
     const currentTime = new Date().getTime();
     setLastTouchTime(currentTime);
@@ -73,12 +71,10 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
       [task]: 99
     };
     setIconIndice(updatedIconIndice)
-    setPicking(true)
   }
 
   const handleLeavingIcon = (task) => {
     indexingIcons(task)
-    setPicking(false)
     recycling(task)
   }
 

@@ -15,8 +15,9 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
     
   useEffect(() => {
     const updateFollowerPosition = () => {
-      if (binWindowRef.current) {
-        const referenceRect = binWindowRef.current.getBoundingClientRect();
+      const binWindow = binWindowRef.current
+      if (binWindow) {
+        const referenceRect = binWindow.getBoundingClientRect();
         setFollowerPosition({
           top: referenceRect.top,
           left: referenceRect.left,

@@ -8,7 +8,6 @@
     display: grid;
     grid-template-columns: 90px 90px 90px;
     grid-template-rows: 1fr 1fr;
-
     justify-items: center;
     gap: 1rem;
 
@@ -118,7 +117,7 @@
   width: 100%;
 
   .bin-icons {
-    margin: 21.5px;
+    margin: 15px;
     display: grid;
     grid-template-columns: 90px 90px 90px;
     grid-template-rows: 1fr 1fr;
