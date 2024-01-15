@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, teleportingIcon }) => {
+const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice  }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconIndice, setIconIndice] = useState({
     'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
@@ -24,7 +24,6 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
     event.stopPropagation();
     if (task == 'git') {
       redirectGitHub()
-      return teleportingIcon(event)
     }
     const updatedTasksVisibility = {
       ...tasksVisibility,
@@ -38,33 +37,38 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
   }
   const handleIconMobile = (event, task) => {
     event.stopPropagation();
-
-    setActiveTask(null)
-    const updatedIconIndice = {
-      ...iconIndice,
-      [task]: 99
-    };
-    setIconIndice(updatedIconIndice)
-    const currentTime = new Date().getTime();
-    setLastTouchTime(currentTime);
-
-    if (currentTime - lastTouchTime <= 300) {
-      if (task == 'git') {
-        redirectGitHub()
-        return teleportingIcon(event)
-      }
-      const updatedTasksVisibility = {
-        ...tasksVisibility,
-        [task]: 'visible'
+    if (isTouchDevice) {
+      setActiveTask(null)
+      const updatedIconIndice = {
+        ...iconIndice,
+        [task]: 99
       };
-      if (task == 'recycle bin') {
-        setBinLastPos(null)
+      setIconIndice(updatedIconIndice)
+      const currentTime = new Date().getTime();
+      setLastTouchTime(currentTime);
+
+      if (currentTime - lastTouchTime <= 300) {
+        if (task == 'git') {
+          redirectGitHub()
+          setSelectedIcon(null)
+          setTimeout(() => {
+            setSelectedIcon(task)
+          }, 0);
+          return
+        }
+        const updatedTasksVisibility = {
+          ...tasksVisibility,
+          [task]: 'visible'
+        };
+        if (task == 'recycle bin') {
+          setBinLastPos(null)
+        }
+        setTasksVisibility(updatedTasksVisibility);
+        setActiveTask(task)
+        displayingTask(true, task)
+        indexingWindows(task)
+        indexingIcons(task)
       }
-      setTasksVisibility(updatedTasksVisibility);
-      setActiveTask(task)
-      displayingTask(true, task)
-      indexingWindows(task)
-      indexingIcons(task)
     }
   }
   const handlePickingIcon = (task) => {
