@@ -10,7 +10,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
   }, [iconPosition])
   
   const onStart = () => {
-    activiatingDockMenu(false)
+    activiatingDockMenu(false);
   };
   const onStop = () => {};
   const dragHandlers = { onStart, onStop };
@@ -42,13 +42,6 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
     }
     setSelectedIcon(task)
     handleIconMobile(event, task)
-    if (task == 'git') {
-      const x = desktopRef.current?.getBoundingClientRect().x
-      const y = desktopRef.current?.getBoundingClientRect().y
-      setTimeout(() => {
-        positioningIcon(task, x, y)
-      }, 0);
-    }
   }
   const handleDrag = (e, ui) => {
     setPosition({ x: position.x + ui.deltaX, y: position.y + ui.deltaY });
