@@ -7,6 +7,34 @@ Throughout the development of this portfolio, I delved into the intricacies of C
 
 `setCursorPosition` when dragging window to get track the values of `getBoundingClientRect()`
 
+
+## prevState
+`prevState` is a parameter representing the previous state of the component. It's often used in the functional form of setState, where you provide a callback function. The callback receives the previous state as an argument and returns the new state. Below is an example of how I make use of `prevState`:
+
+```
+const pickingIcon = (icon) => {
+  if (iconIndices[icon] == maxIconIndex) {
+    const updatedIconIndices = {
+      ...iconIndices,
+      [icon]: 99
+    };
+    return setIconIndices(updatedIconIndices)
+  } else {
+    setIconIndices(prevState => {
+      const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
+      const iconIndex = sortedKeys.indexOf(icon);
+      for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
+        prevState[sortedKeys[i]] -= 1;
+      }
+      prevState[icon] = 99;
+      return prevState;
+    });
+  }
+}
+```
+Using prevState can help avoid unnecessary creation of a new set in React state updates. When you are working with a set state in React and need to update it based on the previous state, you can use the functional form of setState to ensure that you are working with the latest state.
+
+
 ## Stacking Order Control with Z-Index
 An intriguing revelation in this process was the use of z-index to control the stacking order of positioned elements. While this property influences the stacking order among children and their parent within the same stacking context, it doesn't impact the stacking order of sibling elements.
 
