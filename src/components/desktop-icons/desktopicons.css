@@ -48,19 +48,19 @@
 }
 .filter {
     background-color: black;
-    border: 1.75px solid lightgray;
+    border: 1.75px solid white;
+    border-radius: 2.5px;
     opacity: 0.3;
 }
 .filter-gray {
-    background-color: darkgray;
+    background-color: rgb(195, 195, 195);
     border-radius: 2.5px;
-    opacity: 1;
 }
 .bin-filter {
     background-color: black;
-    border-radius: 5px;
+    border-radius: 2.5px;
     border: 1.75px solid lightgray;
-    opacity: 0.15;
+    opacity: 0.2;
 }
 .bin-filter-black {
     background-color: black;

@@ -170,11 +170,6 @@ const App = () => {
 
   const binWindowRef = useRef(null)
   const unrecyclingIcon = () => {
-    if (activeTask == 'recycle bin') {
-      setTimeout(() => {
-        setActiveTask(null)
-      }, 0);
-    }
     if (iconsInBin.size == 0) {
       setIcons(prevTasks => ({
         ...prevTasks,
