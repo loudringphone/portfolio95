@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask, indexingWindows, windowIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask}) => {
+const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask}) => {
   const task = 'browser'
   const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
 
@@ -32,9 +32,9 @@ const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask,
   }
 
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <Wrapper className="drag-browser" style={{zIndex: windowIndices.browser, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.browser}}>
-    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+    <Wrapper className="drag-browser" style={{zIndex: taskIndices.browser, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.browser}}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';
-const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice  }) => {
+const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice  }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconIndices, setIconIndices] = useState({
     'resume': 0, 'portfolio': 1, 'music': 2, 'recycle bin': 3, 'git': 4
@@ -47,7 +47,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
     setTasksVisibility(updatedTasksVisibility);
     setActiveTask(task);
     displayingTask(true, task);
-    indexingWindows(task);
+    indexingTasks(task);
     movingIconToTop(task);
   }
   const handleIconMobile = (event, task) => {
@@ -72,7 +72,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
         setTasksVisibility(updatedTasksVisibility);
         setActiveTask(task)
         displayingTask(true, task)
-        indexingWindows(task)
+        indexingTasks(task)
         movingIconToTop(task)
       }
     }
@@ -110,7 +110,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
       if (task == 'resume') {
         setActiveTask('warning')
         displayingTask(true, 'warning')
-        indexingWindows('warning')
+        indexingTasks('warning')
         return issuingWarning()
       }
       recyclingIcon(task)

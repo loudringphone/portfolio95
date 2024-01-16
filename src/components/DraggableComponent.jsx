@@ -1,10 +1,10 @@
 import React  from 'react'
 import Draggable from 'react-draggable';
 
-const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingWindows, handleDrag, children }) => {
+const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingTasks, handleDrag, children }) => {
   const onStart = () => {
     setActiveTask(task);
-    indexingWindows(task)
+    indexingTasks(task)
   };
   const onStop = () => {};
   const dragHandlers = { onStart, onStop };

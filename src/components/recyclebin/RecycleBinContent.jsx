@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, cursorPosition, windowIndices, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
+function RecycleBinContent({binWindowRef, cursorPosition, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
   const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
 
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     setActiveTask('recycle bin');
-    indexingWindows('recycle bin')
+    indexingTasks('recycle bin')
     if (event.target.className != 'icon-whole') {
       setSelectedBinIcon(null)
     }
@@ -63,7 +63,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndices, display
         width: binWindowRef.current?.clientWidth,
         top: `${followerPosition.top}px`,
         left: `${followerPosition.left}px`,
-        zIndex: windowIndices['recycle bin'],
+        zIndex: taskIndices['recycle bin'],
         display: displayTasks.has('recycle bin') ? 'block' : 'none',
         visibility: tasksVisibility['recycle bin']
       }}
@@ -91,7 +91,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndices, display
               unrecyclingIcon={unrecyclingIcon}
               teleportingIcon={teleportingIcon}
               isTouchDevice={isTouchDevice}
-              indexingWindows={indexingWindows}
+              indexingTasks={indexingTasks}
               setIconDragPoint={setIconDragPoint}
               settingIconsInBin={settingIconsInBin}
             />

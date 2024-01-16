@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndices, warnings, errorAudio}) => {
+const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, warnings, errorAudio}) => {
   const task = 'warning'
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
@@ -41,9 +41,9 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
   }, [warnings])
   
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-      <Wrapper className="drag-warning" style={{zIndex: windowIndices.warning, display: displayTasks.has(task) ? 'block' : 'none'}}>
-        <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+      <Wrapper className="drag-warning" style={{zIndex: taskIndices.warning, display: displayTasks.has(task) ? 'block' : 'none'}}>
+        <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
             <span>Warning</span>
             <div className="buttons">

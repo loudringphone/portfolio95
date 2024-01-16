@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingWindows, windowIndices, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition}) => {
+const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition}) => {
   const task = 'portfolio'
   const initialPosition = window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 }
 
@@ -45,7 +45,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   newTasksVisibility.browser = 'visible'
   setTasksVisibility(newTasksVisibility)
   setActiveTask('browser')
-  indexingWindows('browser')
+  indexingTasks('browser')
   displayingTask(true, 'browser')
   }
 
@@ -64,9 +64,9 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
   };
 
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: windowIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
-    <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows} handleTouchStart={handleTouchStart}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+    <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: taskIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
+    <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks} handleTouchStart={handleTouchStart}>
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">

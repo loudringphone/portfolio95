@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndices, tasksVisibility, setTasksVisibility, isTouchDevice}) => {
+const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, isTouchDevice}) => {
   const task = 'resume'
   const initialPosition = window.innerWidth > 500 ? { x: 60, y: 25 } : { x: 5, y: 10 }
 
@@ -48,9 +48,9 @@ const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, 
     }
   }, [isTouchDevice])
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-      <Wrapper className="drag-resume" style={{zIndex: windowIndices.resume, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.resume}}>
-        <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+      <Wrapper className="drag-resume" style={{zIndex: taskIndices.resume, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.resume}}>
+        <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
             <span>resume.exe</span>
             <div className="buttons">

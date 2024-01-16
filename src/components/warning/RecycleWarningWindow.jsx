@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const RecycleWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndices}) => {
+const RecycleWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices}) => {
   const task = 'recycle warning'
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
@@ -34,9 +34,9 @@ const RecycleWarningWindow = ({displayTasks, displayingTask, setActiveTask, acti
   }
 
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-      <Wrapper className="drag-warning" style={{zIndex: windowIndices[task], display: displayTasks.has(task) ? 'block' : 'none'}}>
-        <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+      <Wrapper className="drag-warning" style={{zIndex: taskIndices[task], display: displayTasks.has(task) ? 'block' : 'none'}}>
+        <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
             <span>Warning</span>
 
