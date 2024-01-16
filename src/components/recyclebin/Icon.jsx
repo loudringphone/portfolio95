@@ -105,12 +105,12 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         onDoubleClick={(event) => handleOpen(event)}
       ></div>
       <div className='icon-placeholder'>
-        <div className="filter" style={{display: selectedBinIcon == task ? 'block' : 'none'}}></div>
+        <div className="bin-filter" style={{display: selectedBinIcon == task ? 'block' : 'none'}}></div>
         {icon}
       </div>
       <div className='text-placeholder'>
-        <div className="filter-text" style={{display: selectedBinIcon == task && activeTask == 'recycle bin' ? 'block' : 'none'}}></div>
-        <div className="filter" style={{display: selectedBinIcon == task && activeTask !== 'recycle bin' ? 'block' : 'none'}}></div>
+        <div className="filter-blue" style={{display: selectedBinIcon == task && activeTask == 'recycle bin' ? 'block' : 'none'}}></div>
+        <div className="bin-filter-black" style={{display: selectedBinIcon == task && activeTask !== 'recycle bin' ? 'block' : 'none'}}></div>
       <p style={{color: selectedBinIcon == task && activeTask == 'recycle bin' ? 'white' : 'black'}}>
         {taskName}
       </p>

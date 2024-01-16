@@ -41,7 +41,7 @@
     justify-content: center;
     width: max-content;
 }
-.filter, .filter-gray, .filter-blue {
+.filter, .filter-gray, .filter-blue, .bin-filter, .bin-filter-black {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -55,6 +55,17 @@
     background-color: darkgray;
     border-radius: 2.5px;
     opacity: 1;
+}
+.bin-filter {
+    background-color: black;
+    border-radius: 5px;
+    border: 1.75px solid lightgray;
+    opacity: 0.2;
+}
+.bin-filter-black {
+    background-color: black;
+    opacity: 0.25;
+    border-radius: 2.5px;
 }
 
 .filter-blue {
