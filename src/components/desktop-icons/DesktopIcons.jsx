@@ -4,21 +4,36 @@ import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';
 const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice  }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
-  const [iconIndice, setIconIndice] = useState({
-    'resume': 0, 'portfolio': 0, 'music': 0, 'recycle bin': 0
+  const [iconIndices, setIconIndices] = useState({
+    'resume': 0, 'portfolio': 1, 'music': 2, 'recycle bin': 3, 'git': 4
   })
+  const maxIconIndex = Object.keys(iconIndices).length - 1
   
-  const indexingIcons = (key) => {
-    const newIconIndice = new Object(iconIndice)
-    delete newIconIndice[key];
-    const sortedKeys = Object.keys(iconIndice).sort((a, b) => iconIndice[a] - iconIndice[b]);
-    let i = 0
-    sortedKeys.forEach((k) => {
-      newIconIndice[k] = 0 + i;
-      i++
-    });
-    newIconIndice[key] = 0 + i
-    setIconIndice(newIconIndice)
+  const pickingIcon = (icon) => {
+    if (iconIndices[icon] == maxIconIndex) {
+      const updatedIconIndices = {
+        ...iconIndices,
+        [icon]: 99
+      };
+      return setIconIndices(updatedIconIndices)
+    } else {
+      setIconIndices(prevState => {
+        const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
+        const iconIndex = sortedKeys.indexOf(icon);
+        for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
+          prevState[sortedKeys[i]] -= 1;
+        }
+        prevState[icon] = 99;
+        return { ...prevState };
+      });
+    }
+  }
+  const movingIconToTop = (icon) => {
+    const updatedIconIndices = {
+      ...iconIndices,
+      [icon]: maxIconIndex
+    };
+    setIconIndices(updatedIconIndices)
   }
   const handleIcon = (event, task) => {
     event.stopPropagation();
@@ -33,17 +48,13 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
     setActiveTask(task);
     displayingTask(true, task);
     indexingWindows(task);
-    indexingIcons(task);
+    movingIconToTop(task);
   }
   const handleIconMobile = (event, task) => {
     event.stopPropagation();
     if (isTouchDevice) {
       setActiveTask(null)
-      const updatedIconIndice = {
-        ...iconIndice,
-        [task]: 99
-      };
-      setIconIndice(updatedIconIndice)
+      pickingIcon(task)
       const currentTime = new Date().getTime();
       setLastTouchTime(currentTime);
 
@@ -62,20 +73,12 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
         setActiveTask(task)
         displayingTask(true, task)
         indexingWindows(task)
-        indexingIcons(task)
+        movingIconToTop(task)
       }
     }
   }
-  const handlePickingIcon = (task) => {
-    const updatedIconIndice = {
-      ...iconIndice,
-      [task]: 99
-    };
-    setIconIndice(updatedIconIndice)
-  }
-
   const handleLeavingIcon = (task) => {
-    indexingIcons(task)
+    movingIconToTop(task)
     recycling(task)
   }
 
@@ -124,10 +127,10 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
           iconRef={data.iconRef}
           iconPosition={data.position}
           visibility={data.visibility}
-          iconIndice={iconIndice}
+          iconIndices={iconIndices}
           handleIcon={handleIcon}
           handleIconMobile={handleIconMobile}
-          handlePickingIcon={handlePickingIcon}
+          pickingIcon={pickingIcon}
           handleLeavingIcon={handleLeavingIcon}
           activiatingDockMenu={activiatingDockMenu}
           setSelectedIcon={setSelectedIcon}

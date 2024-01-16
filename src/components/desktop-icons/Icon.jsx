@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, handlePickingIcon, handleLeavingIcon, iconIndice, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, pickingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null)
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
@@ -27,7 +27,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
       setBinLastPos({x: x, y: y})
     }
     setSelectedIcon(task)
-    handlePickingIcon(task)
+    pickingIcon(task)
   }
 
   const handleTouchStart = (event, task) => {
@@ -58,7 +58,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, h
       onDrag={handleDrag}
       position={position}
     >
-    <div className='icon' ref={desktopRef} style={{ zIndex: iconIndice[task], visibility: visibility, }}>
+    <div className='icon' ref={desktopRef} style={{ zIndex: iconIndices[task], visibility: visibility, }}>
       <div className="desktopRef"
         onDoubleClick={(event) => handleIcon(event, task)}
         onTouchStart={(event) => handleTouchStart(event, task)}

@@ -30,28 +30,28 @@ const Wrapper = styled.div`
 const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, setCursorPosition, settingIconsInBin }) => {
   const task = 'recycle bin'
   const initialPosition = { x: 20, y: 15 }
-  const [iconIndice, setIconIndice] = useState({ 'music': 0, 'portfolio': 0 })
+  const [iconIndices, setIconIndices] = useState({ 'music': 0, 'portfolio': 0 })
 
   const handlePickingIcon = (task) => {
-    const updatedIconIndice = {
-      ...iconIndice,
+    const updatedIconIndices = {
+      ...iconIndices,
       [task]: 99
     };
-    setIconIndice(updatedIconIndice)
+    setIconIndices(updatedIconIndices)
   }
   const handleLeavingIcon = (task) => {
-    const updatedIconIndice = {
-        ...iconIndice,
+    const updatedIconIndices = {
+        ...iconIndices,
         [task]: 0
       };
-      setIconIndice(updatedIconIndice)
+      setIconIndices(updatedIconIndices)
   }
   const handleDisappearingIcon = (task) => {
-    const updatedIconIndice = {
-        ...iconIndice,
+    const updatedIconIndices = {
+        ...iconIndices,
         [task]: -1
       };
-      setIconIndice(updatedIconIndice)
+      setIconIndices(updatedIconIndices)
   }
 
   const handleDrag = (event) => {
@@ -100,7 +100,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
                     key={task}
                     icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
                     task={task}
-                    iconIndice={iconIndice}
+                    iconIndices={iconIndices}
                     visibility={data.visibility}
                     setSelectedBinIcon={setSelectedBinIcon}
                     selectedBinIcon={selectedBinIcon}
