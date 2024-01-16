@@ -6,8 +6,8 @@ const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingTask
     setActiveTask(task);
     indexingTasks(task)
   };
-  const onStop = () => {};
-  const dragHandlers = { onStart, onStop };
+  // const onStop = () => {};
+  const dragHandlers = { onStart };
   const stopPropagation = (event) => {
     event.stopPropagation();
   }

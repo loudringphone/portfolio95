@@ -3,57 +3,51 @@ import Draggable from 'react-draggable';
 
 
 const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, pickingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching }) => {
-  const [resumeLastPos, setResumeLastPos] = useState(null)
+  const [resumeLastPos, setResumeLastPos] = useState(null);
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
-    setPosition(iconPosition)
-  }, [iconPosition])
+    setPosition(iconPosition);
+  }, [iconPosition]);
   
   const onStart = () => {
     activiatingDockMenu(false);
   };
-  const onStop = () => {};
-  const dragHandlers = { onStart, onStop };
-  const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
-
-  const handleMouseDown = (task) => {
-    if (task == 'resume') {
-      const x = desktopRef.current?.getBoundingClientRect().x
-      const y = desktopRef.current?.getBoundingClientRect().y
-      setResumeLastPos({x: x, y: y})
-    } else if (task == 'recycle bin') {
-      const x = desktopRef.current?.getBoundingClientRect().x
-      const y = desktopRef.current?.getBoundingClientRect().y
-      setBinLastPos({x: x, y: y})
-    }
-    setTaskSwitiching(false)
-    setSelectedIcon(task)
-    pickingIcon(task)
+  const dragHandlers = { onStart };
+  const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ');
+  let lastPos = {};
+  if (task == 'resume' || task == 'recycle bin') {
+    const x = desktopRef.current?.getBoundingClientRect().x;
+    const y = desktopRef.current?.getBoundingClientRect().y;
+    lastPos = {x: x, y: y};
   }
 
-  const handleTouchStart = (event, task) => {
-    if (task == 'resume') {
-      const x = desktopRef.current?.getBoundingClientRect().x
-      const y = desktopRef.current?.getBoundingClientRect().y
-      setResumeLastPos({x: x, y: y})
-    } else if (task == 'recycle bin') {
-      const x = desktopRef.current?.getBoundingClientRect().x
-      const y = desktopRef.current?.getBoundingClientRect().y
-      setBinLastPos({x: x, y: y})
+  const selectingIcon = (icon) => {
+    if (icon == 'resume') {
+      setResumeLastPos(lastPos);
+    } else if (icon == 'recycle bin') {
+      setBinLastPos(lastPos);
     }
-    setTaskSwitiching(false)
-    setSelectedIcon(task)
-    handleIconMobile(event, task)
+    setTaskSwitiching(false);
+    setSelectedIcon(icon);
   }
+  const handleMouseDown = (icon) => {
+    selectingIcon(icon)
+    pickingIcon(icon);
+  }
+  const handleTouchStart = (event, icon) => {
+    selectingIcon(icon)
+    handleIconMobile(event, icon);
+  }
+  
   const handleDrag = (e, ui) => {
     setPosition({ x: position.x + ui.deltaX, y: position.y + ui.deltaY });
   };
 
   useEffect(() => {
     if (resumeLastPos){
-      positioningIcon('resume', resumeLastPos.x, resumeLastPos.y)
+      positioningIcon('resume', resumeLastPos.x, resumeLastPos.y);
     }
-  }, [warnings])
+  }, [warnings]);
   
   return (
     <Draggable bounds="body" {...dragHandlers}

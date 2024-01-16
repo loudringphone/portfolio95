@@ -39,8 +39,7 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
     setHelperDisplay('none')
     setWelcomeActive(true)
   };
-  const onStop = () => {};
-  const dragHandlers = { onStart, onStop };
+  const dragHandlers = { onStart };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     setWelcomeActive(true)

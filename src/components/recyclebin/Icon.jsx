@@ -16,8 +16,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setActiveTask('recycle bin')
     setSelectedBinIcon(task)
   };
-  const onStop = () => {};
-  const dragHandlers = { onStart, onStop };
+  const dragHandlers = { onStart };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
   const handleUp = (event, task) => {
