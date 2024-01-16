@@ -14,11 +14,11 @@ Throughout the development of this portfolio, I delved into the intricacies of C
 ```
 const pickingIcon = (icon) => {
   if (iconIndices[icon] == maxIconIndex) {
-    const updatedIconIndices = {
-      ...iconIndices,
-      [icon]: 99
-    };
-    return setIconIndices(updatedIconIndices)
+    setIconIndices(prevState => {
+      prevState[icon] = 99
+      return prevState;
+    })
+    return
   } else {
     setIconIndices(prevState => {
       const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
