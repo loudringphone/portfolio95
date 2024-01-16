@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, pickingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, pickingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null)
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
@@ -26,6 +26,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, p
       const y = desktopRef.current?.getBoundingClientRect().y
       setBinLastPos({x: x, y: y})
     }
+    setTaskSwitiching(false)
     setSelectedIcon(task)
     pickingIcon(task)
   }
@@ -40,6 +41,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, p
       const y = desktopRef.current?.getBoundingClientRect().y
       setBinLastPos({x: x, y: y})
     }
+    setTaskSwitiching(false)
     setSelectedIcon(task)
     handleIconMobile(event, task)
   }
@@ -86,11 +88,22 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, p
         onTouchEnd={() => handleLeavingIcon(task)}
         onMouseUp={() => handleLeavingIcon(task)}
       >
-        <div className="filter-text" style={{display: selectedIcon == task && activeTask == null? 'block' : 'none'}}></div>
-        <div className="filter" style={{display: selectedIcon == task && activeTask ? 'block' : 'none'}}></div>
-      <p>
-        {taskName}
-      </p>
+        { taskSwitiching ?
+          <>
+            <div className="filter-gray" style={{display: selectedIcon == task ? 'block' : 'none'}}></div>
+            <p style={{color: selectedIcon == task ? 'black' : '#fefefe'}}>
+              {taskName}
+            </p>
+          </>
+        :
+          <>
+            <div className="filter-blue" style={{display: selectedIcon == task && activeTask == null ? 'block' : 'none'}}></div>
+            <p>
+              {taskName}
+            </p>
+          </>
+        }
+        
       </div>
     </div>
   </Draggable>

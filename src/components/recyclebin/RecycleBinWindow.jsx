@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, setCursorPosition, settingIconsInBin }) => {
+const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, setCursorPosition, settingIconsInBin, setTaskSwitiching }) => {
   const task = 'recycle bin'
   const initialPosition = { x: 20, y: 15 }
   const [iconIndices, setIconIndices] = useState({ 'music': 0, 'portfolio': 0 })
@@ -65,7 +65,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
           <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
             <span>Recycle Bin</span>
             <div className="buttons">
-              <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+              <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
               <Button onClick={()=>{displayingTask(false, 'recycle bin')}} onTouchEnd={()=>{displayingTask(false, 'recycle bin')}}>
                 <span className='close-icon' />
               </Button>

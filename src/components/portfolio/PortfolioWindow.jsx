@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition}) => {
+const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition, setTaskSwitiching }) => {
   const task = 'portfolio'
   const initialPosition = window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 }
 
@@ -70,7 +70,7 @@ const PortfolioWindow = ({displayingTask, setProjectUrl, displayTasks, setActive
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
         <Button onClick={()=>{displayingTask(false, task)}} onTouchEnd={()=>{displayingTask(false, task)}}>
           <span className='close-icon' />
         </Button>

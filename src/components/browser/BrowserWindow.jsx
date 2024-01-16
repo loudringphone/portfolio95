@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask}) => {
+const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
   const task = 'browser'
   const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
 
@@ -38,7 +38,7 @@ const BrowserWindow = ({setProjectUrl, projectUrl, displayTasks, displayingTask,
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>

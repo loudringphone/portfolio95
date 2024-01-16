@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, isTouchDevice}) => {
+const ResumeWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, isTouchDevice, setTaskSwitiching }) => {
   const task = 'resume'
   const initialPosition = window.innerWidth > 500 ? { x: 60, y: 25 } : { x: 5, y: 10 }
 
@@ -57,7 +57,7 @@ const ResumeWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, 
             <Button style={{width: 'auto', padding: '0 10px', marginRight: '5px'}} onClick={downloadResume} onTouchEnd={()=>{downloadResume()}}>
               Download
             </Button>
-            <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+            <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
             <Button onClick={()=>{displayingTask(false, task)}} onTouchEnd={()=>{displayingTask(false, task)}}>
               <span className='close-icon' />
             </Button>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';
-const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice  }) => {
+const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice, setTaskSwitiching, taskSwitiching  }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconIndices, setIconIndices] = useState({
     'resume': 0, 'portfolio': 1, 'music': 2, 'recycle bin': 3, 'git': 4
@@ -141,6 +141,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           warnings={warnings}
           positioningIcon={positioningIcon}
           setBinLastPos={setBinLastPos}
+          setTaskSwitiching={setTaskSwitiching}
+          taskSwitiching={taskSwitiching}
         />
       ))}
     </div>

@@ -28,8 +28,6 @@
     position: absolute;
     background-color: transparent;
     opacity: 0.5;
-    /* height: 100%;
-    width: 100%; */
 }
 .icon-placeholder {
     position: relative;
@@ -43,17 +41,24 @@
     justify-content: center;
     width: max-content;
 }
-.filter, .filter-text {
+.filter, .filter-gray, .filter-blue {
     position: absolute;
     height: 100%;
     width: 100%;
 }
 .filter {
     background-color: black;
-    border: 1px solid white;
-    opacity: 0.25;
+    border: 1.75px solid lightgray;
+    opacity: 0.3;
 }
-.filter-text {
+.filter-gray {
+    background-color: darkgray;
+    border-radius: 2.5px;
+    opacity: 1;
+}
+
+.filter-blue {
+    border-radius: 2.5px;
     background-color: blue;
     opacity: 1;
 }

@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signed, signOff }) => {
+const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signed, signOff, setTaskSwitiching }) => {
   const task = 'music'
 
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
@@ -186,7 +186,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
         <span>music.exe</span>
 
         <div className="buttons">
-          <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask}/>
+          <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
           <Button onClick={handleClose} onTouchEnd={handleClose}>
             <span className='close-icon' />
           </Button>

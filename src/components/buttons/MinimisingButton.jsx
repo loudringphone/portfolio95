@@ -1,16 +1,18 @@
 import React from 'react'
 import { Button } from 'react95';
 import './buttons.css'
-const MinimisingButton = ({tasksVisibility, task, setTasksVisibility, setActiveTask}) => {
-    const handleClick = (event) => {
+const MinimisingButton = ({ task, setTasksVisibility, setActiveTask, setTaskSwitiching }) => {
+    const handleMinimising = (event) => {
         event.stopPropagation();
-        const newTasksVisibility = new Object(tasksVisibility);
-        newTasksVisibility[task] = 'collapse';
-        setTasksVisibility(newTasksVisibility);
+        setTaskSwitiching(true)
+        setTasksVisibility((prevState) => {
+          prevState[task] = 'collapse'
+          return prevState
+        })
         setActiveTask(null);
     }
   return (
-    <Button onClick={handleClick} onTouchEnd={handleClick}>
+    <Button onClick={handleMinimising} onTouchEnd={handleMinimising}>
       <span className='minimise-icon'>&nbsp;</span>
     </Button>
   )
