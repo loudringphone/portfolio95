@@ -53,6 +53,7 @@ const GlobalStyles = createGlobalStyle`
 const App = () => {
   const [isTouchDevice, setIsTouchDevice] = useState('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   const tasks = ["portfolio", "resume", "browser", "music", "recycle bin"];
+  const minTaskIndex = tasks.length
   const initializeTasksState = (state) => {
     const initialState = {};
     tasks.forEach(task => {
@@ -61,7 +62,7 @@ const App = () => {
     return initialState;
   };
   const [tasksVisibility, setTasksVisibility] = useState(initializeTasksState('visible'));
-  const [taskIndices, setTaskIndices] = useState(initializeTasksState(5));
+  const [taskIndices, setTaskIndices] = useState(initializeTasksState(minTaskIndex));
   const recycleAudio = new Audio(win95recycle);
   const errorAudio = new Audio(win95error);
   const [projectUrl, setProjectUrl] = useState(null)
@@ -291,17 +292,17 @@ const App = () => {
     }, 500);
   }
   
-  const indexingTasks = (key) => {
-    const newtaskIndices = new Object(taskIndices)
-    delete newtaskIndices[key];
-    const sortedKeys = Object.keys(taskIndices).sort((a, b) => taskIndices[a] - taskIndices[b]);
-    let i = 0
-    sortedKeys.forEach((k) => {
-      newtaskIndices[k] = 5 + i;
-      i++
+  const indexingTasks = (task) => {
+    setTaskIndices((prevState) => {
+      const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
+      const taskIndex = sortedKeys.indexOf(task);
+      for (let i = taskIndex + 1; i < sortedKeys.length; i++) {
+        if (prevState[sortedKeys[i]] > minTaskIndex)
+        prevState[sortedKeys[i]] -= 1;
+      }
+      prevState[task] = minTaskIndex * 2 - 1;
+      return prevState;
     });
-    newtaskIndices[key] = 5 + i
-    setTaskIndices(newtaskIndices)
   }
 
   const displayingTask = (boolean, task) => {

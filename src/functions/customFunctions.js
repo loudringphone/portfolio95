@@ -7,12 +7,12 @@ const formatTime = (seconds) => {
   };
 
 const redirectGitHub = () => {
-  // setTimeout(() => {
+  setTimeout(() => {
     const confirmRedirect = window.confirm("You are about to visit my GitHub page. Continue?");
     if (confirmRedirect) {
       window.open('https://github.com/loudringphone/portfolio95', '_blank');
     }
-  // }, 250);
+  }, 250);
 }
 
 export { formatTime, redirectGitHub }

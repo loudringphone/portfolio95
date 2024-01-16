@@ -38,7 +38,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   const handleIcon = (event, task) => {
     event.stopPropagation();
     if (task == 'git') {
-      return redirectGitHub()
+      redirectGitHub()
+      return movingIconToTop(task)
     }
     const updatedTasksVisibility = {
       ...tasksVisibility,
@@ -60,7 +61,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
 
       if (currentTime - lastTouchTime <= 300) {
         if (task == 'git') {
-          return redirectGitHub()
+          redirectGitHub()
+          return movingIconToTop(task)
         }
         const updatedTasksVisibility = {
           ...tasksVisibility,
