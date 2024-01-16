@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility ,signed, signOff }) => {
+const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndices, tasksVisibility, setTasksVisibility ,signed, signOff }) => {
   const task = 'music'
 
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
@@ -180,7 +180,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
-    <Wrapper className="drag-music" style={{zIndex: windowIndice[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.music}}>
+    <Wrapper className="drag-music" style={{zIndex: windowIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.music}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingWindows={indexingWindows}>
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>music.exe</span>

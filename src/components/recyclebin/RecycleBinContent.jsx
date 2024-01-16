@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
+function RecycleBinContent({binWindowRef, cursorPosition, windowIndices, displayTasks, tasksVisibility, setActiveTask, indexingWindows, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
   const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
 
   const handleClickInsideWindow = (event) => {
@@ -63,7 +63,7 @@ function RecycleBinContent({binWindowRef, cursorPosition, windowIndice, displayT
         width: binWindowRef.current?.clientWidth,
         top: `${followerPosition.top}px`,
         left: `${followerPosition.left}px`,
-        zIndex: windowIndice['recycle bin'],
+        zIndex: windowIndices['recycle bin'],
         display: displayTasks.has('recycle bin') ? 'block' : 'none',
         visibility: tasksVisibility['recycle bin']
       }}

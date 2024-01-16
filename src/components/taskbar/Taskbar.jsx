@@ -8,7 +8,7 @@ import './taskbar.css'
 import GitIcon from "../GitIcon";
 import { redirectGitHub } from "../../functions/customFunctions";
 
-export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndice, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, indexingWindows, signingIn, setWelcomeActive, standbyTasks, windowIndices, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
   const shutdownAudio = new Audio(win95shutdown)
 
   const handleClick = (event) => {
@@ -68,7 +68,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, in
                 activeTask={activeTask}
                 setActiveTask={setActiveTask}
                 indexingWindows={indexingWindows}
-                windowIndice={windowIndice}
+                windowIndices={windowIndices}
                 />
             ))
           }

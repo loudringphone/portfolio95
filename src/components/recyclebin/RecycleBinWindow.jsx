@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndice, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, setCursorPosition, settingIconsInBin }) => {
+const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingWindows, windowIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, setCursorPosition, settingIconsInBin }) => {
   const task = 'recycle bin'
   const initialPosition = { x: 20, y: 15 }
   const [iconIndices, setIconIndices] = useState({ 'music': 0, 'portfolio': 0 })
@@ -60,7 +60,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
 
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingWindows={indexingWindows} handleDrag={handleDrag}>
-      <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndice['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}}>
+      <Wrapper className="drag-recycle-bin" style={{zIndex: windowIndices['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}}>
         <WindowComponent task={'recycle bin'} setActiveTask={setActiveTask} indexingWindows={indexingWindows} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
           <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
             <span>Recycle Bin</span>

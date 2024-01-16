@@ -24,7 +24,7 @@ const DesktopIcons = ({ displayingTask, indexingWindows, tasksVisibility, setTas
           prevState[sortedKeys[i]] -= 1;
         }
         prevState[icon] = 99;
-        return { ...prevState };
+        return prevState;
       });
     }
   }
