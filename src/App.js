@@ -301,14 +301,16 @@ const App = () => {
   }
 
   const displayingTask = (boolean, task) => {
-    const newDisplayTasks = new Set(displayTasks)
-    if (boolean) {
-      newDisplayTasks.add(task)
-    } else {
-      newDisplayTasks.delete(task)
-    }
-    setDisplayTasks(newDisplayTasks)
-  }
+    setDisplayTasks((prevState) => {
+      const newDisplayTasks = new Set(prevState);
+      if (boolean) {
+        newDisplayTasks.add(task);
+      } else {
+        newDisplayTasks.delete(task);
+      }
+      return newDisplayTasks;
+    });
+  };
 
   useEffect(() => {
     if (activeTask) {
