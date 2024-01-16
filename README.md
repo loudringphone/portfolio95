@@ -36,5 +36,10 @@ I also encountered an issue with the useSpring scrolling animation for the music
 
 `api.transform.pause()` when `touchmove`
 
+
+## Challenges with window.confirm and draggable-react Interaction
+I noticed an issue where, with the `window.confirm` open, the app continued to interpret touch behavior as active. This resulted in icons teleporting if I attempted to drag another icon immediately after canceling the confirmation box. Despite trying to control the behavior using `[isDragging, setIsDragging]` in conjunction with `onStart()` and `onStop()` from `draggable-react`, the problem was mitigated but not solved completely. Handling the touchmove event and prevent default behavior by adding and removing event listeners still didn't yield the desired outcome either. Eventually, I discovered that I could use `setTimeout` to interrupt the touch behavior, but I'm open to more optimal solutions. If you have any insights, please feel free to share!
+
+
 ## Job Inquiries
 Feel free to explore the portfolio and contact me for any junior role available! Getting a job is harder than I thought before I enrolled in the software development course. I believe I have done everything I can, including drafting a good cover letter and a good resume and building a strong portfolio. Despite my efforts, I have only had one phone interview since completing the course!
