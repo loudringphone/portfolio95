@@ -15,4 +15,18 @@ const redirectGitHub = () => {
   }, 250);
 }
 
-export { formatTime, redirectGitHub }
+const handleButtonTouchEnd = (event, handler) => {
+  const rect = event.currentTarget.getBoundingClientRect();
+  const clientX = event.changedTouches[0].clientX;
+  const clientY = event.changedTouches[0].clientY;
+  const withinBounds =
+    clientX >= rect.left &&
+    clientX <= rect.right &&
+    clientY >= rect.top &&
+    clientY <= rect.bottom;
+  if (withinBounds) {
+    handler(event);
+  }
+}
+
+export { formatTime, redirectGitHub, handleButtonTouchEnd }

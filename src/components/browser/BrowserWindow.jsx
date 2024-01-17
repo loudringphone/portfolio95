@@ -1,5 +1,5 @@
 import React from 'react';
-import MinimisingButton from '../buttons/MinimisingButton';
+import MinimiseButton from '../buttons/MinimiseButton';
 import {
   Button,
   WindowContent,
@@ -38,7 +38,7 @@ const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
+        <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
         <Button onClick={handleClose} onTouchEnd={handleClose}>
           <span className='close-icon' />
         </Button>

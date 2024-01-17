@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
-import MinimisingButton from '../buttons/MinimisingButton';
+import MinimiseButton from '../buttons/MinimiseButton';
+import CloseButton from '../buttons/CloseButton';
 import TextScroller from './TextScroller';
 import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
 import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
@@ -33,6 +34,7 @@ const Wrapper = styled.div`
 
 const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signed, signOff, setTaskSwitiching }) => {
   const task = 'music'
+  const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
   const [musicIndex, setMusicIndex] = useState(0)
   const [audio, setAudio] = useState(new Audio(music[0].source));
@@ -167,17 +169,15 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   }, [audio, playing]);
   
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>
     <Wrapper className="drag-music" style={{zIndex: taskIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.music}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>music.exe</span>
 
         <div className="buttons">
-          <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
-          <Button onClick={handleClose} onTouchEnd={handleClose}>
-            <span className='close-icon' />
-          </Button>
+          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
+          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content'>

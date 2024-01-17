@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
-import MinimisingButton from '../buttons/MinimisingButton';
+import MinimiseButton from '../buttons/MinimiseButton';
+import CloseButton from '../buttons/CloseButton';
 import Icon from './Icon';
 import {
   Button,
@@ -29,6 +30,7 @@ const Wrapper = styled.div`
 
 const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, setCursorPosition, settingIconsInBin, setTaskSwitiching }) => {
   const task = 'recycle bin'
+  const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = { x: 20, y: 15 }
   const [iconIndices, setIconIndices] = useState({ 'music': 0, 'portfolio': 0 })
 
@@ -59,16 +61,14 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
   }
 
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} handleDrag={handleDrag}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} handleDrag={handleDrag} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>
       <Wrapper className="drag-recycle-bin" style={{zIndex: taskIndices['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}}>
         <WindowComponent task={'recycle bin'} setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
           <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
             <span>Recycle Bin</span>
             <div className="buttons">
-              <MinimisingButton tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
-              <Button onClick={()=>{displayingTask(false, 'recycle bin')}} onTouchEnd={()=>{displayingTask(false, 'recycle bin')}}>
-                <span className='close-icon' />
-              </Button>
+              <MinimiseButton tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
+              <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
             </div>
           </WindowHeader></strong>
         {/* {

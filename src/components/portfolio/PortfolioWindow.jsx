@@ -3,7 +3,8 @@ import ActiveProjectTree from './ActiveProjectTree';
 import InactiveProjectTree from './InactiveProjectTree';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
-import MinimisingButton from '../buttons/MinimisingButton';
+import MinimiseButton from '../buttons/MinimiseButton';
+import CloseButton from '../buttons/CloseButton';
 import {
   Button,
   WindowContent,
@@ -27,6 +28,7 @@ const Wrapper = styled.div`
 
 const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition, setTaskSwitiching }) => {
   const task = 'portfolio'
+  const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth <= 500 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/3, y: 15 }
 
   const [projectSelected, setProjectSelected] = useState(null)
@@ -64,16 +66,14 @@ const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiv
   };
 
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>
     <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: taskIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks} handleTouchStart={handleTouchStart}>
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-        <MinimisingButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
-        <Button onClick={()=>{displayingTask(false, task)}} onTouchEnd={()=>{displayingTask(false, task)}}>
-          <span className='close-icon' />
-        </Button>
+          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
+          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
         </div>
         
       </WindowHeader></strong>

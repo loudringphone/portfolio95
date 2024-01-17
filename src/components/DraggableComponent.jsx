@@ -1,8 +1,11 @@
 import React  from 'react'
 import Draggable from 'react-draggable';
 
-const DraggableComponent = ({ task, initialPosition, setActiveTask, indexingTasks, handleDrag, children }) => {
+const DraggableComponent = ({ task, isDraggable, setIsDraggable, initialPosition, setActiveTask, indexingTasks, handleDrag, children }) => {
   const onStart = () => {
+    if (!isDraggable) {
+      return false
+    }
     setActiveTask(task);
     indexingTasks(task)
   };

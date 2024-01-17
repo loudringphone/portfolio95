@@ -213,17 +213,17 @@ const App = () => {
   }
   const teleportingIcon = (event) => {
     const binRect = binWindowRef.current?.getBoundingClientRect();
-    const cursorX = event.clientX || event.changedTouches[0].clientX;
-    const cursorY = event.clientY || event.changedTouches[0].clientY;
+    const clientX = event.clientX || event.changedTouches[0].clientX;
+    const clientY = event.clientY || event.changedTouches[0].clientY;
     if (
-      cursorX < binRect.x || cursorX > binRect?.x + binRect?.width ||
-      cursorY < binRect?.y || cursorY > binRect?.y + binRect?.height
+      clientX < binRect.x || clientX > binRect?.x + binRect?.width ||
+      clientY < binRect?.y || clientY > binRect?.y + binRect?.height
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].binRef?.current?.contains(event.target));
 
       if (task) {
-        const offsetX = cursorX - iconDragPoint.x;
-        const offsetY = cursorY - iconDragPoint.y;
+        const offsetX = clientX - iconDragPoint.x;
+        const offsetY = clientY - iconDragPoint.y;
         positioningIcon(task, offsetX, offsetY)
         setTimeout(() => {
           setIcons(prevTasks => ({
@@ -238,8 +238,8 @@ const App = () => {
       }
     }
     else if (
-      cursorX >= binRect?.x && cursorX <= binRect?.x + binRect?.width &&
-      cursorY >= binRect?.y && cursorY <= binRect?.y + binRect?.height
+      clientX >= binRect?.x && clientX <= binRect?.x + binRect?.width &&
+      clientY >= binRect?.y && clientY <= binRect?.y + binRect?.height
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].desktopRef?.current?.contains(event.target));
 
