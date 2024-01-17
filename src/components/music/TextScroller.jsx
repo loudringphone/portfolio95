@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import {forwardRef, useState, useEffect, useImperativeHandle } from "react";
 import { useSpring, animated } from "react-spring";
 
-const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
+const TextScroller = forwardRef(({ text, isSkipped, setIsSkipped }, ref) => {
   const [restartAnimation, setRestartAnimation] = useState(false);
   const duration = 10000
   const scrolling = useSpring({
@@ -13,16 +13,23 @@ const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
       setRestartAnimation(true);
     }
   });
+  const scrollingTransform = scrolling.transform
 
-  const scrollRef = useRef(null)
-  const handlePause = () => {
-    scrolling.transform.pause()
-  };
-  const handleResume = () => {
-    scrolling.transform.resume()
-  };
+  useImperativeHandle(ref, () => {
+    return {
+      resume() { scrollingTransform.resume() },
+      pause() { scrollingTransform.pause() },
+      reset() { scrollingTransform.reset() },
+    }
+  }, [])
 
   useEffect(() => {
+    const handlePause = () => {
+      scrollingTransform.pause()
+    };
+    const handleResume = () => {
+      scrollingTransform.resume()
+    };
     window.addEventListener("touchmove", handlePause);
     window.addEventListener("touchend", handleResume);
     return () => {
@@ -32,16 +39,8 @@ const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      scrolling.transform.resume()
-    } else {
-      scrolling.transform.pause()
-    }
-  }, [isOpen])
-
-  useEffect(() => {
     if (isSkipped) {
-      resettingText();
+      setIsSkipped(false);
       setRestartAnimation(true);
     }
     if (restartAnimation) {
@@ -51,9 +50,9 @@ const TextScroller = ({ text, isSkipped, resettingText, isOpen }) => {
 
   return (
     <div className="music-title">
-      <animated.div ref={scrollRef} style={scrolling}>{text}</animated.div>
+      <animated.div style={scrolling}>{text}</animated.div>
     </div>
   );
-};
+});
 
 export default TextScroller;

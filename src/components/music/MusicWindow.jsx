@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import MinimisingButton from '../buttons/MinimisingButton';
 import TextScroller from './TextScroller';
 import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
@@ -40,9 +40,16 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   const [countdownTime, setCountdownTime] = useState(music[0].duration);
   const [playing, setPlaying] = useState(false)
   const [isSkipped, setIsSkipped] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
 
+  const scrollerRef = useRef();
+  useEffect(() => {
+    if (displayTasks.has(task)) {
+      scrollerRef.current.resume()
+    }
+  }, [displayTasks])
   const handleClose = () => {
+    scrollerRef.current.pause()
+    scrollerRef.current.reset()
     displayingTask(false, task)
     if (audio) {
       audio.pause();
@@ -118,9 +125,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     });
     
   }
-  const resettingText = () => {
-    setIsSkipped(false);
-  }
+
   useEffect(() => {
     if (audio) {
       if (!signed || signOff) {
@@ -129,22 +134,6 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       }
     }
   }, [signed, signOff])
-
-  useEffect(() => {
-    if (!displayTasks.has(task)) {
-      setIsOpen(false)
-      if (audio) {
-        audio.pause();
-        return setPlaying(false)
-      }
-    } else {
-      setIsOpen(true)
-    }
-  }, [displayTasks])
-
-  useEffect(() => {
-    setIsSkipped(true)
-  }, [isOpen])
 
   useEffect(() => {
     let countdownInterval;
@@ -194,7 +183,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       </WindowHeader></strong>
       <WindowContent className='window-content'>
         <div className="music-title-container">
-          <TextScroller text={music[musicIndex].title} isSkipped={isSkipped} resettingText={resettingText} isOpen={isOpen} />
+          <TextScroller ref={scrollerRef} text={music[musicIndex].title} isSkipped={isSkipped} setIsSkipped={setIsSkipped} />
           <div className='count-down'>{formatTime(countdownTime)}</div>
         </div>
         <div className="buttons">
