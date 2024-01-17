@@ -48,10 +48,9 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       scrollerRef.current.resume()
     }
   }, [displayTasks])
-  const handleClose = () => {
+  const handleMusicClose = () => {
     scrollerRef.current.reset()
     scrollerRef.current.pause()
-    displayingTask(false, task)
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -177,7 +176,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
 
         <div className="buttons">
           <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
-          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} />
+          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} handleMusicClose={handleMusicClose} />
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content'>
