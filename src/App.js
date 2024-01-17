@@ -516,7 +516,6 @@ const App = () => {
           :
           <></>
         }
-
         {
           isTouchDevice ?
           <RecycleBinContent binWindowRef={binWindowRef} cursorPosition={cursorPosition} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
@@ -524,7 +523,6 @@ const App = () => {
           :
           <></>
         }
-       
        < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} signingIn={signingIn} setWelcomeActive={setWelcomeActive} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
       </ThemeProvider>
     </Helmet>

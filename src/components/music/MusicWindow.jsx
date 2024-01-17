@@ -33,7 +33,6 @@ const Wrapper = styled.div`
 
 const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signed, signOff, setTaskSwitiching }) => {
   const task = 'music'
-
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
   const [musicIndex, setMusicIndex] = useState(0)
   const [audio, setAudio] = useState(new Audio(music[0].source));
@@ -42,6 +41,11 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   const [isSkipped, setIsSkipped] = useState(false)
 
   const scrollerRef = useRef();
+  useEffect(() => {
+    if (displayTasks.has(task)) {
+      scrollerRef.current.resume()
+    }
+  }, [displayTasks])
   const handleClose = () => {
     scrollerRef.current.reset()
     scrollerRef.current.pause()
