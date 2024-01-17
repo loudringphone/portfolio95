@@ -9,28 +9,24 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   })
   const maxIconIndex = Object.keys(iconIndices).length - 1
   
-  const pickingingIcon = (icon) => {
-    // if (iconIndices[icon] == maxIconIndex) {
-    //  return
-    // } else {
+  const pickingIcon = (icon) => {
+    if (iconIndices[icon] == maxIconIndex) {
+      setIconIndices(prevState => {
+        prevState[icon] = 99
+        return prevState;
+      })
+      return
+    } else {
       setIconIndices(prevState => {
         const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
         const iconIndex = sortedKeys.indexOf(icon);
         for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
-          console.log(sortedKeys[i])
           prevState[sortedKeys[i]] -= 1;
         }
-        prevState[icon] = maxIconIndex;
+        prevState[icon] = 99;
         return prevState;
       });
-    // }
-    console.log(iconIndices)
-  }
-  const draggingIcon = (icon) => {
-    setIconIndices(prevState => {
-      prevState[icon] = 99
-      return prevState;
-    })
+    }
   }
   const movingIconToTop = (icon) => {
     const updatedIconIndices = {
@@ -50,16 +46,16 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
       [task]: 'visible'
     };
     setTasksVisibility(updatedTasksVisibility);
-    setActiveTask(task)
+    setActiveTask(task);
+    displayingTask(true, task);
     indexingTasks(task);
     movingIconToTop(task);
-    displayingTask(true, task);
   }
   const handleIconMobile = (event, task) => {
     event.stopPropagation();
     if (isTouchDevice) {
       setActiveTask(null)
-      draggingIcon(task)
+      pickingIcon(task)
       const currentTime = new Date().getTime();
       setLastTouchTime(currentTime);
 
@@ -136,8 +132,7 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           iconIndices={iconIndices}
           handleIcon={handleIcon}
           handleIconMobile={handleIconMobile}
-          pickingingIcon={pickingingIcon}
-          draggingIcon={draggingIcon}
+          pickingIcon={pickingIcon}
           handleLeavingIcon={handleLeavingIcon}
           activiatingDockMenu={activiatingDockMenu}
           setSelectedIcon={setSelectedIcon}
