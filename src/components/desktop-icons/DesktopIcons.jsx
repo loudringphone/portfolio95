@@ -10,9 +10,9 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   const maxIconIndex = Object.keys(iconIndices).length - 1
   
   const pickingingIcon = (icon) => {
-    // if (iconIndices[icon] == maxIconIndex) {
-    //  return
-    // } else {
+    if (iconIndices[icon] == maxIconIndex) {
+     return
+    } else {
       setIconIndices(prevState => {
         const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
         const iconIndex = sortedKeys.indexOf(icon);
@@ -23,7 +23,7 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
         prevState[icon] = maxIconIndex;
         return prevState;
       });
-    // }
+    }
     console.log(iconIndices)
   }
   const draggingIcon = (icon) => {
