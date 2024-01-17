@@ -17,6 +17,7 @@ const MinimiseButton = ({ task, setTasksVisibility, setActiveTask, setTaskSwitic
   }
   const disablingDraggable = (event) => {
     event.stopPropagation();
+    setActiveTask(task)
     setIsDraggable(false)
     setIsDraggable(true)
   }

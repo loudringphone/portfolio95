@@ -176,8 +176,8 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
         <span>music.exe</span>
 
         <div className="buttons">
-          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
-          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
+          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} />
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content'>

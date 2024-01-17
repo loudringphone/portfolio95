@@ -2,9 +2,10 @@ import React from 'react'
 import { Button } from 'react95';
 import { handleButtonTouchEnd } from '../../functions/customFunctions';
 import './buttons.css'
-const CloseButton = ({ task, displayingTask, setIsDraggable }) => {
+const CloseButton = ({ task, displayingTask, setIsDraggable, setActiveTask }) => {
     const disablingDraggable = (event) => {
       event.stopPropagation();
+      setActiveTask(task)
       setIsDraggable(false)
       setIsDraggable(true)
     }

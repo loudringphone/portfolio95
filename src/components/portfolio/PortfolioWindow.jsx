@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import ActiveProjectTree from './ActiveProjectTree';
 import InactiveProjectTree from './InactiveProjectTree';
 import DraggableComponent from '../DraggableComponent';
@@ -73,7 +73,7 @@ const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiv
         <span>portfolio.exe</span>
         <div className="buttons">
           <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
-          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+          <CloseButton task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
         </div>
         
       </WindowHeader></strong>

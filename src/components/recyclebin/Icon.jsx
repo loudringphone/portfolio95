@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 

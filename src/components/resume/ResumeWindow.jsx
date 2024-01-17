@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ResumePdf from './ResumePdf';
 import DownloadButton from '../buttons/DownloadButton';
 import MinimiseButton from '../buttons/MinimiseButton';
@@ -46,9 +46,9 @@ const ResumeWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask,
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
             <span>resume.exe</span>
             <div className="buttons">
-              <DownloadButton setIsDraggable={setIsDraggable} />
+              <DownloadButton task={task} setActiveTask={setActiveTask} setIsDraggable={setIsDraggable} />
               <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
-              <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+              <CloseButton task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
             </div>
           </WindowHeader></strong>
           <WindowContent className='window-content'>

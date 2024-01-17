@@ -1,7 +1,7 @@
-import React from 'react';
+import { useState } from 'react';
 import MinimiseButton from '../buttons/MinimiseButton';
+import CloseButton from '../buttons/CloseButton';
 import {
-  Button,
   WindowContent,
   WindowHeader,
 } from 'react95';
@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 
 const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
   const task = 'browser'
+  const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
 
   const handleClose = () => {
@@ -32,16 +33,14 @@ const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask
   }
 
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>
     <Wrapper className="drag-browser" style={{zIndex: taskIndices.browser, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.browser}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
         <span>browser.exe</span>
         <div className="buttons">
-        <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching}/>
-        <Button onClick={handleClose} onTouchEnd={handleClose}>
-          <span className='close-icon' />
-        </Button>
+          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
+          <CloseButton task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content' style={{display: 'block'}}>

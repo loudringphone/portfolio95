@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';

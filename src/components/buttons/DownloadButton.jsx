@@ -3,9 +3,10 @@ import { Button } from 'react95';
 import resume from '../../assets/pdfs/Resume.pdf'
 import { handleButtonTouchEnd } from '../../functions/customFunctions';
 import './buttons.css'
-const DownloadButton = ({ setIsDraggable }) => {
+const DownloadButton = ({ task, setActiveTask, setIsDraggable }) => {
     const disablingDraggable = (event) => {
       event.stopPropagation();
+      setActiveTask(task)
       setIsDraggable(false)
       setIsDraggable(true)
     }
