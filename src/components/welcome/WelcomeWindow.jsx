@@ -122,8 +122,8 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
             </div>
             </div>
             <div className="login-buttons">
-              <Button type="submit" onClick={handleSubmit} onTouch={handleSubmit}>OK</Button>
-              <Button onClick={handleCancel} onTouch={ handleCancel}>Cancel</Button>
+              <Button type="submit" onClick={handleSubmit} onTouchEnd={handleSubmit}>OK</Button>
+              <Button onClick={handleCancel} onTouchEnd={ handleCancel}>Cancel</Button>
             </div>
             </WindowContent>
           </Window>

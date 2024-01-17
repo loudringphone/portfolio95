@@ -8,7 +8,7 @@ const Helper = ({ helperDisplay, setHelperDisplay }) => {
 
   return (
     <div className='helper' style={{ display: helperDisplay }}>
-      <div className='closeBtn' onClick={closeHelper} onTouch={closeHelper}><CloseFillIcon /></div>
+      <div className='closeBtn' onClick={closeHelper} onTouchEnd={closeHelper}><CloseFillIcon /></div>
       <p>User name: Admin</p>
       <p>Password: admin</p>
     </div>

@@ -2,15 +2,26 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, pickingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null);
   const [position, setPosition] = useState(iconPosition);
   useEffect(() => {
     setPosition(iconPosition);
   }, [iconPosition]);
   
+  const selectingIcon = (icon) => {
+    if (icon == 'resume') {
+      setResumeLastPos(lastPos);
+    } else if (icon == 'recycle bin') {
+      setBinLastPos(lastPos);
+    }
+    setTaskSwitiching(false);
+    setSelectedIcon(icon);
+  }
   const onStart = () => {
     activiatingDockMenu(false);
+    selectingIcon(task)
+    pickingingIcon(task)
   };
   const dragHandlers = { onStart };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ');
@@ -21,21 +32,12 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile, p
     lastPos = {x: x, y: y};
   }
 
-  const selectingIcon = (icon) => {
-    if (icon == 'resume') {
-      setResumeLastPos(lastPos);
-    } else if (icon == 'recycle bin') {
-      setBinLastPos(lastPos);
-    }
-    setTaskSwitiching(false);
-    setSelectedIcon(icon);
-  }
   const handleMouseDown = (icon) => {
-    selectingIcon(icon)
-    pickingIcon(icon);
+    setTimeout(() => {
+      draggingIcon(icon);
+    }, 0);
   }
   const handleTouchStart = (event, icon) => {
-    selectingIcon(icon)
     handleIconMobile(event, icon);
   }
   
