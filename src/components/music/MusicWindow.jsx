@@ -42,14 +42,9 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   const [isSkipped, setIsSkipped] = useState(false)
 
   const scrollerRef = useRef();
-  useEffect(() => {
-    if (displayTasks.has(task)) {
-      scrollerRef.current.resume()
-    }
-  }, [displayTasks])
   const handleClose = () => {
-    scrollerRef.current.pause()
     scrollerRef.current.reset()
+    scrollerRef.current.pause()
     displayingTask(false, task)
     if (audio) {
       audio.pause();
@@ -183,7 +178,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       </WindowHeader></strong>
       <WindowContent className='window-content'>
         <div className="music-title-container">
-          <TextScroller ref={scrollerRef} text={music[musicIndex].title} isSkipped={isSkipped} setIsSkipped={setIsSkipped} />
+          <TextScroller ref={scrollerRef} text={music[musicIndex].title} isSkipped={isSkipped} setIsSkipped={setIsSkipped} displayTasks={displayTasks} />
           <div className='count-down'>{formatTime(countdownTime)}</div>
         </div>
         <div className="buttons">

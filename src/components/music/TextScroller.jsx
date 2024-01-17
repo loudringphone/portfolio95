@@ -1,7 +1,7 @@
 import {forwardRef, useState, useEffect, useImperativeHandle } from "react";
 import { useSpring, animated } from "react-spring";
 
-const TextScroller = forwardRef(({ text, isSkipped, setIsSkipped }, ref) => {
+const TextScroller = forwardRef(({ text, isSkipped, setIsSkipped, displayTasks }, ref) => {
   const [restartAnimation, setRestartAnimation] = useState(false);
   const duration = 10000
   const scrolling = useSpring({
@@ -24,19 +24,21 @@ const TextScroller = forwardRef(({ text, isSkipped, setIsSkipped }, ref) => {
   }, [])
 
   useEffect(() => {
-    const handlePause = () => {
-      scrollingTransform.pause()
-    };
-    const handleResume = () => {
-      scrollingTransform.resume()
-    };
-    window.addEventListener("touchmove", handlePause);
-    window.addEventListener("touchend", handleResume);
-    return () => {
-      window.removeEventListener("touchmove", handlePause);
-      window.removeEventListener("touchend", handleResume);
-    };
-  }, []);
+    if (displayTasks.has('music')) {
+      const handlePause = () => {
+        scrollingTransform.pause()
+      };
+      const handleResume = () => {
+        scrollingTransform.resume()
+      };
+      window.addEventListener("touchmove", handlePause);
+      window.addEventListener("touchend", handleResume);
+      return () => {
+        window.removeEventListener("touchmove", handlePause);
+        window.removeEventListener("touchend", handleResume);
+      };
+    }
+  }, [displayTasks]);
 
   useEffect(() => {
     if (isSkipped) {
