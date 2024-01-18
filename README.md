@@ -83,5 +83,10 @@ useImperativeHandle(ref, () => {
 ## `useCallback` and `memo`
 To minimise unnecessary re-renders of components, I turned to W3Schools to learn about the benefits of useCallback. By placing console logs within my components, I can identify instances of re-rendering. Upon detection, I leverage useCallback to memoize functions where necessary. This approach not only helps in preventing avoidable re-renders but also contributes to the overall performance improvement of my portfolio application.
 
+![JS heap size](https://github.com/loudringphone/portfolio95/assets/112668237/a31cfaee-50f8-439a-a52c-af7294221193)
+
+I assessed the performance using Chrome's developer tools.
+Not sure if that is the best way to check but I can see that after using useCallback, the size has dropped a little bit.
+
 ## Job Inquiries
 Feel free to explore the portfolio and contact me for any junior role available! Getting a job is harder than I thought before I enrolled in the software development course. I believe I have done everything I can, including drafting a good cover letter and a good resume and building a strong portfolio. Despite my efforts, I have only had one phone interview since completing the course!
