@@ -280,13 +280,6 @@ const App = () => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   }, [window.innerWidth])
   
-  const signingIn = (boolean) => {
-    setSigned(boolean)
-    setTimeout(() => {
-      setSignOff(!boolean)
-    }, 500);
-  }
-  
   const indexingTasks = (task) => {
     setTaskIndices((prevState) => {
       const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
@@ -485,7 +478,7 @@ const App = () => {
         <ThemeProvider theme={original}>
           <GlobalStyles />
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onTouchStart={handleDown} onMouseDown={handleDown}>
-            <WelcomeWindow setWelcomeActive={setWelcomeActive} welcomeActive={welcomeActive} signingIn={signingIn} />
+            <WelcomeWindow setWelcomeActive={setWelcomeActive} welcomeActive={welcomeActive} setSigned={setSigned} />
           </div>
         </ThemeProvider>
       </Helmet>
@@ -523,7 +516,7 @@ const App = () => {
           :
           <></>
         }
-       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} signingIn={signingIn} setWelcomeActive={setWelcomeActive} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
+       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} setSigned={setSigned} setWelcomeActive={setWelcomeActive} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
       </ThemeProvider>
     </Helmet>
   )

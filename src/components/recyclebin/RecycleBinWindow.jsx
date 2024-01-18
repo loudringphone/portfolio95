@@ -31,7 +31,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
   const task = 'recycle bin'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = { x: 20, y: 15 }
-  const [iconIndices, setIconIndices] = useState({ 'music': 0, 'portfolio': 0 })
+  const [iconIndices, setIconIndices] = useState({ 'music': 0, 'portfolio': 0, 'git' : 0 })
 
   const handlePickingIcon = (task) => {
     const updatedIconIndices = {
