@@ -1,7 +1,7 @@
 import React from 'react'
 import './bluescreen.css'
 
-const BlueScreen = ({displayBSOD, displayingBSOD, setActiveTask, resettingWarnings}) => {
+const BlueScreen = ({displayBSOD, displayingBSOD, setActiveTask}) => {
   const handleClick = () => {
     displayingBSOD(false)
     setActiveTask('warning')

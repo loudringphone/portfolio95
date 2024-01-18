@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
+const WelcomeWindow = ({setWelcomeActive, welcomeActive, setSigned}) => {
   const startupAudio = new Audio(win95startup);
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.025, y: 20} : { x: (window.innerWidth - 650)/2, y: 80 })
   const [helperDisplay, setHelperDisplay] = useState('none')
@@ -61,7 +61,7 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, signingIn}) => {
   const handleSubmit = (event) => {
     setHelperDisplay('none')
     if (username == 'Admin' && password == 'admin') {
-      signingIn(true)
+      setSigned(true)
       startupAudio.play();
     } else {
       event?.stopPropagation();

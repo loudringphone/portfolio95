@@ -1,7 +1,7 @@
 import React from 'react'
 import { Window } from 'react95';
 
-const WindowComponent = ({ task, handleTouchStart, setActiveTask, indexingTasks, icons, setSelectedBinIcon, children }) => {
+const WindowComponent = ({ task, handleTouchStart, setActiveTask, indexingTasks, setSelectedBinIcon, children }) => {
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
     setActiveTask(task);

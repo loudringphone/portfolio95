@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { styleReset } from 'react95';
 import original from "react95/dist/themes/original";
@@ -7,7 +7,7 @@ import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
 import './App.css';
 import DesktopIcons from './components/desktop-icons/DesktopIcons';
 import { Helmet } from './helmet/Helmet';
-import { Taskbar } from './components/taskbar/Taskbar';
+import Taskbar from './components/taskbar/Taskbar';
 import PortfolioWindow from './components/portfolio/PortfolioWindow';
 import ResumeWindow from './components/resume/ResumeWindow';
 import BrowserWindow from './components/browser/BrowserWindow';
@@ -156,7 +156,7 @@ const App = () => {
 
   const [cursorPosition, setCursorPosition] = useState({clientX: null, clientY: null})
 
-  const settingIconsInBin = (boolean, task) => {
+  const settingIconsInBin = useCallback((boolean, task) => {
     setIconsInBin((prevState) => {
       if (boolean) {
         prevState.add(task);
@@ -165,11 +165,10 @@ const App = () => {
       }
       return prevState;
     });
-  }
-
+  }, [iconsInBin])
 
   const binWindowRef = useRef(null)
-  const unrecyclingIcon = () => {
+  const unrecyclingIcon = useCallback(() => {
     if (iconsInBin.size == 0) {
       setIcons(prevTasks => ({
         ...prevTasks,
@@ -179,7 +178,7 @@ const App = () => {
         }
       }));
     }
-  }
+  },[icons])
 
   const recyclingIcon = (task) => {
     if (displayTasks.has('recycle bin')) {
@@ -280,14 +279,7 @@ const App = () => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   }, [window.innerWidth])
   
-  const signingIn = (boolean) => {
-    setSigned(boolean)
-    setTimeout(() => {
-      setSignOff(!boolean)
-    }, 500);
-  }
-  
-  const indexingTasks = (task) => {
+  const indexingTasks = useCallback((task) => {
     setTaskIndices((prevState) => {
       const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
       const taskIndex = sortedKeys.indexOf(task);
@@ -298,9 +290,9 @@ const App = () => {
       prevState[task] = minTaskIndex * 2 - 1;
       return prevState;
     });
-  }
+  },[taskIndices])
 
-  const displayingTask = (boolean, task) => {
+  const displayingTask = useCallback((boolean, task) => {
     setDisplayTasks((prevState) => {
       const newDisplayTasks = new Set(prevState);
       if (boolean) {
@@ -310,7 +302,7 @@ const App = () => {
       }
       return newDisplayTasks;
     });
-  };
+  },[displayTasks])
 
   useEffect(() => {
     if (activeTask) {
@@ -318,12 +310,12 @@ const App = () => {
     }
   }, [activeTask])
 
-  const activiatingDockMenu = (boolean) => {
+  const activiatingDockMenu = useCallback((boolean) => {
     setDockMenuActive(boolean)
     if (boolean) {
       setActiveTask(null)
     }
-  }
+  },[dockMenuActive, activeTask])
 
   const handleDown = (event) => {
     activiatingDockMenu(false)
@@ -336,12 +328,12 @@ const App = () => {
     setSelectedIcon(null)
   }
 
-  const turningoff = (boolean) => {
+  const turningoff = useCallback((boolean) => {
     setSignOff(boolean)
     setTimeout(() => {
       setShutDOwn(boolean)
     }, 500);
-  }
+  },[signOff, shutDown])
 
   const issuingWarning = () => {
     const updatedWarnings = warnings + 1
@@ -485,7 +477,7 @@ const App = () => {
         <ThemeProvider theme={original}>
           <GlobalStyles />
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onTouchStart={handleDown} onMouseDown={handleDown}>
-            <WelcomeWindow setWelcomeActive={setWelcomeActive} welcomeActive={welcomeActive} signingIn={signingIn} />
+            <WelcomeWindow setWelcomeActive={setWelcomeActive} welcomeActive={welcomeActive} setSigned={setSigned} />
           </div>
         </ThemeProvider>
       </Helmet>
@@ -523,7 +515,7 @@ const App = () => {
           :
           <></>
         }
-       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} signingIn={signingIn} setWelcomeActive={setWelcomeActive} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
+       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} setSigned={setSigned} setWelcomeActive={setWelcomeActive} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
       </ThemeProvider>
     </Helmet>
   )

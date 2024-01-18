@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from 'react';
+import {memo, useState, useRef, useEffect} from 'react';
 import ActiveProjectTree from './ActiveProjectTree';
 import InactiveProjectTree from './InactiveProjectTree';
 import DraggableComponent from '../DraggableComponent';
@@ -125,4 +125,4 @@ const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiv
   )
 }
 
-export default PortfolioWindow
+export default memo(PortfolioWindow);

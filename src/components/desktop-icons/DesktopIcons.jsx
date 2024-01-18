@@ -17,14 +17,12 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
         const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
         const iconIndex = sortedKeys.indexOf(icon);
         for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
-          console.log(sortedKeys[i])
           prevState[sortedKeys[i]] -= 1;
         }
         prevState[icon] = maxIconIndex;
         return prevState;
       });
     }
-    console.log(iconIndices)
   }
   const draggingIcon = (icon) => {
     setIconIndices(prevState => {
