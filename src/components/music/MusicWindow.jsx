@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useRef } from 'react';
+import {useState, useEffect, useRef} from 'react';
 import MinimiseButton from '../buttons/MinimiseButton';
 import CloseButton from '../buttons/CloseButton';
 import TextScroller from './TextScroller';
@@ -200,4 +200,4 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   )
 }
 
-export default memo(MusicWindow)
+export default MusicWindow

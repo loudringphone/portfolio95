@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ResumePdf from './ResumePdf';
 import DownloadButton from '../buttons/DownloadButton';
 import MinimiseButton from '../buttons/MinimiseButton';
@@ -62,4 +62,4 @@ const ResumeWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask,
   )
 }
 
-export default memo(ResumeWindow);
+export default ResumeWindow

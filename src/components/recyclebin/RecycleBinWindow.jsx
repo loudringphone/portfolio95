@@ -1,4 +1,4 @@
-import {memo, useState} from 'react';
+import {useState} from 'react';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import MinimiseButton from '../buttons/MinimiseButton';
@@ -132,4 +132,4 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
   )
 }
 
-export default memo(RecycleBinWindow);
+export default RecycleBinWindow

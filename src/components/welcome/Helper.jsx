@@ -1,10 +1,10 @@
-import { memo, useCallback } from 'react';
+import React from 'react';
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
 
 const Helper = ({ helperDisplay, setHelperDisplay }) => {
-  const closeHelper = useCallback(() => {
+  const closeHelper = () => {
     setHelperDisplay('none')
-  }, [helperDisplay])
+  }
 
   return (
     <div className='helper' style={{ display: helperDisplay }}>
@@ -15,4 +15,4 @@ const Helper = ({ helperDisplay, setHelperDisplay }) => {
   )
 }
 
-export default memo(Helper)
+export default Helper

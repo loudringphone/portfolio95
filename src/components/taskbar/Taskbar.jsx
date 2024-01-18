@@ -1,4 +1,4 @@
-import { memo } from "react";
+import React, { useState } from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
@@ -8,7 +8,7 @@ import './taskbar.css'
 import GitIcon from "../GitIcon";
 import { redirectGitHub } from "../../functions/customFunctions";
 
-const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, displayTasks, indexingTasks, setSigned, setWelcomeActive, taskIndices, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
+export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, displayTasks, indexingTasks, signingIn, setWelcomeActive, taskIndices, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
   const shutdownAudio = new Audio(win95shutdown)
 
   const handleClick = (event) => {
@@ -28,9 +28,7 @@ const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, displayTa
 
   const handleLogOff = () => {
     setWelcomeActive(true)
-    setTimeout(() => {
-      setSigned(false)
-    }, 500);
+    signingIn(false)
   }
   const handleShutDown = () => {
     turningoff(true)
@@ -142,5 +140,3 @@ const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, displayTa
     </AppBar>
   );
 };
-
-export default memo(Taskbar);
