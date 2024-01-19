@@ -17,11 +17,12 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
     const updateBoundingClientRect = () => {
       const binWindow = binWindowRef.current
       const binContent = contentRef.current
-      if (binWindow) {
+      if (displayTasks.has('recycle bin')) {
         const scrollTop = document.documentElement.scrollTop
+        const scrollLeft = document.documentElement.scrollLeft;
         const referenceRect = binWindow.getBoundingClientRect();
         binContent.style.top = `${scrollTop + referenceRect.top}px`;
-        binContent.style.left = `${referenceRect.left}px`;
+        binContent.style.left = `${scrollLeft + referenceRect.left}px`;
       }
     };
       if (displayTasks.has('recycle bin')) {
