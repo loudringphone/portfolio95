@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
+function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin, documentPosition, setDocumentPosition}) {
   const contentRef = useRef(null)
 
   const handleClickInsideWindow = (event) => {
@@ -18,8 +18,9 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
       const binWindow = binWindowRef.current
       const binContent = contentRef.current
       if (binWindow) {
+        const scrollTop = document.documentElement.scrollTop
         const referenceRect = binWindow.getBoundingClientRect();
-        binContent.style.top = `${referenceRect.top}px`;
+        binContent.style.top = `${scrollTop + referenceRect.top}px`;
         binContent.style.left = `${referenceRect.left}px`;
       }
     };
@@ -32,7 +33,6 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
     };
   }, [displayTasks]); 
 
-  const [documentPosition, setDocumentPosition] = useState(0);
   const [touchStartY, setTouchStartY] = useState(null);
   const handleTouchStart = (event) => {
     setTouchStartY(event.touches[0].clientY);
@@ -64,6 +64,8 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
         zIndex: taskIndices['recycle bin'],
         display: displayTasks.has('recycle bin') ? 'block' : 'none',
         visibility: tasksVisibility['recycle bin'],
+        height: binWindowRef.current?.clientHeight,
+        width: binWindowRef.current?.clientWidth,
         top: 58,
         left: 26,
       }}
