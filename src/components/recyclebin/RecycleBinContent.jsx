@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, cursorPosition, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
-  const [followerPosition, setFollowerPosition] = useState({ top: 0, left: 0 });
+function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin}) {
+  const contentRef = useRef(null)
 
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
@@ -12,24 +12,26 @@ function RecycleBinContent({binWindowRef, cursorPosition, taskIndices, displayTa
       setSelectedBinIcon(null)
     }
   };
-    
+ 
   useEffect(() => {
-    const updateFollowerPosition = () => {
+    const updateBoundingClientRect = () => {
       const binWindow = binWindowRef.current
+      const binContent = contentRef.current
       if (binWindow) {
         const referenceRect = binWindow.getBoundingClientRect();
-        setFollowerPosition({
-          top: referenceRect.top,
-          left: referenceRect.left,
-        });
+        binContent.style.top = `${referenceRect.top}px`;
+        binContent.style.left = `${referenceRect.left}px`;
       }
     };
-    if (displayTasks.has('recycle bin')) {
-        updateFollowerPosition()
-    }
-  }, [cursorPosition, displayTasks]);
+      if (displayTasks.has('recycle bin')) {
+        updateBoundingClientRect()
+      }
+      window.addEventListener('touchmove', updateBoundingClientRect);
+    return () => {
+      window.removeEventListener('touchmove', updateBoundingClientRect);
+    };
+  }, [displayTasks]); 
 
-  const contentRef = useRef(null)
   const [documentPosition, setDocumentPosition] = useState(0);
   const [touchStartY, setTouchStartY] = useState(null);
   const handleTouchStart = (event) => {
@@ -59,13 +61,11 @@ function RecycleBinContent({binWindowRef, cursorPosition, taskIndices, displayTa
       onTouchStartCapture={handleTouchStart}
       onClick={handleClickInsideWindow}
       style={{
-        height: binWindowRef.current?.clientHeight,
-        width: binWindowRef.current?.clientWidth,
-        top: `${followerPosition.top}px`,
-        left: `${followerPosition.left}px`,
         zIndex: taskIndices['recycle bin'],
         display: displayTasks.has('recycle bin') ? 'block' : 'none',
-        visibility: tasksVisibility['recycle bin']
+        visibility: tasksVisibility['recycle bin'],
+        top: 58,
+        left: 26,
       }}
     >
       <div className="bin-icons">

@@ -154,8 +154,6 @@ const App = () => {
     }
   }, [isTouchDevice])
 
-  const [cursorPosition, setCursorPosition] = useState({clientX: null, clientY: null})
-
   const settingIconsInBin = (boolean, task) => {
     setIconsInBin((prevState) => {
       if (boolean) {
@@ -499,7 +497,7 @@ const App = () => {
           <PortfolioWindow {...windowProps} setProjectUrl={setProjectUrl} setPortfolioHeight={setPortfolioHeight} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition} />
           <BrowserWindow {...windowProps} setProjectUrl={setProjectUrl} projectUrl={projectUrl}         />
           <MusicWindow {...windowProps} signed={signed} signOff={signOff} isTouchDevice={isTouchDevice} />
-          <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} setCursorPosition={setCursorPosition} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} settingIconsInBin={settingIconsInBin} />
+          <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} settingIconsInBin={settingIconsInBin} />
           <BinWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu}  />
           <RecycleWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu} selectedIcon={selectedIcon}/>
           <WarningWindow {...windowProps} warnings={warnings} activiatingDockMenu={activiatingDockMenu} errorAudio={errorAudio} />
@@ -511,7 +509,7 @@ const App = () => {
         }
         {
           isTouchDevice ?
-          <RecycleBinContent binWindowRef={binWindowRef} cursorPosition={cursorPosition} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
+          <RecycleBinContent binWindowRef={binWindowRef} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
           setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} settingIconsInBin={settingIconsInBin}/>
           :
           <></>
