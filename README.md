@@ -4,9 +4,11 @@ Explore my portfolio by visiting this [link](https://winstonsportfolio95.netlify
 ## Draggable Components on Touchscreens
 Throughout the development of this portfolio, I delved into the intricacies of CSS and ReactJS, gaining valuable insights and refining my skills. One challenge involved making both the parent and child components draggable. While this functionality works seamlessly on a traditional computer mouse, it may not function as expected on touchscreens. To address this, I implemented a workaround involving a separate element that tracks the parent's movement, duplicating the content of the child to follow suit and ensuring a smooth dragging experience on touchscreens.
 
-
-`setCursorPosition` when dragging window to get track the values of `getBoundingClientRect()`
-
+```
+binContent.style.top = `${scrollTop + binWindowRect.top}px`;
+binContent.style.left = `${scrollLeft + binWindowRect.left}px`;
+```
+The scroll position (`scrollTop` and `scrollLeft`) is used to account for the current view of the app, ensuring that the position of `binContent` is correctly adjusted relative to the scrolled viewport. The combination of the scroll position and the `binWindow`'s position (`binWindowRect.top` and `binWindowRect.left`) provides the correct absolute position for binContent.
 
 ## `prevState`
 `prevState` is a parameter representing the previous state of the component. It's often used in the functional form of setState, where you provide a callback function. The callback receives the previous state as an argument and returns the new state. Below is an example of how I make use of `prevState`:
@@ -56,7 +58,7 @@ Similarly, I employ a similar technique to cover the icon elements, each consist
 In addition, I worked on enhancing user interaction within my application. Specifically, I implemented a feature that preserves the position of an icon when dragged from the Recycle Bin back to the Desktop. This required understanding how to duplicate an icon and accurately replicate its position. As a result, upon returning an icon to the Desktop from the Recycle Bin, it will be precisely positioned at the last point of interaction. This attention to detail is aimed at creating a more user-friendly and responsive interface for an enjoyable user experience.
 
 
-`getBoundingClientRect()`, `event.changedTouches[0].clientX || event.changedTouches[0].clientX` and `event.clientY || event.changedTouches[0].clientY`
+`getBoundingClientRect()`, `event.clientX || event.changedTouches[0].clientX` and `event.clientY || event.changedTouches[0].clientY`
 
 ## Addressing Animation Issues on Mobile
 I also encountered an issue with the useSpring scrolling animation for the music window. I notice that if I view the portfolio with the music window open on my mobile device, when I drag the browser, the music window would blink. I knew it must be caused by the scrolling animation, so I did some research about how to pause the useSpring animation when touchmove.
