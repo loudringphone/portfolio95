@@ -20,9 +20,9 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
       if (displayTasks.has('recycle bin')) {
         const scrollTop = document.documentElement.scrollTop
         const scrollLeft = document.documentElement.scrollLeft;
-        const referenceRect = binWindow.getBoundingClientRect();
-        binContent.style.top = `${scrollTop + referenceRect.top}px`;
-        binContent.style.left = `${scrollLeft + referenceRect.left}px`;
+        const binWindowRect = binWindow.getBoundingClientRect();
+        binContent.style.top = `${scrollTop + binWindowRect.top}px`;
+        binContent.style.left = `${scrollLeft + binWindowRect.left}px`;
       }
     };
       if (displayTasks.has('recycle bin')) {
