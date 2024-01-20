@@ -48,6 +48,10 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
   useEffect(() => {
     if (resumeLastPos){
       positioningIcon('resume', resumeLastPos.x, resumeLastPos.y);
+      setTimeout(() => {
+        selectingIcon('resume')
+        setTaskSwitiching(true)
+      }, 0);
     }
   }, [warnings]);
   
