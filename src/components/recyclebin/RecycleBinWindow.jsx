@@ -1,8 +1,7 @@
 import {useState} from 'react';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
-import MinimiseButton from '../buttons/MinimiseButton';
-import CloseButton from '../buttons/CloseButton';
+import WindowButton from '../buttons/WindowButton';
 import Icon from './Icon';
 import {
   WindowContent,
@@ -62,8 +61,8 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
           <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
             <span>Recycle Bin</span>
             <div className="buttons">
-              <MinimiseButton tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
-              <CloseButton task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+              <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
+              <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
             </div>
           </WindowHeader></strong>
         {/* {

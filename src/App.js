@@ -355,7 +355,7 @@ const App = () => {
       setTimeout(() => {
         setLoading(false)
       }, 1200);
-    }, 2000);
+    }, 2);
   }, []);
 
   const desktopRef = useRef(null)
@@ -472,11 +472,11 @@ const App = () => {
   } 
   if (!signed && signOff) {
     return (
-      <Helmet style={{height: "100vh", width: "100vw"}}>
+      <Helmet>
+        <GlobalStyles />
         <ThemeProvider theme={original}>
-          <GlobalStyles />
           <div className="desktop" style={{height: "100vh", width: "100vw"}} onTouchStart={handleDown} onMouseDown={handleDown}>
-            <WelcomeWindow setWelcomeActive={setWelcomeActive} welcomeActive={welcomeActive} setSigned={setSigned} />
+            <WelcomeWindow setActiveTask={setActiveTask} activeTask={activeTask} setSigned={setSigned} />
           </div>
         </ThemeProvider>
       </Helmet>

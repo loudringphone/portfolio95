@@ -1,3 +1,5 @@
+import resume from '../assets/pdfs/Resume.pdf'
+
 const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -29,4 +31,12 @@ const handleButtonTouchEnd = (event, handler) => {
   }
 }
 
-export { formatTime, redirectGitHub, handleButtonTouchEnd }
+const downloadResume = () => {
+  let a = document.createElement('a');
+  a.href = resume;
+  a.download = 'Resume - Winston Lau.pdf';
+  a.click();
+  window.open(resume, '_blank');
+}
+
+export { formatTime, redirectGitHub, handleButtonTouchEnd, downloadResume }

@@ -1,6 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import MinimiseButton from '../buttons/MinimiseButton';
-import CloseButton from '../buttons/CloseButton';
+import WindowButton from '../buttons/WindowButton';
 import TextScroller from './TextScroller';
 import PlayMiniFillIcon from 'remixicon-react/PlayMiniFillIcon';
 import PauseMiniFillIcon from 'remixicon-react/PauseMiniFillIcon';
@@ -175,8 +174,8 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
         <span>music.exe</span>
 
         <div className="buttons">
-          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
-          <CloseButton task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} handleMusicClose={handleMusicClose} />
+          <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
+          <WindowButton purpose='close' task={task} displayingTask={displayingTask} setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} handleMusicClose={handleMusicClose} />
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content'>

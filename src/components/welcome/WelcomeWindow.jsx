@@ -4,7 +4,6 @@ import { Password1010 } from "@react95/icons";
 import ConditionalAnimatedWrapper from '../ConditionalAnimatedWrapper';
 import Draggable from 'react-draggable';
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
-
 import {
   Button,
   Window,
@@ -13,6 +12,7 @@ import {
   TextInput,
 } from 'react95';
 import styled from 'styled-components';
+import WindowButton from '../buttons/WindowButton';
 import './welcomewindow.scss'
 import win95startup from '../../assets/sounds/win95startup.mp3'
 
@@ -27,8 +27,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const WelcomeWindow = ({setWelcomeActive, welcomeActive, setSigned}) => {
+const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
   const startupAudio = new Audio(win95startup);
+  const [isDraggable, setIsDraggable] = useState(true)
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.025, y: 20} : { x: (window.innerWidth - 650)/2, y: 80 })
   const [helperDisplay, setHelperDisplay] = useState('none')
   const [username, setUsername] = useState('Admin')
@@ -37,15 +38,15 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, setSigned}) => {
 
   const onStart = () => {
     setHelperDisplay('none')
-    setWelcomeActive(true)
+    setActiveTask('welcome')
   };
   const dragHandlers = { onStart };
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
-    setWelcomeActive(true)
+    setActiveTask('welcome')
   };
   const handleMouseDown = () => {
-    setWelcomeActive(true)
+    setActiveTask('welcome')
   }
   const handleUsername = (event) => {
     const value = event.target.value
@@ -65,10 +66,10 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, setSigned}) => {
       startupAudio.play();
     } else {
       event?.stopPropagation();
-      setWelcomeActive(false)
+      setActiveTask(false)
       setSigninError(true)
       setTimeout(() => {
-        setWelcomeActive(true)
+        setActiveTask('welcome')
         setSigninError(false)
         setHelperDisplay('block')
       }, 750);
@@ -90,15 +91,13 @@ const WelcomeWindow = ({setWelcomeActive, welcomeActive, setSigned}) => {
   return (
     <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" {...dragHandlers} onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
       <Wrapper className="drag-welcome">
-        <Helper helperDisplay={helperDisplay} setHelperDisplay={setHelperDisplay}/>
+        <Helper helperDisplay={helperDisplay} setHelperDisplay={setHelperDisplay} setActiveTask={setActiveTask} />
         <ConditionalAnimatedWrapper animate={signinError}>
           <Window className='welcome-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
-            <strong className="cursor"><WindowHeader  active={welcomeActive} className='window-title'>
+            <strong className="cursor"><WindowHeader  active={activeTask} className='window-title'>
               <span>Welcome to Windows</span>
               <div className="buttons">
-              <Button onClick={handleHelp} onTouchEnd={handleHelp}>
-                <span className='help-icon'>?</span>
-              </Button>
+              <WindowButton purpose='help' task="welcome" setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} setHelperDisplay={setHelperDisplay} />
               <Button disabled={true} active={false}>
                 <CloseFillIcon />
               </Button>

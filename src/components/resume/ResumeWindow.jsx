@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import ResumePdf from './ResumePdf';
-import DownloadButton from '../buttons/DownloadButton';
-import MinimiseButton from '../buttons/MinimiseButton';
-import CloseButton from '../buttons/CloseButton';
+import WindowButton from '../buttons/WindowButton';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import './scrollview.scss';
@@ -46,9 +44,9 @@ const ResumeWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask,
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
             <span>resume.exe</span>
             <div className="buttons">
-              <DownloadButton task={task} setActiveTask={setActiveTask} setIsDraggable={setIsDraggable} />
-              <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
-              <CloseButton task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+              <WindowButton purpose='download' task={task} setActiveTask={setActiveTask} setIsDraggable={setIsDraggable} />
+              <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
+              <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
             </div>
           </WindowHeader></strong>
           <WindowContent className='window-content'>

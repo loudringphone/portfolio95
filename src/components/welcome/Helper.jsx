@@ -1,9 +1,10 @@
 import React from 'react';
 import CloseFillIcon from 'remixicon-react/CloseFillIcon';
 
-const Helper = ({ helperDisplay, setHelperDisplay }) => {
+const Helper = ({ helperDisplay, setHelperDisplay, setActiveTask }) => {
   const closeHelper = () => {
     setHelperDisplay('none')
+    setActiveTask('welcome')
   }
 
   return (

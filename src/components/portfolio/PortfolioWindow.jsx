@@ -3,8 +3,7 @@ import ActiveProjectTree from './ActiveProjectTree';
 import InactiveProjectTree from './InactiveProjectTree';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
-import MinimiseButton from '../buttons/MinimiseButton';
-import CloseButton from '../buttons/CloseButton';
+import WindowButton from '../buttons/WindowButton';
 import {
   Button,
   WindowContent,
@@ -72,8 +71,8 @@ const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiv
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
         <span>portfolio.exe</span>
         <div className="buttons">
-          <MinimiseButton tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
-          <CloseButton task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+          <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
+          <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
         </div>
         
       </WindowHeader></strong>

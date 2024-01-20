@@ -28,7 +28,7 @@ const ConditionalAnimatedWrapper = ({ animate, children }) => {
   if (animate) {
     return <AnimatedContent>{children}</AnimatedContent>;
   } else {
-    return <div>{children}</div>;
+    return <>{children}</>;
   }
 };
 
