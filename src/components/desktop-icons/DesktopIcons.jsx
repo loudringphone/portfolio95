@@ -11,19 +11,22 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   const maxIconIndex = numberOfIcons - 1
   
   const pickingingIcon = (icon) => {
-    const iconIndex = iconIndices[icon]
     const indexSet = new Set(Object.values(iconIndices))
     if (indexSet.size != numberOfIcons) {
       setIconIndices(prevState => {
         const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
-        for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
-          prevState[sortedKeys[i]] -= 1;
+        const iconIndex = sortedKeys.indexOf(icon);
+        sortedKeys.splice(iconIndex, 1);
+        sortedKeys.push(icon); 
+        for (let i = 0; i < sortedKeys.length; i++) {
+          prevState[sortedKeys[i]] = i;
         }
         prevState[icon] = maxIconIndex;
         return prevState;
       });
       return
     }
+    const iconIndex = iconIndices[icon]
     if (iconIndex == maxIconIndex) {
      return
     } else {
