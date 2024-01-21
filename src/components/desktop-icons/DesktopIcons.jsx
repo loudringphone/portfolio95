@@ -7,15 +7,28 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   const [iconIndices, setIconIndices] = useState({
     'resume': 0, 'portfolio': 1, 'music': 2, 'recycle bin': 3, 'git': 4
   })
-  const maxIconIndex = Object.keys(iconIndices).length - 1
+  const numberOfIcons = Object.keys(iconIndices).length
+  const maxIconIndex = numberOfIcons - 1
   
   const pickingingIcon = (icon) => {
-    if (iconIndices[icon] == maxIconIndex) {
+    const iconIndex = iconIndices[icon]
+    const indexSet = new Set(Object.values(iconIndices))
+    if (indexSet.size != numberOfIcons) {
+      setIconIndices(prevState => {
+        const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
+        for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
+          prevState[sortedKeys[i]] -= 1;
+        }
+        prevState[icon] = maxIconIndex;
+        return prevState;
+      });
+      return
+    }
+    if (iconIndex == maxIconIndex) {
      return
     } else {
       setIconIndices(prevState => {
         const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
-        const iconIndex = sortedKeys.indexOf(icon);
         for (let i = iconIndex + 1; i < sortedKeys.length; i++) {
           prevState[sortedKeys[i]] -= 1;
         }
