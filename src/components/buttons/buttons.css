@@ -9,12 +9,12 @@
 .close-icon {
   font-size: 25px;
   font-weight: bold;
-  height: 120%;
+  margin-bottom: 2px;
 }
 
 .minimise-icon {
     display: inline-block;
     border-bottom: 4px solid black;
     padding: 0 4px;
-    margin-bottom: 9px;
+    margin-bottom: 2px;
 }
