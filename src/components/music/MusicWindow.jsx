@@ -21,14 +21,6 @@ import './musicwindow.scss'
 const Wrapper = styled.div`
   position: absolute;
   background: transparent;
-  .close-icon {
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      background: ${({ theme }) => theme.materialText};
-    }
-  }
 `;
 
 const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signed, signOff, setTaskSwitiching }) => {

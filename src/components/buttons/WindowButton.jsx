@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from 'react95';
+import styled from 'styled-components';
 import { handleButtonTouchEnd, downloadResume } from '../../functions/customFunctions';
 import './buttons.css'
+
+const Wrapper = styled.div`
+  .close-icon {
+    margin-top: 1.5px;
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      background: ${({ theme }) => theme.materialText};
+    }
+  }
+`;
+
 const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTaskSwitiching, setIsDraggable, displayingTask, handleMusicClose, setHelperDisplay }) => {
   const [handle, setHandle] = useState(null)
   useEffect(() => {
@@ -50,7 +64,7 @@ const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTas
           case 'minimise':
             return <span className='minimise-icon'>&nbsp;</span>;
           case 'close':
-            return <span className='close-icon' />;
+            return <Wrapper><span className='close-icon' /></Wrapper>;
           case 'download':
             return 'Download';
           case 'help':

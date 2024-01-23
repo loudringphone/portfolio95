@@ -11,14 +11,6 @@ import './browserwindow.scss'
 const Wrapper = styled.div`
   position: absolute;
   background: transparent;
-  .close-icon {
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      background: ${({ theme }) => theme.materialText};
-    }
-  }
 `;
 
 const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
@@ -26,10 +18,6 @@ const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
 
-  const handleClose = () => {
-    displayingTask(false, task)
-    setProjectUrl(null)
-  }
 
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>

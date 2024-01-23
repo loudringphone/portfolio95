@@ -15,14 +15,6 @@ import './recyclebinwindow.scss'
 const Wrapper = styled.div`
   position: absolute;
   background: transparent;
-  .close-icon {
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      background: ${({ theme }) => theme.materialText};
-    }
-  }
 `;
 
 

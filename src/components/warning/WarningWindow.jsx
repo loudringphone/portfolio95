@@ -14,14 +14,6 @@ import './warningwindow.scss'
 const Wrapper = styled.div`
   position: absolute;
   background: transparent;
-  .close-icon {
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      background: ${({ theme }) => theme.materialText};
-    }
-  }
 `;
 
 const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, warnings, errorAudio}) => {

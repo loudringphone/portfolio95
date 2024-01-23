@@ -17,12 +17,6 @@ import './portfoliowindow.scss'
 
 const Wrapper = styled.div`
   position: absolute;
-  .close-icon {
-    &:before,
-    &:after {
-      background: ${({ theme }) => theme.materialText};
-    }
-  }
 `;
 
 const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setPortfolioHeight, setTouchStartY, setDocumentPosition, setTaskSwitiching }) => {
