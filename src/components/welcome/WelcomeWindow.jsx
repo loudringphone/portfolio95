@@ -3,7 +3,6 @@ import Helper from './Helper';
 import { Password1010 } from "@react95/icons";
 import ConditionalAnimatedWrapper from '../ConditionalAnimatedWrapper';
 import Draggable from 'react-draggable';
-import CloseFillIcon from 'remixicon-react/CloseFillIcon';
 import {
   Button,
   Window,
@@ -75,15 +74,9 @@ const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
       }, 750);
     }
   }
- 
-  const handleHelp = () => {
-    setHelperDisplay('block')
-  }
-
   const handleCancel = () => {
     setHelperDisplay('none')
   }
-
   const stopPropagation = (event) => {
     event.stopPropagation();
   }
@@ -99,7 +92,7 @@ const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
               <div className="buttons">
               <WindowButton purpose='help' task="welcome" setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} setHelperDisplay={setHelperDisplay} />
               <Button disabled={true} active={false}>
-                <CloseFillIcon />
+                <span className='close-icon'>×</span>
               </Button>
               </div>
             </WindowHeader></strong>

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import DraggableComponent from '../DraggableComponent';
+import Draggable from 'react-draggable';
 import WindowComponent from '../WindowComponent';
 import warning from '../../assets/images/warning.ico'
-import CloseFillIcon from 'remixicon-react/CloseFillIcon';
 
 import {
   Button,
@@ -22,6 +21,10 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
   const centerY = window.innerHeight / 2;
   const initialPosition = { x: centerX - 180, y: centerY - 165 }
 
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  }
+
   const handleClick = () => {
     displayingTask(false, task);
   }
@@ -33,14 +36,14 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
   }, [warnings])
   
   return (
-    <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
+    <Draggable defaultPosition={initialPosition} bounds="body" handle="strong" onMouseDown={stopPropagation} onTouchStart={stopPropagation}>
       <Wrapper className="drag-warning" style={{zIndex: taskIndices.warning, display: displayTasks.has(task) ? 'block' : 'none'}}>
         <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
             <span>Warning</span>
             <div className="buttons">
               <Button disabled={true} active={false}>
-                <CloseFillIcon />
+                <span className='close-icon'>×</span>
               </Button>
             </div>
           </WindowHeader></strong>
@@ -66,7 +69,7 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
           </WindowContent>
         </WindowComponent>
       </Wrapper>
-    </DraggableComponent>
+    </Draggable>
   )
 }
 

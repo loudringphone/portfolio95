@@ -6,12 +6,31 @@ import './buttons.css'
 
 const Wrapper = styled.div`
   .close-icon {
-    margin-top: 1.5px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: -1px;
+    margin-top: 1px;
+    transform: rotateZ(45deg);
+    position: relative;
     &:before,
     &:after {
       content: '';
       position: absolute;
       background: ${({ theme }) => theme.materialText};
+    }
+    &:before {
+      height: 100%;
+      width: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &:after {
+      height: 3px;
+      width: 100%;
+      left: 0px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 `;
@@ -64,7 +83,7 @@ const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTas
           case 'minimise':
             return <span className='minimise-icon'>&nbsp;</span>;
           case 'close':
-            return <Wrapper><span className='close-icon' /></Wrapper>;
+            return <span className='close-icon'>×</span>;
           case 'download':
             return 'Download';
           case 'help':
