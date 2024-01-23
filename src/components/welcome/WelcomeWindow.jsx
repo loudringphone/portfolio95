@@ -17,13 +17,6 @@ import win95startup from '../../assets/sounds/win95startup.mp3'
 
 const Wrapper = styled.div`
   background: transparent;
-  .close-icon {
-    &:before,
-    &:after {
-      content: '';
-      background: ${({ theme }) => theme.materialText};
-    }
-  }
 `;
 
 const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
