@@ -1,6 +1,7 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import WindowComponent from '../WindowComponent';
+import CloseLineIcon from 'remixicon-react/CloseLineIcon';
 import warning from '../../assets/images/warning.ico'
 import {
   Button,
@@ -35,7 +36,7 @@ const BinWarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTa
             <span>Warning</span>
             <div className="buttons">
               <Button disabled={true} active={false}>
-                <span className='close-icon'>×</span>
+                <CloseLineIcon />
               </Button>
             </div>
           </WindowHeader></strong>

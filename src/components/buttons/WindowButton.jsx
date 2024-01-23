@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from 'react95';
-import styled from 'styled-components';
+import CloseLineIcon from 'remixicon-react/CloseLineIcon';
 import { handleButtonTouchEnd, downloadResume } from '../../functions/customFunctions';
 import './buttons.css'
 
@@ -52,7 +52,7 @@ const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTas
           case 'minimise':
             return <span className='minimise-icon'>&nbsp;</span>;
           case 'close':
-            return <span className='close-icon'>×</span>;
+            return <CloseLineIcon />;
           case 'download':
             return 'Download';
           case 'help':

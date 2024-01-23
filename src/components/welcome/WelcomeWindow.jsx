@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Helper from './Helper';
+import CloseLineIcon from 'remixicon-react/CloseLineIcon';
 import { Password1010 } from "@react95/icons";
 import ConditionalAnimatedWrapper from '../ConditionalAnimatedWrapper';
 import Draggable from 'react-draggable';
@@ -85,7 +86,7 @@ const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
               <div className="buttons">
               <WindowButton purpose='help' task="welcome" setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} setHelperDisplay={setHelperDisplay} />
               <Button disabled={true} active={false}>
-                <span className='close-icon'>×</span>
+                <CloseLineIcon />
               </Button>
               </div>
             </WindowHeader></strong>
