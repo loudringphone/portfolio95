@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, settingIconsInBin, setTaskSwitiching }) => {
+const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, settingIconsInBin, setTaskSwitiching }) => {
   const task = 'recycle bin'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = { x: 20, y: 15 }
@@ -45,6 +45,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
       };
       setIconIndices(updatedIconIndices)
   }
+  console.log(iconsInBin)
 
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>
@@ -80,32 +81,33 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
           {
             !isTouchDevice ?
               <div className="bin-icons">
-              {Object.entries(icons).map(([task, data]) => (
-                task !== 'resume' && task !== 'recycle bin' && (
-                  <Icon
-                    key={task}
-                    icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
-                    task={task}
-                    iconIndices={iconIndices}
-                    visibility={data.visibility}
-                    setSelectedBinIcon={setSelectedBinIcon}
-                    selectedBinIcon={selectedBinIcon}
-                    activeTask={activeTask}
-                    binRef={data.binRef}
-                    binWindowRef={binWindowRef}
-                    setActiveTask={setActiveTask}
-                    handlePickingIcon={handlePickingIcon}
-                    handleLeavingIcon={handleLeavingIcon}
-                    handleDisappearingIcon={handleDisappearingIcon}
-                    unrecyclingIcon={unrecyclingIcon}
-                    isTouchDevice={isTouchDevice}
-                    indexingTasks={indexingTasks}
-                    setIconDragPoint={setIconDragPoint}
-                    settingIconsInBin={settingIconsInBin}
-                  />
-                )))
-              }
-              </div>
+                {[...iconsInBin].map((icon) => {
+                  const data = icons[icon];
+                  return (
+                    <Icon
+                      key={icon}
+                      icon={<data.Icon style={{ height: '60px', width: '60px', padding: '4px' }} />}
+                      task={icon}
+                      iconIndices={iconIndices}
+                      visibility={data.visibility}
+                      setSelectedBinIcon={setSelectedBinIcon}
+                      selectedBinIcon={selectedBinIcon}
+                      activeTask={activeTask}
+                      iconBinRef={data.iconBinRef}
+                      binWindowRef={binWindowRef}
+                      setActiveTask={setActiveTask}
+                      handlePickingIcon={handlePickingIcon}
+                      handleLeavingIcon={handleLeavingIcon}
+                      handleDisappearingIcon={handleDisappearingIcon}
+                      unrecyclingIcon={unrecyclingIcon}
+                      isTouchDevice={isTouchDevice}
+                      indexingTasks={indexingTasks}
+                      setIconDragPoint={setIconDragPoint}
+                      settingIconsInBin={settingIconsInBin}
+                    />
+                  );
+                })}
+                </div>
             :
               <></>
           }

@@ -93,7 +93,7 @@ const App = () => {
       Icon: GitIcon,
       desktopRef: useRef(null),
       iconRef: useRef(null),
-      binRef: useRef(null),
+      iconBinRef: useRef(null),
       position: { x: 125, y: 150 },
       visibility: 'visible',
     },
@@ -101,7 +101,7 @@ const App = () => {
       Icon: MediaCd,
       desktopRef: useRef(null),
       iconRef: useRef(null),
-      binRef: useRef(null),
+      iconBinRef: useRef(null),
       position: { x: 25, y: 150 },
       visibility: 'visible',
     },
@@ -109,7 +109,7 @@ const App = () => {
       Icon: Shell32167,
       desktopRef: useRef(null),
       iconRef: useRef(null),
-      binRef: useRef(null),
+      iconBinRef: useRef(null),
       position: { x: 25, y: 25 },
       visibility: 'visible',
     },
@@ -185,6 +185,7 @@ const App = () => {
       }, 0);
     }
     displayingTask(false, task)
+    settingIconsInBin(true, task)
     setIcons(prevTasks => ({
       ...prevTasks,
       [task]: {
@@ -215,7 +216,7 @@ const App = () => {
       clientX < binRect.x || clientX > binRect?.x + binRect?.width ||
       clientY < binRect?.y || clientY > binRect?.y + binRect?.height
     ) {
-      const task = Object.keys(icons).find(taskKey => icons[taskKey].binRef?.current?.contains(event.target));
+      const task = Object.keys(icons).find(taskKey => icons[taskKey].iconBinRef?.current?.contains(event.target));
 
       if (task) {
         const offsetX = clientX - iconDragPoint.x;

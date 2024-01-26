@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, settingIconsInBin }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, settingIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
@@ -16,7 +16,11 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setActiveTask('recycle bin')
     setSelectedBinIcon(task)
   };
-  const dragHandlers = { onStart };
+  const onStop = (event) => {
+    const elementRect = event.currentTarget;
+    console.log(iconBinRef)
+  }
+  const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
   const handleUp = (event, task) => {
@@ -95,7 +99,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
      onMouseDown={stopPropagation} onTouchStart={stopPropagation}
       position={position}
     >
-    <div className='icon' ref={binRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
+    <div className='icon' ref={iconBinRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
       <div className='icon-whole'
         onMouseDown={handleDown}
         onMouseUp={(event) => handleUp(event, task)}

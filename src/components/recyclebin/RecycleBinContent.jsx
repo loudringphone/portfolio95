@@ -88,7 +88,7 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
               setSelectedBinIcon={setSelectedBinIcon}
               selectedBinIcon={selectedBinIcon}
               activeTask={activeTask}
-              binRef={data.binRef}
+              iconBinRef={data.iconBinRef}
               binWindowRef={binWindowRef}
               setActiveTask={setActiveTask}
               unrecyclingIcon={unrecyclingIcon}
