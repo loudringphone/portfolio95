@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, settingIconsInBin }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
@@ -18,7 +18,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   };
   const onStop = (event) => {
     const elementRect = event.currentTarget;
-    console.log(iconBinRef)
+    console.log(iconBinRef.current)
   }
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
@@ -36,11 +36,12 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       cursorY < binRect.y || cursorY > binRect.y + binRect.height
     ) {
       setIconDisplay('none')
-      settingIconsInBin(false, task)
       if (isTouchDevice) {
         teleportingIcon(event)
       }
-      unrecyclingIcon();
+      setTimeout(() => {
+        unrecyclingIcon();
+      }, 0);
       setSelectedBinIcon(null)
     }
     setTimeout(() => {
@@ -55,7 +56,6 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   useEffect(() => {
       if (visibility == 'hidden') {
         setIconDisplay('block')
-        settingIconsInBin(true, task)
       }
   }, [visibility])
   

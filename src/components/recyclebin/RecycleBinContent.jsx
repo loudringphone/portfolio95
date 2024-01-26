@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, settingIconsInBin, documentPosition, setDocumentPosition}) {
+function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, documentPosition, setDocumentPosition, iconsInBin}) {
   const contentRef = useRef(null)
 
   const handleClickInsideWindow = (event) => {
@@ -73,17 +73,18 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
     >
       <div className="bin-icons">
         {
-          Object.entries(icons).map(([task, data]) => (
-            task !== 'resume' && task !== 'recycle bin' && (
+         [...iconsInBin].map((icon) => {
+          const data = icons[icon];
+          return (
             <Icon
-              key={task}
+              key={icon}
               icon={
                 React.createElement(
                   data.Icon,
                   { style: { height: '60px', width: '60px', padding: '4px' } }
                 )
               }
-              task={task}
+              task={icon}
               visibility={data.visibility}
               setSelectedBinIcon={setSelectedBinIcon}
               selectedBinIcon={selectedBinIcon}
@@ -96,9 +97,8 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
               isTouchDevice={isTouchDevice}
               indexingTasks={indexingTasks}
               setIconDragPoint={setIconDragPoint}
-              settingIconsInBin={settingIconsInBin}
             />
-          )))
+          )})
         }
       </div>
     </div>

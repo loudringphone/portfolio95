@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, settingIconsInBin, setTaskSwitiching }) => {
+const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, setTaskSwitiching }) => {
   const task = 'recycle bin'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = { x: 20, y: 15 }
@@ -103,11 +103,10 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
                       isTouchDevice={isTouchDevice}
                       indexingTasks={indexingTasks}
                       setIconDragPoint={setIconDragPoint}
-                      settingIconsInBin={settingIconsInBin}
                     />
                   );
                 })}
-                </div>
+              </div>
             :
               <></>
           }
