@@ -81,7 +81,7 @@ const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
         <Helper helperDisplay={helperDisplay} setHelperDisplay={setHelperDisplay} setActiveTask={setActiveTask} />
         <ConditionalAnimatedWrapper animate={signinError}>
           <Window className='welcome-window' onClick={handleClickInsideWindow} onMouseDown={handleMouseDown}>
-            <strong className="cursor"><WindowHeader  active={activeTask} className='window-title'>
+            <strong className="cursor"><WindowHeader  active={activeTask=='welcome'} className='window-title'>
               <span>Welcome to Windows</span>
               <div className="buttons">
               <WindowButton purpose='help' task="welcome" setIsDraggable={setIsDraggable} setActiveTask={setActiveTask} setHelperDisplay={setHelperDisplay} />

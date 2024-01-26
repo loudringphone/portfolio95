@@ -66,8 +66,6 @@ const App = () => {
   const recycleAudio = new Audio(win95recycle);
   const errorAudio = new Audio(win95error);
   const [projectUrl, setProjectUrl] = useState(null)
-  
-  const [welcomeActive, setWelcomeActive] = useState(true)
   const [dockMenuActive, setDockMenuActive] = useState(false)
   const [displayTasks, setDisplayTasks] = useState(new Set())
   const [activeTask, setActiveTask] = useState(null)
@@ -318,7 +316,6 @@ const App = () => {
 
   const handleDown = (event) => {
     activiatingDockMenu(false)
-    setWelcomeActive(false)
     setActiveTask(null)
     const desktopRefs = Object.values(icons).map(task => task.desktopRef);
     if (desktopRefs.some(ref => ref.current?.contains(event.target))) {
@@ -514,7 +511,7 @@ const App = () => {
           :
           <></>
         }
-       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} setSigned={setSigned} setWelcomeActive={setWelcomeActive} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
+       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} setSigned={setSigned} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
       </ThemeProvider>
     </Helmet>
   )
