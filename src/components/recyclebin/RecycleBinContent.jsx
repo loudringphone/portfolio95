@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, unrecyclingIcon, teleportingIcon, isTouchDevice, setIconDragPoint, documentPosition, setDocumentPosition, iconsInBin}) {
-  const contentRef = useRef(null)
+function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, emptyingBin, teleportingIcon, isTouchDevice, setIconDragPoint, documentPosition, setDocumentPosition, iconsInBin, setIconsInBin}) {
+  const contentRef = useRef()
+  const binIconsRef = useRef()
 
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
@@ -71,7 +72,7 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
         left: 26,
       }}
     >
-      <div className="bin-icons">
+      <div className="bin-icons" ref={binIconsRef}>
         {
          [...iconsInBin].map((icon) => {
           const data = icons[icon];
@@ -92,11 +93,13 @@ function RecycleBinContent({binWindowRef, taskIndices, displayTasks, tasksVisibi
               iconBinRef={data.iconBinRef}
               binWindowRef={binWindowRef}
               setActiveTask={setActiveTask}
-              unrecyclingIcon={unrecyclingIcon}
+              emptyingBin={emptyingBin}
               teleportingIcon={teleportingIcon}
               isTouchDevice={isTouchDevice}
               indexingTasks={indexingTasks}
               setIconDragPoint={setIconDragPoint}
+              binIconsRef={binIconsRef}
+              setIconsInBin={setIconsInBin}
             />
           )})
         }

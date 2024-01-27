@@ -2,24 +2,59 @@ import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, unrecyclingIcon, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, iconsInBin, setIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
   const [iconZindex, setIconZindex] = useState(0)
   const errorAudio = new Audio(win95error);
+  const [dragStartTime, setDragStartTime] = useState(null)
 
   const onStart = (event) => {
     event.stopPropagation();
-    setIconZindex(99)
-    indexingTasks('recycle bin')
-    setActiveTask('recycle bin')
-    setSelectedBinIcon(task)
+    setIconZindex(99);
+    indexingTasks('recycle bin');
+    setActiveTask('recycle bin');
+    setSelectedBinIcon(task);
+    setDragStartTime(new Date().getTime());
   };
   const onStop = (event) => {
-    const elementRect = event.currentTarget;
-    console.log(iconBinRef.current)
-  }
+    const DragEndTime = new Date().getTime();
+    const dragTime = (DragEndTime - dragStartTime);
+    if (dragTime > 250) {
+      const binIconsRect = binIconsRef.current.getBoundingClientRect();
+      const clientX = event.clientX || event.changedTouches[0].clientX;
+      const clientY = event.clientY || event.changedTouches[0].clientY;
+      if (
+        //width: 300, gap: 15, padding: 15, gridWidth: 90, gridHeight: 97
+        clientX >= binIconsRect.x && clientX <= binIconsRect.x + binIconsRect.width &&
+        clientY >= binIconsRect.y && clientY <= binIconsRect.y + 112
+      ) {
+        if (clientX <= binIconsRect.x + 75) {
+          setIconsInBin(prevIcons => {
+            prevIcons.delete(task);
+            const arr = Array.from(prevIcons);
+            arr.unshift(task); 
+            return new Set(arr);
+          })
+        } else if (clientX <= binIconsRect.x + 225) {
+          setIconsInBin(prevIcons => {
+            prevIcons.delete(task);
+            const arr = Array.from(prevIcons);
+            arr.splice(1, 0, task);
+            return new Set(arr);
+          })
+        } else if (clientX >= binIconsRect.x + 285) {
+          setIconsInBin(prevIcons => {
+            prevIcons.delete(task);
+            const arr = Array.from(prevIcons);
+            arr.push(task); 
+            return new Set(arr);
+          })
+        }
+      }
+    };
+  };
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
 
@@ -28,19 +63,19 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setIconZindex(99)
     setSelectedBinIcon(task)
     setIconZindex(-1)
-    const cursorX = event.clientX || event.changedTouches[0].clientX;
-    const cursorY = event.clientY || event.changedTouches[0].clientY;
+    const clientX = event.clientX || event.changedTouches[0].clientX;
+    const clientY = event.clientY || event.changedTouches[0].clientY;
     const binRect = binWindowRef.current.getBoundingClientRect();
     if (
-      cursorX < binRect.x || cursorX > binRect.x + binRect.width ||
-      cursorY < binRect.y || cursorY > binRect.y + binRect.height
+      clientX < binRect.x || clientX > binRect.x + binRect.width ||
+      clientY < binRect.y || clientY > binRect.y + binRect.height
     ) {
       setIconDisplay('none')
       if (isTouchDevice) {
         teleportingIcon(event)
       }
       setTimeout(() => {
-        unrecyclingIcon();
+        emptyingBin();
       }, 0);
       setSelectedBinIcon(null)
     }

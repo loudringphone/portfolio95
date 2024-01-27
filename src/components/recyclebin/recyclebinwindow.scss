@@ -9,7 +9,8 @@
     grid-template-columns: 90px 90px 90px;
     grid-template-rows: 1fr 1fr;
     justify-items: center;
-    gap: 1rem;
+    gap: 15px;
+    padding: 15px;
 
     .icon {
       display: flex;
@@ -48,10 +49,11 @@
    
       .window-content {
         display: flex;
+        padding: 0px;
         background-color: white;
         border: 1px solid gray;
         flex-direction: column;
-        width: 300px;
+        width: 330px;
         height: 250px;
         .warning {
           display: flex;
@@ -89,7 +91,7 @@
   width: 100%;
 
   .bin-icons {
-    margin: 15px;
+    padding: 15px;
     display: grid;
     grid-template-columns: 90px 90px 90px;
     grid-template-rows: 1fr 1fr;

@@ -165,9 +165,8 @@ const App = () => {
 
 
   const binWindowRef = useRef(null)
-  const unrecyclingIcon = () => {
+  const emptyingBin = () => {
     if (iconsInBin.size == 0) {
-      console.log('111111')
       setIcons(prevTasks => ({
         ...prevTasks,
         "recycle bin": {
@@ -210,12 +209,12 @@ const App = () => {
     }));
   }
   const teleportingIcon = (event) => {
-    const binRect = binWindowRef.current?.getBoundingClientRect();
+    const binRect = binWindowRef.current.getBoundingClientRect();
     const clientX = event.clientX || event.changedTouches[0].clientX;
     const clientY = event.clientY || event.changedTouches[0].clientY;
     if (
-      clientX < binRect.x || clientX > binRect?.x + binRect?.width ||
-      clientY < binRect?.y || clientY > binRect?.y + binRect?.height
+      clientX < binRect.x || clientX > binRect.x + binRect.width ||
+      clientY < binRect.y || clientY > binRect.y + binRect.height
     ) {
       const task = Object.keys(icons).find(taskKey => icons[taskKey].iconBinRef?.current?.contains(event.target));
 
@@ -498,7 +497,7 @@ const App = () => {
           <PortfolioWindow {...windowProps} setProjectUrl={setProjectUrl} setPortfolioHeight={setPortfolioHeight} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition} />
           <BrowserWindow {...windowProps} setProjectUrl={setProjectUrl} projectUrl={projectUrl}         />
           <MusicWindow {...windowProps} signed={signed} signOff={signOff} isTouchDevice={isTouchDevice} />
-          <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} unrecyclingIcon={unrecyclingIcon} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} />
+          <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} emptyingBin={emptyingBin} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} setIconsInBin={setIconsInBin} />
           <BinWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu}  />
           <RecycleWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu} selectedIcon={selectedIcon}/>
           <WarningWindow {...windowProps} warnings={warnings} activiatingDockMenu={activiatingDockMenu} errorAudio={errorAudio} />
@@ -511,7 +510,7 @@ const App = () => {
         {
           isTouchDevice ?
           <RecycleBinContent binWindowRef={binWindowRef} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
-          setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} unrecyclingIcon={unrecyclingIcon} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} documentPosition={documentPosition} setDocumentPosition={setDocumentPosition}/>
+          setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} emptyingBin={emptyingBin} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} documentPosition={documentPosition} setDocumentPosition={setDocumentPosition} setIconsInBin={setIconsInBin} />
           :
           <></>
         }

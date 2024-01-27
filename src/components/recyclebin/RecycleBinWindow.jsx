@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState, useRef } from 'react';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import WindowButton from '../buttons/WindowButton';
@@ -18,7 +18,8 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, unrecyclingIcon, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, setTaskSwitiching }) => {
+const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, emptyingBin, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, setTaskSwitiching, setIconsInBin }) => {
+  const binIconsRef = useRef()
   const task = 'recycle bin'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = { x: 20, y: 15 }
@@ -45,7 +46,6 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
       };
       setIconIndices(updatedIconIndices)
   }
-  console.log(iconsInBin)
 
   return (
     <DraggableComponent task={task} initialPosition={initialPosition} setActiveTask={setActiveTask} indexingTasks={indexingTasks} isDraggable={isDraggable} setIsDraggable={setIsDraggable}>
@@ -80,7 +80,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
         <WindowContent className='window-content' ref={binWindowRef}>
           {
             !isTouchDevice ?
-              <div className="bin-icons">
+              <div className="bin-icons" ref={binIconsRef}>
                 {[...iconsInBin].map((icon) => {
                   const data = icons[icon];
                   return (
@@ -99,10 +99,13 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
                       handlePickingIcon={handlePickingIcon}
                       handleLeavingIcon={handleLeavingIcon}
                       handleDisappearingIcon={handleDisappearingIcon}
-                      unrecyclingIcon={unrecyclingIcon}
+                      emptyingBin={emptyingBin}
                       isTouchDevice={isTouchDevice}
                       indexingTasks={indexingTasks}
                       setIconDragPoint={setIconDragPoint}
+                      binIconsRef={binIconsRef}
+                      iconsInBin={iconsInBin}
+                      setIconsInBin={setIconsInBin}
                     />
                   );
                 })}
