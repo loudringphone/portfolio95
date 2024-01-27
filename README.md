@@ -10,6 +10,9 @@ binContent.style.left = `${scrollLeft + binWindowRect.left}px`;
 ```
 The scroll position (`scrollTop` and `scrollLeft`) is used to account for the current view of the app, ensuring that the position of `binContent` is correctly adjusted relative to the scrolled viewport. The combination of the scroll position and the `binWindow`'s position (`binWindowRect.top` and `binWindowRect.left`) provides the correct absolute position for binContent.
 
+## `event.stopPropagation()` and `event.preventDefault()`
+These two methods play a crucial role in achieving a smooth drag-and-drop functionality. `event.stopPropagation()` is utilized to stop the propagation of events up or down the `DOM` hierarchy. On the other hand, `event.preventDefault()` serves the purpose of preventing the default action associated with an event. By employing these methods, we can manipulate event behaviors to ensure a seamless and controlled drag-and-drop experience. These techniques are instrumental in customizing the interaction and enhancing user experience during drag-and-drop operations. 
+
 ## `prevState`
 `prevState` is a parameter representing the previous state of the component. It's often used in the functional form of setState, where you provide a callback function. The callback receives the previous state as an argument and returns the new state. Below is an example of how I make use of `prevState`:
 
