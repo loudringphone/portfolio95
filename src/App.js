@@ -501,16 +501,16 @@ const App = () => {
           <BinWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu}  />
           <RecycleWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu} selectedIcon={selectedIcon}/>
           <WarningWindow {...windowProps} warnings={warnings} activiatingDockMenu={activiatingDockMenu} errorAudio={errorAudio} />
+
+          {
+          isTouchDevice ?
+            <RecycleBinContent binWindowRef={binWindowRef} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} emptyingBin={emptyingBin} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} documentPosition={documentPosition} setDocumentPosition={setDocumentPosition} setIconsInBin={setIconsInBin} />
+          :
+            <></>
+          }
         </div>
         { warnings >= 3 ?
           <BlueScreen displayBSOD={displayBSOD} displayingBSOD={displayingBSOD} setActiveTask={setActiveTask} />
-          :
-          <></>
-        }
-        {
-          isTouchDevice ?
-          <RecycleBinContent binWindowRef={binWindowRef} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} 
-          setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} emptyingBin={emptyingBin} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} documentPosition={documentPosition} setDocumentPosition={setDocumentPosition} setIconsInBin={setIconsInBin} />
           :
           <></>
         }

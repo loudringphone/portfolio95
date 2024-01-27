@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, iconsInBin, setIconsInBin }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, setIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
   const [iconZindex, setIconZindex] = useState(0)
   const errorAudio = new Audio(win95error);
-  const [dragStartTime, setDragStartTime] = useState(null)
+  const [dragStartTime, setDragStartTime] = useState(null);
 
   const onStart = (event) => {
     event.stopPropagation();
@@ -127,11 +127,21 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     };
   }
 
-  return (
+  const iconBinRect = iconBinRef.current?.getBoundingClientRect();
+  const bodyWidth = document.body.clientWidth;
+  const bodyHeight = document.body.clientHeight;
 
- 
-    <Draggable bounds={false} {...dragHandlers}
-     onMouseDown={stopPropagation} onTouchStart={stopPropagation}
+  return (
+    <Draggable
+      bounds={{
+        left: iconBinRect ? -iconBinRect.x : 0,
+        top: iconBinRect ? -iconBinRect.y : 0,
+        right: iconBinRect ? bodyWidth - iconBinRect.x - iconBinRect.width : 0,
+        bottom: iconBinRect ? bodyHeight - iconBinRect.y - iconBinRect.height : 0
+      }}
+      {...dragHandlers}
+      onMouseDown={stopPropagation}
+      onTouchStart={stopPropagation}
       position={position}
     >
     <div className='icon' ref={iconBinRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
