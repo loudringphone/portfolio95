@@ -19,6 +19,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     setDragStartTime(new Date().getTime());
   };
   const onStop = (event) => {
+    setIconZindex(0);
     const DragEndTime = new Date().getTime();
     const dragTime = (DragEndTime - dragStartTime);
     if (dragTime > 250) {
@@ -30,6 +31,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         clientX >= binIconsRect.x && clientX <= binIconsRect.x + binIconsRect.width &&
         clientY >= binIconsRect.y && clientY <= binIconsRect.y + 112
       ) {
+        // 15 + 90/3 * 2
         if (clientX <= binIconsRect.x + 75) {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
@@ -37,7 +39,8 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
             arr.unshift(task); 
             return new Set(arr);
           })
-        } else if (clientX <= binIconsRect.x + 225) {
+        // 15 + 90 + 15 + 90 + 15 + 90/3 * 2
+        } else if (clientX < binIconsRect.x + 285) {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
@@ -60,9 +63,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
 
   const handleUp = (event, task) => {
     setActiveTask('recycle bin')
-    setIconZindex(99)
     setSelectedBinIcon(task)
-    setIconZindex(-1)
     const clientX = event.clientX || event.changedTouches[0].clientX;
     const clientY = event.clientY || event.changedTouches[0].clientY;
     const binRect = binWindowRef.current.getBoundingClientRect();
@@ -79,9 +80,6 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       }, 0);
       setSelectedBinIcon(null)
     }
-    setTimeout(() => {
-      setIconZindex(0)
-    }, 0);
   }
 
   const stopPropagation = (event) => {
