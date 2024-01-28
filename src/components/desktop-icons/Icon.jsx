@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 import SkeletonIcon from './SkeletonIcon';
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching, setActiveTask, movingIconToTop, maxIconIndex }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching, setActiveTask, maxIconIndex }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null);
   const [position, setPosition] = useState(iconPosition);
   const [startPos, setStartPos] = useState(iconPosition)
@@ -10,6 +10,11 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
   useEffect(() => {
     setPosition(iconPosition);
   }, [iconPosition]);
+  useEffect(() => {
+    if (visibility == 'visible') {
+      setStartPos(position)
+    }
+  }, [visibility])
   
   const selectingIcon = (icon) => {
     setActiveTask(null)
