@@ -7,6 +7,7 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   const [iconIndices, setIconIndices] = useState({
     'resume': 0, 'portfolio': 1, 'music': 2, 'recycle bin': 3, 'git': 4
   })
+  const [isDragging, setIsDragging] = useState(null)
   const numberOfIcons = Object.keys(iconIndices).length
   const maxIconIndex = numberOfIcons - 1
   
@@ -41,6 +42,7 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
     }
   }
   const draggingIcon = (icon) => {
+    setIsDragging(icon)
     setIconIndices(prevState => {
       prevState[icon] = 99
       return prevState;
@@ -99,6 +101,7 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   }
   const handleLeavingIcon = (task) => {
     movingIconToTop(task);
+    setIsDragging(null)
     recycling(task);
   }
 
@@ -164,6 +167,7 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           taskSwitiching={taskSwitiching}
           setActiveTask={setActiveTask}
           maxIconIndex={maxIconIndex}
+          isDragging={isDragging}
         />
       ))}
     </div>

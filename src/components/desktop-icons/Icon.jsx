@@ -2,11 +2,10 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 import SkeletonIcon from './SkeletonIcon';
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching, setActiveTask, maxIconIndex }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching, setActiveTask, maxIconIndex, isDragging }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null);
   const [position, setPosition] = useState(iconPosition);
   const [startPos, setStartPos] = useState(iconPosition)
-  const [dragging, setDragging] = useState(false)
   useEffect(() => {
     setPosition(iconPosition);
   }, [iconPosition]);
@@ -30,12 +29,8 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
     activiatingDockMenu(false);
     selectingIcon(task)
     pickingingIcon(task)
-    setTimeout(() => {
-      setDragging(true)
-    }, 0);
   };
   const onStop = () => {
-    setDragging(false)
     setStartPos(position)
   }
   const dragHandlers = { onStart, onStop };
@@ -78,13 +73,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
         position={position}
       >
       <div className='icon' ref={desktopRef} style={{ zIndex: iconIndices[task], visibility: visibility, }}>
-        <div className="desktopRef"
-          onDoubleClick={(event) => handleIcon(event, task)}
-          onTouchStart={(event) => handleTouchStart(event, task)}
-          onMouseDown={() => handleMouseDown(task)}
-          onTouchEnd={() => handleLeavingIcon(task)}
-          onMouseUp={() => handleLeavingIcon(task)}
-        ></div>
+        <div className="desktopRef"></div>
         <div
           className='icon-placeholder'
           ref={iconRef}
@@ -128,7 +117,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
      icon={icon}
      task={task}
      startPos={startPos}
-     dragging={dragging}
+     isDragging={isDragging}
      maxIconIndex={maxIconIndex}
    />
    </>

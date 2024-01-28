@@ -1,13 +1,13 @@
 import React from 'react'
 
-const SkeletonIcon = ({ icon, task, startPos, dragging, maxIconIndex }) => {
+const SkeletonIcon = ({ icon, task, startPos, isDragging, maxIconIndex }) => {
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ');
   
   return (
     <div className='icon' style={{
       top: startPos.y, left: startPos.x,
       zIndex: maxIconIndex,
-      display: dragging ? 'flex' : 'none',
+      display: isDragging === task ? 'flex' : 'none',
     }}>
       <div className='icon-placeholder'>
         <div className="filter"></div>
