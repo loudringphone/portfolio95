@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, iconBinRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, setIconsInBin }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binIconRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, iconsInBin, setIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
@@ -31,29 +31,56 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         clientX >= binIconsRect.x && clientX <= binIconsRect.x + binIconsRect.width &&
         clientY >= binIconsRect.y && clientY <= binIconsRect.y + 112
       ) {
-        // 15 + 90 + 15 + 90/2
-        if (clientX <= binIconsRect.x + 165) {
+        const unshifting = (task) => {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
             arr.unshift(task); 
             return new Set(arr);
           })
-        // 15 + 90 + 15 + 90 + 15 + 90/2
-        } else if (clientX < binIconsRect.x + 270) {
+        }
+        const inserting = (task) => {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
             arr.splice(1, 0, task);
             return new Set(arr);
           })
-        } else if (clientX >= binIconsRect.x + 270) {
+        }
+        const pushing = (task) => {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
             arr.push(task); 
             return new Set(arr);
           })
+        }
+        //15 90 15 90 15 90 15 = 330
+        const iconsArr = Array.from(iconsInBin)
+        if (iconsArr[0] === task) {
+          // 15 90 15 45 || 15 90 15 90 15 45
+          if (clientX > binIconsRect.x + 165 && clientX <= binIconsRect.x + 270 ) {
+            inserting(task)
+          // 15 90 15 90 15 45
+          } else if ( clientX > binIconsRect.x + 270) {
+            pushing(task)
+          }
+        } else if (iconsArr[2] === task) {
+          // 15 45
+          if (clientX <= binIconsRect.x + 60 ) {
+            unshifting(task)
+          // 15 45 ||  15 90 15 45
+          } else if (clientX > binIconsRect.x + 60 && clientX <= binIconsRect.x + 165) {
+            inserting(task)
+          }
+        } else {
+          // 15 45
+          if (clientX <= binIconsRect.x + 60 ) {
+            unshifting(task)
+          // 15 90 15 90 15 45
+          } else if (clientX > binIconsRect.x + 270) {
+            pushing(task)
+          } 
         }
       }
     };
@@ -125,7 +152,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     };
   }
 
-  const iconBinRect = iconBinRef.current?.getBoundingClientRect();
+  const iconBinRect = binIconRef.current?.getBoundingClientRect();
   const bodyWidth = document.body.clientWidth;
   const bodyHeight = document.body.clientHeight;
 
@@ -142,7 +169,7 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       onTouchStart={stopPropagation}
       position={position}
     >
-    <div className='icon' ref={iconBinRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
+    <div className='icon' ref={binIconRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
       <div className='icon-whole'
         onMouseDown={handleDown}
         onMouseUp={(event) => handleUp(event, task)}

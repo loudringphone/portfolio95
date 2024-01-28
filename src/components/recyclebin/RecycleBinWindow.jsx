@@ -93,7 +93,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
                       setSelectedBinIcon={setSelectedBinIcon}
                       selectedBinIcon={selectedBinIcon}
                       activeTask={activeTask}
-                      iconBinRef={data.iconBinRef}
+                      binIconRef={data.binIconRef}
                       binWindowRef={binWindowRef}
                       setActiveTask={setActiveTask}
                       handlePickingIcon={handlePickingIcon}
@@ -104,6 +104,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
                       indexingTasks={indexingTasks}
                       setIconDragPoint={setIconDragPoint}
                       binIconsRef={binIconsRef}
+                      iconsInBin={iconsInBin}
                       setIconsInBin={setIconsInBin}
                     />
                   );

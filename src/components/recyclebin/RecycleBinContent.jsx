@@ -90,7 +90,7 @@ function RecycleBinContent({ binWindowRef, taskIndices, displayTasks, tasksVisib
               setSelectedBinIcon={setSelectedBinIcon}
               selectedBinIcon={selectedBinIcon}
               activeTask={activeTask}
-              iconBinRef={data.iconBinRef}
+              binIconRef={data.binIconRef}
               binWindowRef={binWindowRef}
               setActiveTask={setActiveTask}
               emptyingBin={emptyingBin}
@@ -99,6 +99,7 @@ function RecycleBinContent({ binWindowRef, taskIndices, displayTasks, tasksVisib
               indexingTasks={indexingTasks}
               setIconDragPoint={setIconDragPoint}
               binIconsRef={binIconsRef}
+              iconsInBin={iconsInBin}
               setIconsInBin={setIconsInBin}
             />
           )})
