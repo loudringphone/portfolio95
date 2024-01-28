@@ -33,6 +33,9 @@ const WarningWindow = ({displayTasks, displayingTask, setActiveTask, activeTask,
   useEffect(() => {
     if (warnings > 0) {
       errorAudio.play()
+      setTimeout(() => {
+        setActiveTask('warning')
+      }, 0);
     }
   }, [warnings])
   

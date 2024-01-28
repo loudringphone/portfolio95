@@ -9,13 +9,9 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
   useEffect(() => {
     setPosition(iconPosition);
   }, [iconPosition]);
-  useEffect(() => {
-    if (visibility == 'visible') {
-      setStartPos(position)
-    }
-  }, [visibility])
   
   const selectingIcon = (icon) => {
+    setStartPos(position)
     setActiveTask(null)
     if (icon == 'resume') {
       setResumeLastPos(lastPos);
