@@ -17,13 +17,15 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, di
   }
   const handleTask = (event, task) => {
     event.stopPropagation();
-    activiatingDockMenu(false)
-    const newTasksVisibility = new Object(tasksVisibility)
-    newTasksVisibility[task] = 'visible'
-    setTasksVisibility(newTasksVisibility)
-    setActiveTask(task);
-    displayingTask(true, task)
-    indexingTasks(task)
+    setTimeout(() => {
+      activiatingDockMenu(false)
+      const newTasksVisibility = new Object(tasksVisibility)
+      newTasksVisibility[task] = 'visible'
+      setTasksVisibility(newTasksVisibility)
+      setActiveTask(task);
+      displayingTask(true, task)
+      indexingTasks(task)
+    }, 100);
   }
 
   const handleLogOff = () => {
@@ -38,9 +40,15 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, di
       shutdownAudio.play();
     }, 500);
   }
- 
   const stopPropagation = (event) => {
     event.stopPropagation();
+  }
+  const handleGit = (event) => {
+    event.stopPropagation();
+    setTimeout(() => {
+      activiatingDockMenu(false)
+      redirectGitHub()
+    }, 100);
   }
 
   return (
@@ -91,7 +99,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, di
               </MenuListItem>
               {
                 icons['git']['visibility'] == 'visible' ?
-                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={redirectGitHub}>
+                <MenuListItem style={{justifyContent:'flex-start', gap:"10px"}} onClick={(event) => handleGit(event)}>
                   <GitIcon menuList={true}/>
                     <p><span className='underscore'>G</span>it</p>
                 </MenuListItem>
