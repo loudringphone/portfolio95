@@ -319,7 +319,9 @@ const App = () => {
 
   const handleDown = (event) => {
     activiatingDockMenu(false)
-    setActiveTask(null)
+    if (event.target.className === 'desktop') {
+      setActiveTask(null)
+    }
     const desktopRefs = Object.values(icons).map(task => task.desktopRef);
     if (desktopRefs.some(ref => ref.current?.contains(event.target))) {
       return;
