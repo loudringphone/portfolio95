@@ -25,6 +25,9 @@ const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTas
               handleMusicClose()
             }
             displayingTask(false, task)
+            setTimeout(() => {
+              setActiveTask(null);
+            }, 0);
           }
         case 'download':
           return downloadResume

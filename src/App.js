@@ -53,7 +53,7 @@ const GlobalStyles = createGlobalStyle`
 const App = () => {
   const [isTouchDevice, setIsTouchDevice] = useState('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   const tasks = ["portfolio", "resume", "browser", "music", "recycle bin"];
-  const minTaskIndex = tasks.length
+  const minTaskIndex = tasks.length + 5
   const initializeTasksState = (state) => {
     const initialState = {};
     tasks.forEach(task => {

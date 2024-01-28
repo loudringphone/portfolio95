@@ -56,8 +56,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
   const handleIcon = (event, task) => {
     event.stopPropagation();
     if (task == 'git') {
-      redirectGitHub()
-      return movingIconToTop(task)
+      redirectGitHub();
+      return movingIconToTop(task);
     }
     const updatedTasksVisibility = {
       ...tasksVisibility,
@@ -90,16 +90,16 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           setBinLastPos(null)
         }
         setTasksVisibility(updatedTasksVisibility);
-        setActiveTask(task)
-        displayingTask(true, task)
-        indexingTasks(task)
-        movingIconToTop(task)
+        setActiveTask(task);
+        displayingTask(true, task);
+        indexingTasks(task);
+        movingIconToTop(task);
       }
     }
   }
   const handleLeavingIcon = (task) => {
-    movingIconToTop(task)
-    recycling(task)
+    movingIconToTop(task);
+    recycling(task);
   }
 
 
@@ -162,6 +162,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           setBinLastPos={setBinLastPos}
           setTaskSwitiching={setTaskSwitiching}
           taskSwitiching={taskSwitiching}
+          setActiveTask={setActiveTask}
+          maxIconIndex={maxIconIndex}
         />
       ))}
     </div>

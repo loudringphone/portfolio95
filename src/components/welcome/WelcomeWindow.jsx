@@ -59,7 +59,7 @@ const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
       startupAudio.play();
     } else {
       event?.stopPropagation();
-      setActiveTask(false)
+      setActiveTask(null)
       setSigninError(true)
       setTimeout(() => {
         setActiveTask('welcome')
