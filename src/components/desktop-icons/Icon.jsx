@@ -64,8 +64,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
       }, 0);
     }
   }, [warnings]);
-  
-  // console.log(activeTask)
+
   return (
     <>
       <Draggable bounds="body" {...dragHandlers}

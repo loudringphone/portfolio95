@@ -66,6 +66,7 @@
           align-self: center;
         }
         .icon-whole {
+          pointer-events: auto;
           position: absolute;
           top: 0;
           z-index: 20;
