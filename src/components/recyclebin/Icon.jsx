@@ -31,23 +31,23 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         clientX >= binIconsRect.x && clientX <= binIconsRect.x + binIconsRect.width &&
         clientY >= binIconsRect.y && clientY <= binIconsRect.y + 112
       ) {
-        // 15 + 90/3 * 2
-        if (clientX <= binIconsRect.x + 75) {
+        // 15 + 90 + 15 + 90/2
+        if (clientX <= binIconsRect.x + 165) {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
             arr.unshift(task); 
             return new Set(arr);
           })
-        // 15 + 90 + 15 + 90 + 15 + 90/3 * 2
-        } else if (clientX < binIconsRect.x + 285) {
+        // 15 + 90 + 15 + 90 + 15 + 90/2
+        } else if (clientX < binIconsRect.x + 270) {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
             arr.splice(1, 0, task);
             return new Set(arr);
           })
-        } else if (clientX >= binIconsRect.x + 285) {
+        } else if (clientX >= binIconsRect.x + 270) {
           setIconsInBin(prevIcons => {
             prevIcons.delete(task);
             const arr = Array.from(prevIcons);
