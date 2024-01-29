@@ -13,6 +13,7 @@ import {
 } from 'react95';
 import styled from 'styled-components';
 import { projects } from './projects';
+import { capitalise } from '../../functions/customFunctions';
 import './portfoliowindow.scss'
 
 const Wrapper = styled.div`
@@ -63,7 +64,7 @@ const PortfolioWindow = ({ displayingTask, setProjectUrl, displayTasks, setActiv
     <Wrapper className="drag-portfolio" ref={portfolioRef} style={{zIndex: taskIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.portfolio}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks} handleTouchStart={handleTouchStart}>
     <strong className="cursor"><WindowHeader active={activeTask == task} className='window-title'>
-        <span>portfolio.exe</span>
+        <span>{capitalise(task)}</span>
         <div className="buttons">
           <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
           <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />

@@ -9,6 +9,7 @@ import {
   Toolbar,
   Frame,
 } from 'react95';
+import { capitalise } from '../../functions/customFunctions';
 import styled from 'styled-components';
 import './recyclebinwindow.scss'
 
@@ -52,7 +53,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
       <Wrapper className="drag-recycle-bin" style={{zIndex: taskIndices['recycle bin'], display: displayTasks.has('recycle bin') ? 'block' : 'none', visibility: tasksVisibility['recycle bin']}}>
         <WindowComponent task={'recycle bin'} setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon}>
           <strong className="cursor"><WindowHeader  active={activeTask == 'recycle bin'} className='window-title'>
-            <span>Recycle Bin</span>
+            <span>{capitalise(task)}</span>
             <div className="buttons">
               <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task='recycle bin' setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable}/>
               <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />

@@ -7,6 +7,7 @@ import {
 import styled from 'styled-components';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
+import { capitalise } from '../../functions/customFunctions';
 import './browserwindow.scss'
 const Wrapper = styled.div`
   position: absolute;
@@ -24,7 +25,7 @@ const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask
     <Wrapper className="drag-browser" style={{zIndex: taskIndices.browser, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.browser}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
-        <span>browser.exe</span>
+        <span>{capitalise(task)}</span>
         <div className="buttons">
           <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
           <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />

@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from 'react95';
 import styled from 'styled-components';
+import { capitalise } from '../../functions/customFunctions';
 import './resumewindow.scss'
 const Wrapper = styled.div`
   position: absolute;
@@ -34,7 +35,7 @@ const ResumeWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask,
       <Wrapper className="drag-resume" style={{zIndex: taskIndices.resume, display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.resume}}>
         <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
           <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
-            <span>resume.exe</span>
+            <span>{capitalise(task)}</span>
             <div className="buttons">
               <WindowButton purpose='download' task={task} setActiveTask={setActiveTask} setIsDraggable={setIsDraggable} />
               <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />

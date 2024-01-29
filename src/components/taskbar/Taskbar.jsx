@@ -79,6 +79,7 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, di
                 setActiveTask={setActiveTask}
                 indexingTasks={indexingTasks}
                 taskIndices={taskIndices}
+                displayTasks={displayTasks}
                 />
             ))
           }

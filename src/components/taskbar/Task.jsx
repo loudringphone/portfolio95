@@ -1,9 +1,9 @@
 import React from 'react'
 import './taskbar.css'
 import { Button } from "react95";
+import { capitalise } from '../../functions/customFunctions';
 
-
-function Task({task, activeTask, setActiveTask, indexingTasks, tasksVisibility, setTasksVisibility}) {
+function Task({ task, activeTask, setActiveTask, indexingTasks, tasksVisibility, setTasksVisibility, displayTasks }) {
   const handleClick = (event) => {
     event.stopPropagation();
     if (activeTask == task) {
@@ -21,12 +21,12 @@ function Task({task, activeTask, setActiveTask, indexingTasks, tasksVisibility, 
   }
   return (
     <Button
-      className="task"
+      className={`task task-${displayTasks.size}`}
       active={activeTask == task}
       style={{ fontWeight: "bold" }}
       onClick={handleClick}
     >
-      {window.innerWidth <= 500? task : `${task}.exe`}
+      {capitalise(task)}
     </Button>
   )
 }

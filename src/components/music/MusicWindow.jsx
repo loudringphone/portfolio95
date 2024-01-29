@@ -9,6 +9,7 @@ import StopMiniFillIcon from 'remixicon-react/StopMiniFillIcon';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import { formatTime } from '../../functions/customFunctions';
+import { capitalise } from '../../functions/customFunctions';
 import { music } from './music'
 
 import {
@@ -163,7 +164,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     <Wrapper className="drag-music" style={{zIndex: taskIndices[task], display: displayTasks.has(task) ? 'block' : 'none', visibility: tasksVisibility.music}}>
     <WindowComponent task={task} setActiveTask={setActiveTask} indexingTasks={indexingTasks}>
       <strong className="cursor"><WindowHeader  active={activeTask == task} className='window-title'>
-        <span>music.exe</span>
+        <span>{capitalise(task)}</span>
 
         <div className="buttons">
           <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
