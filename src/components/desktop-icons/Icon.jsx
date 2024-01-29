@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Draggable from 'react-draggable';
 import SkeletonIcon from './SkeletonIcon';
 
-const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching, setActiveTask, maxIconIndex, isDragging }) => {
+const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pickingingIcon, draggingIcon, handleLeavingIcon, iconIndices, activiatingDockMenu, setSelectedIcon, selectedIcon, desktopRef, iconPosition, activeTask, warnings, positioningIcon, setBinLastPos, taskSwitiching, setTaskSwitiching, setActiveTask, maxIconIndex, isDragging, skeletonIsActive, setSkeletonIsActive }) => {
   const [resumeLastPos, setResumeLastPos] = useState(null);
   const [position, setPosition] = useState(iconPosition);
   const [startPos, setStartPos] = useState(iconPosition)
@@ -28,6 +28,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
   };
   const onStop = () => {
     setStartPos(position)
+    setSkeletonIsActive(true)
   }
   const dragHandlers = { onStart, onStop };
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ');
@@ -114,6 +115,7 @@ const Icon = ({ task, icon, iconRef, visibility, handleIcon, handleIconMobile,pi
      startPos={startPos}
      isDragging={isDragging}
      maxIconIndex={maxIconIndex}
+     skeletonIsActive={skeletonIsActive}
    />
    </>
   )

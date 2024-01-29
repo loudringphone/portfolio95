@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './desktopicons.css'
 import Icon from './Icon';
 import { redirectGitHub } from '../../functions/customFunctions';
-const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice, setTaskSwitiching, taskSwitiching  }) => {
+const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasksVisibility, setActiveTask, issuingWarning, activiatingDockMenu, setSelectedIcon, selectedIcon, icons, recyclingIcon, activeTask, warnings, positioningIcon, setBinLastPos, isTouchDevice, setTaskSwitiching, taskSwitiching, displayTasks  }) => {
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconIndices, setIconIndices] = useState({
     'resume': 0, 'portfolio': 1, 'music': 2, 'recycle bin': 3, 'git': 4
@@ -139,6 +139,13 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
       recyclingIcon(task)
     }
   };
+
+  const [skeletonIsActive, setSkeletonIsActive] = useState(true)
+  useEffect(() => {
+    if (activeTask === null && displayTasks.size > 0) {
+      setSkeletonIsActive(false)
+    }
+  }, [activeTask])
   return (
     <div className="desktop-icons">
       {Object.entries(icons).map(([task, data]) => (
@@ -168,6 +175,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           setActiveTask={setActiveTask}
           maxIconIndex={maxIconIndex}
           isDragging={isDragging}
+          skeletonIsActive={skeletonIsActive}
+          setSkeletonIsActive={setSkeletonIsActive}
         />
       ))}
     </div>
