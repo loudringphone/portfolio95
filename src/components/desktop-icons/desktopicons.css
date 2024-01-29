@@ -1,99 +1,97 @@
 /* .desktop-icons {
-    display: inherit;
-    padding: 1.5rem;
-    justify-items: center;
-    width: 90px;
+  display: inherit;
+  padding: 1.5rem;
+  justify-items: center;
+  width: 90px;
 } */
 
 .desktop-icons .icon {
-    display: flex;
-    position: absolute;
-    width: 90px;
-    flex-direction: column;
-    align-items: center;
-    width: max-content;
-    cursor: pointer;
+  display: flex;
+  position: absolute;
+  width: 90px;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
 }
 
 .icon {
-    pointer-events: none;
+  pointer-events: none;
+  cursor: default;
+}
+.icon > * {
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .desktop-icons  .icon p {
-    font-weight: bold;
-    color: #fefefe;;
-    text-align: center;
-    cursor: pointer;
-    padding: 0 0.25rem;
-    z-index: 1;
-    user-select: none;
+  font-weight: bold;
+  color: #fefefe;;
+  text-align: center;
+  padding: 0 0.25rem;
+  z-index: 1;
+  user-select: none;
 }
 .desktopRef {
-    position: absolute;
-    background-color: transparent;
-    opacity: 0.5;
+  position: absolute;
+  background-color: transparent;
+  opacity: 0.5;
 }
 .icon-placeholder {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    pointer-events: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 .text-placeholder {
-    margin-top: 5px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    width: max-content;
-    pointer-events: auto;
+  margin-top: 5px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: max-content;
 }
 .filter, .filter-gray, .filter-blue, .bin-filter, .bin-filter-black {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 .filter {
-    background-color: black;
-    border: 1.75px solid white;
-    border-radius: 2.5px;
-    opacity: 0.3;
+  background-color: black;
+  border: 1.75px solid white;
+  border-radius: 2.5px;
+  opacity: 0.3;
 }
 .filter-gray {
-    background-color: rgb(195, 195, 195);
-    border-radius: 2.5px;
+  background-color: rgb(195, 195, 195);
+  border-radius: 2.5px;
 }
 .bin-filter {
-    background-color: black;
-    border-radius: 2.5px;
-    border: 1.75px solid lightgray;
-    opacity: 0.2;
+  background-color: black;
+  border-radius: 2.5px;
+  border: 1.75px solid lightgray;
+  opacity: 0.2;
 }
 .bin-filter-black {
-    background-color: black;
-    opacity: 0.25;
-    border-radius: 2.5px;
+  background-color: black;
+  opacity: 0.25;
+  border-radius: 2.5px;
 }
 
 .filter-blue {
-    border-radius: 2.5px;
-    background-color: blue;
-    opacity: 1;
+  border-radius: 2.5px;
+  background-color: blue;
+  opacity: 1;
 }
 .icon-placeholder img {
-    z-index: 1;
-    user-drag: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+  z-index: 1;
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 @media (max-height: 600px) {
-    .desktop-icons {
-        gap: 1rem;
-    }
-
-
-
+  .desktop-icons {
+    gap: 1rem;
+  }
 }

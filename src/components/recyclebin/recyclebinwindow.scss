@@ -19,14 +19,14 @@
       align-items: center;
       width: max-content;
       text-align: -webkit-center;
-      cursor: pointer;
-      
       p {
         text-align: center;
-        cursor: pointer;
         padding: 0 0.25rem;
         z-index: 1;
         user-select: none;
+    }
+    .icon > * {
+      cursor: pointer;
     }
   }
   
@@ -66,13 +66,13 @@
           align-self: center;
         }
         .icon-whole {
-          pointer-events: auto;
           position: absolute;
           top: 0;
           z-index: 20;
           height: 100%;
           width: 100%;
           background-color: transparent;
+          cursor: default;
         }
       }
       .footer {
@@ -107,10 +107,9 @@
       align-items: center;
       width: max-content;
       text-align: -webkit-center;
-      cursor: pointer;
+      cursor: default;
 
       .icon-whole {
-        pointer-events: auto;
         position: absolute;
         top: 0;
         z-index: 20;
@@ -121,7 +120,6 @@
 
       p {
         text-align: center;
-        cursor: pointer;
         padding: 0 0.25rem;
         z-index: 1;
         user-select: none;
