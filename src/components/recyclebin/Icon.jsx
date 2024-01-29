@@ -100,6 +100,11 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     ) {
       setIconDisplay('none')
       if (isTouchDevice) {
+        const { clientX, clientY } = event;
+        const binIconRect = binIconRef.current.getBoundingClientRect();
+        const relativeX = clientX - binIconRect.left;
+        const relativeY = clientY - binIconRect.top;
+        setIconDragPoint({x: relativeX, y: relativeY})
         teleportingIcon(event)
       }
       setTimeout(() => {
@@ -134,6 +139,13 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         setActiveTask('bin warning')
       }, 150);
       return
+    }
+    if (event.touches.length === 1) {
+      const { clientX, clientY } = event.touches[0];
+      const binIconRect = binIconRef.current.getBoundingClientRect();
+      const relativeX = clientX - binIconRect.left;
+      const relativeY = clientY - binIconRect.top;
+      setIconDragPoint({x: relativeX, y: relativeY})
     }
     const currentTime = new Date().getTime();
     setLastTouchTime(currentTime);
