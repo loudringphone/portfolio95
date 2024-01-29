@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SkeletonIcon = ({ icon, task, startPos, isDragging, maxIconIndex, skeletonIsActive }) => {
+const Afterimage = ({ icon, task, startPos, isDragging, maxIconIndex, afterimageIsActive }) => {
   const taskName = task.split(' ').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ');
   
   return (
@@ -14,7 +14,7 @@ const SkeletonIcon = ({ icon, task, startPos, isDragging, maxIconIndex, skeleton
         {icon}
       </div>
       <div className='text-placeholder'>
-      { skeletonIsActive ?
+      { afterimageIsActive ?
         <>
           <div className="filter-blue"></div>
           <p style={{color: '#fefefe'}}>
@@ -35,4 +35,4 @@ const SkeletonIcon = ({ icon, task, startPos, isDragging, maxIconIndex, skeleton
   )
 }
 
-export default SkeletonIcon
+export default Afterimage

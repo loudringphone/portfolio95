@@ -140,10 +140,10 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
     }
   };
 
-  const [skeletonIsActive, setSkeletonIsActive] = useState(true)
+  const [afterimageIsActive, setAfterimageIsActive] = useState(true)
   useEffect(() => {
     if (activeTask === null && displayTasks.size > 0) {
-      setSkeletonIsActive(false)
+      setAfterimageIsActive(false)
     }
   }, [activeTask])
   return (
@@ -175,8 +175,8 @@ const DesktopIcons = ({ displayingTask, indexingTasks, tasksVisibility, setTasks
           setActiveTask={setActiveTask}
           maxIconIndex={maxIconIndex}
           isDragging={isDragging}
-          skeletonIsActive={skeletonIsActive}
-          setSkeletonIsActive={setSkeletonIsActive}
+          afterimageIsActive={afterimageIsActive}
+          setAfterimageIsActive={setAfterimageIsActive}
         />
       ))}
     </div>
