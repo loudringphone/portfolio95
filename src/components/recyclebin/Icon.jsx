@@ -121,9 +121,9 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
   
   const handleDown = (event) => {
     const { clientX, clientY } = event;
-    const elementRect = event.currentTarget.getBoundingClientRect();
-    const relativeX = clientX - elementRect.left;
-    const relativeY = clientY - elementRect.top;
+    const binIconRect = binIconRef.current.getBoundingClientRect();
+    const relativeX = clientX - binIconRect.left;
+    const relativeY = clientY - binIconRect.top;
     setIconDragPoint({x: relativeX, y: relativeY})
   }
 
@@ -134,13 +134,6 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         setActiveTask('bin warning')
       }, 150);
       return
-    }
-    if (event.touches.length === 1) {
-      const { clientX, clientY } = event.touches[0];
-      const elementRect = event.currentTarget.getBoundingClientRect();
-      const relativeX = clientX - elementRect.left;
-      const relativeY = clientY - elementRect.top;
-      setIconDragPoint({x: relativeX, y: relativeY})
     }
     const currentTime = new Date().getTime();
     setLastTouchTime(currentTime);
@@ -170,18 +163,23 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
       position={position}
     >
     <div className='icon' ref={binIconRef} style={{ zIndex: iconZindex, display: iconDisplay, }}>
-      <div className='icon-whole'
+      <div className='icon-placeholder'
         onMouseDown={handleDown}
         onMouseUp={(event) => handleUp(event, task)}
         onTouchEnd={(event) => handleUp(event, task)}
         onTouchStartCapture={(event) => handleOpen(event)}
         onDoubleClick={(event) => handleOpen(event)}
-      ></div>
-      <div className='icon-placeholder'>
+      >
         <div className="bin-filter" style={{display: selectedBinIcon == task ? 'block' : 'none'}}></div>
         {icon}
       </div>
-      <div className='text-placeholder'>
+      <div className='text-placeholder'
+        onMouseDown={handleDown}
+        onMouseUp={(event) => handleUp(event, task)}
+        onTouchEnd={(event) => handleUp(event, task)}
+        onTouchStartCapture={(event) => handleOpen(event)}
+        onDoubleClick={(event) => handleOpen(event)}
+      >
         <div className="filter-blue" style={{display: selectedBinIcon == task && activeTask == 'recycle bin' ? 'block' : 'none'}}></div>
         <div className="bin-filter-black" style={{display: selectedBinIcon == task && activeTask !== 'recycle bin' ? 'block' : 'none'}}></div>
       <p style={{color: selectedBinIcon == task && activeTask == 'recycle bin' ? 'white' : 'black'}}>
