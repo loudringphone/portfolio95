@@ -172,7 +172,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       <WindowContent className='window-content'>
         <div className="music-title-container">
           <TextScroller ref={scrollerRef} text={music[musicIndex].title} isSkipped={isSkipped} setIsSkipped={setIsSkipped} displayTasks={displayTasks} />
-          <div className='count-down'>{countdownTime ? formatTime(countdownTime) : null}</div>
+          <div className='count-down'>{countdownTime ? formatTime(countdownTime) : '--:--'}</div>
         </div>
         <div className="buttons">
           <Button onClick={handleBack}><SkipBackMiniFillIcon /></Button>
