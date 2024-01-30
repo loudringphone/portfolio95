@@ -21,11 +21,10 @@
 
         .music-title-container {
           display: flex;
-          gap: 5px;
         }
         .count-down {
           margin-left: auto;
-          width: fit-content;
+          width: 35px;
         }
         .buttons {
           width: 100%;
@@ -48,7 +47,7 @@
       .music-title {
         overflow: hidden;
         padding-left: 5px;
-        max-width: 160px;
+        width: 150px;
         white-space: nowrap;
         color: greenyellow;
         background-color: black;

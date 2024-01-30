@@ -95,6 +95,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     const newAudio = new Audio(music[newMusicIndex].source);
     setMusicIndex(newMusicIndex);
     setAudio(newAudio);
+    setCountdownTime(0)
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
     });
@@ -132,7 +133,6 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
         setCountdownTime(Math.floor(audio.duration))
       }
       const handleAudioEnd = () => {
-        setCountdownTime(0);
         clearInterval(countdownInterval);
         setTimeout(() => {
           handleForward()
@@ -172,7 +172,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       <WindowContent className='window-content'>
         <div className="music-title-container">
           <TextScroller ref={scrollerRef} text={music[musicIndex].title} isSkipped={isSkipped} setIsSkipped={setIsSkipped} displayTasks={displayTasks} />
-          <div className='count-down'>{formatTime(countdownTime)}</div>
+          <div className='count-down'>{countdownTime ? formatTime(countdownTime) : null}</div>
         </div>
         <div className="buttons">
           <Button onClick={handleBack}><SkipBackMiniFillIcon /></Button>
