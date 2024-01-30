@@ -40,38 +40,24 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
       scrollerRef.current.resume()
     }
   }, [displayTasks])
-  const handleMusicClose = () => {
-    scrollerRef.current.reset()
-    scrollerRef.current.pause()
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-      setPlaying(false)
-      setCountdownTime(Math.floor(audio.duration))
-    }
-  }
   const handlePlay = () => {
-      audio.play();
       setPlaying(true)
   }
   const handlePause = () => {
     if (audio) {
-      audio.pause();
       setPlaying(false)
     }
   };
   const handleStop = () => {
     if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
       setPlaying(false)
+      audio.currentTime = 0;
       setCountdownTime(Math.floor(audio.duration))
     }
   };
   const handleBack = () => {
     let newMusicIndex
     if (audio) {
-      audio.pause();
       setPlaying(false);
       if (audio.currentTime <= 3) {
         if (musicIndex === 0) {
@@ -84,44 +70,56 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     if (newMusicIndex === undefined) {
       newMusicIndex = musicIndex;
     }
-    setMusicIndex(newMusicIndex)
     const newAudio = new Audio(music[newMusicIndex].source);
+    setMusicIndex(newMusicIndex);
+    setAudio(newAudio);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
-      setAudio(newAudio);
       setIsSkipped(true);
-      newAudio.play();
       setPlaying(true)
     });
   }
 
   const handleForward = () => {
     if (audio) {
-      audio.pause();
-      setPlaying(false)
+      setPlaying(false);
     }
-    let newMusicIndex
-    if (musicIndex == music.length - 1) {
-      newMusicIndex = 0
+    let newMusicIndex;
+    if (musicIndex === music.length - 1) {
+        newMusicIndex = 0;
     } else {
-      newMusicIndex = musicIndex + 1
+        newMusicIndex = musicIndex + 1;
     }
-    setMusicIndex(newMusicIndex)
     const newAudio = new Audio(music[newMusicIndex].source);
+    setMusicIndex(newMusicIndex);
+    setAudio(newAudio);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
-      setAudio(newAudio);
       setIsSkipped(true);
-      newAudio.play();
-      setPlaying(true)
+      setPlaying(true);
     });
-    
+  }
+  useEffect(() => {
+    if (audio && playing) {
+      audio.play()
+    } else if (audio && !playing) {
+      audio.pause()
+    }
+  }, [audio, playing])
+
+  const handleMusicClose = () => {
+    scrollerRef.current.reset()
+    scrollerRef.current.pause()
+    if (audio) {
+      setPlaying(false)
+      audio.currentTime = 0;
+      setCountdownTime(Math.floor(audio.duration))
+    }
   }
 
   useEffect(() => {
     if (audio) {
       if (!signed || signOff) {
-        audio.pause();
         return setPlaying(false)
       }
     }
