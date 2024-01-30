@@ -76,7 +76,7 @@ const App = () => {
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
   const [signOff, setSignOff] = useState(true)
-  const [shutDown, setShutDOwn] = useState(false)
+  const [shutDown, setShutDown] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
   const [binLastPos, setBinLastPos] = useState(null)
@@ -331,9 +331,7 @@ const App = () => {
 
   const turningoff = (boolean) => {
     setSignOff(boolean)
-    setTimeout(() => {
-      setShutDOwn(boolean)
-    }, 500);
+    setShutDown(boolean)
   }
 
   const issuingWarning = () => {
@@ -385,7 +383,7 @@ const App = () => {
     if (shutDown) {
       setTimeout(() => {
         setTurnOff(true)
-      }, 2500);
+      }, 3000);
     }
   },[shutDown])
 
@@ -427,7 +425,7 @@ const App = () => {
       </Helmet>
     )
   }
-  if (shutDown && signOff) {
+  if (shutDown) {
     return (
       <Helmet>
         <div className='shut-down-background'>
