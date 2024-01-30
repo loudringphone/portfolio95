@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   background: transparent;
 `;
 
-const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signed, signOff, setTaskSwitiching }) => {
+const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signingOff, setTaskSwitiching }) => {
   const task = 'music'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
@@ -58,6 +58,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   const handleBack = () => {
     let newMusicIndex
     if (audio) {
+      audio.pause()
       setPlaying(false);
       if (audio.currentTime <= 3) {
         if (musicIndex === 0) {
@@ -75,13 +76,14 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     setAudio(newAudio);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
-      setIsSkipped(true);
-      setPlaying(true)
     });
+    setIsSkipped(true);
+    setPlaying(true);
   }
 
   const handleForward = () => {
     if (audio) {
+      audio.pause()
       setPlaying(false);
     }
     let newMusicIndex;
@@ -95,9 +97,9 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     setAudio(newAudio);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
-      setIsSkipped(true);
-      setPlaying(true);
     });
+    setIsSkipped(true);
+    setPlaying(true);
   }
   useEffect(() => {
     if (audio && playing) {
@@ -118,12 +120,10 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
   }
 
   useEffect(() => {
-    if (audio) {
-      if (!signed || signOff) {
-        return setPlaying(false)
-      }
+    if (audio && signingOff) {
+     setPlaying(false)
     }
-  }, [signed, signOff])
+  }, [signingOff])
 
   useEffect(() => {
     let countdownInterval;

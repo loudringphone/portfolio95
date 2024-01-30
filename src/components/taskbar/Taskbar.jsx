@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Toolbar, Button, MenuList, MenuListItem, Separator } from "react95";
 import Task from "./Task";
 import win95logo from '../../assets/images/win95-logo.png'
@@ -6,11 +6,29 @@ import { Mailnews20, Shell32167, MediaCd, Computer4, Password1010, Shell3232, Sh
 import win95shutdown from '../../assets/sounds/win95shutdown.mp3'
 import './taskbar.css'
 import GitIcon from "../GitIcon";
+import win95startup from '../../assets/sounds/win95startup.mp3'
 import { redirectGitHub } from "../../functions/customFunctions";
 
-export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, displayTasks, indexingTasks, setSigned, taskIndices, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin}) => {
-  const shutdownAudio = new Audio(win95shutdown)
+export const Taskbar = ({ activiatingDockMenu, dockMenuActive, displayingTask, displayTasks, indexingTasks, setSigned, setSigningOff, taskIndices, turningoff, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, icons, iconsInBin, startingUp, setStartingUp }) => {
+  const [startupAudio, setStartupAudio] = useState(new Audio(win95startup))
+  
+  useEffect(() => {
+    if (startingUp && startupAudio) {
+      setStartingUp(false);
+      startupAudio.play();
+      const endedHandler = () => {
+          startupAudio.remove();
+          setStartupAudio(null);
+      };
+      startupAudio.addEventListener('ended', endedHandler);
+      return () => {
+          startupAudio.removeEventListener('ended', endedHandler);
+      };
+    }
+}, [startingUp, startupAudio]);
 
+  const shutdownAudio = new Audio(win95shutdown)
+  
   const handleClick = (event) => {
     event.stopPropagation();
     activiatingDockMenu(!dockMenuActive)
@@ -29,14 +47,20 @@ export const Taskbar = ({activiatingDockMenu, dockMenuActive, displayingTask, di
   }
 
   const handleLogOff = () => {
-    setActiveTask('welcome')
+    setSigningOff(true)
     setTimeout(() => {
+      setActiveTask('welcome')
       setSigned(false)
+      setSigningOff(false)
     }, 500);
   }
   const handleShutDown = () => {
-    turningoff(true)
+    setSigningOff(true)
+    if (startupAudio) {
+      startupAudio.pause()
+    }
     setTimeout(() => {
+      turningoff(true)
       shutdownAudio.play();
     }, 500);
   }

@@ -14,14 +14,12 @@ import {
 import styled from 'styled-components';
 import WindowButton from '../buttons/WindowButton';
 import './welcomewindow.scss'
-import win95startup from '../../assets/sounds/win95startup.mp3'
 
 const Wrapper = styled.div`
   background: transparent;
 `;
 
 const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
-  const startupAudio = new Audio(win95startup);
   const [isDraggable, setIsDraggable] = useState(true)
   const [initialPosition, setInitialPosition] = useState(window.innerWidth <= 600 ? {x: window.innerWidth*0.025, y: 20} : { x: (window.innerWidth - 650)/2, y: 80 })
   const [helperDisplay, setHelperDisplay] = useState('none')
@@ -56,7 +54,6 @@ const WelcomeWindow = ({setActiveTask, activeTask, setSigned}) => {
     setHelperDisplay('none')
     if (username == 'Admin' && password == 'admin') {
       setSigned(true)
-      startupAudio.play();
     } else {
       event?.stopPropagation();
       setActiveTask(null)

@@ -52,6 +52,7 @@ const GlobalStyles = createGlobalStyle`
 
 const App = () => {
   const [isTouchDevice, setIsTouchDevice] = useState('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
+  const [startingUp, setStartingUp] = useState(true)
   const tasks = ["portfolio", "resume", "browser", "music", "recycle bin"];
   const minTaskIndex = tasks.length + 5
   const initializeTasksState = (state) => {
@@ -75,7 +76,7 @@ const App = () => {
   const [warnings, setWarnings] = useState(0)
   const [loading, setLoading] = useState(true)
   const [signed, setSigned] = useState(false)
-  const [signOff, setSignOff] = useState(true)
+  const [signingOff, setSigningOff] = useState(false)
   const [shutDown, setShutDown] = useState(false)
   const [turnOff, setTurnOff] = useState(false)
   const [energyStar, setEnergyStar] = useState(true)
@@ -330,7 +331,7 @@ const App = () => {
   }
 
   const turningoff = (boolean) => {
-    setSignOff(boolean)
+    setSigned(boolean)
     setShutDown(boolean)
   }
 
@@ -355,7 +356,7 @@ const App = () => {
       setTimeout(() => {
         setLoading(false)
       }, 1200);
-    }, 2000);
+    }, 2);
   }, []);
 
   const desktopRef = useRef(null)
@@ -470,7 +471,7 @@ const App = () => {
       </Helmet>
     )
   } 
-  if (!signed && signOff) {
+  if (!signed) {
     return (
       <Helmet>
         <GlobalStyles />
@@ -486,7 +487,6 @@ const App = () => {
   const windowProps = {
     displayingTask, displayTasks, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setTaskSwitiching
   };
-
   return (
     <Helmet>
       <GlobalStyles />
@@ -496,7 +496,7 @@ const App = () => {
           <ResumeWindow {...windowProps} isTouchDevice={isTouchDevice} />
           <PortfolioWindow {...windowProps} setProjectUrl={setProjectUrl} setPortfolioHeight={setPortfolioHeight} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition} />
           <BrowserWindow {...windowProps} setProjectUrl={setProjectUrl} projectUrl={projectUrl}         />
-          <MusicWindow {...windowProps} signed={signed} signOff={signOff} isTouchDevice={isTouchDevice} />
+          <MusicWindow {...windowProps} signed={signed} signingOff={signingOff} isTouchDevice={isTouchDevice} />
           <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} emptyingBin={emptyingBin} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} setIconsInBin={setIconsInBin} />
           <BinWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu}  />
           <RecycleWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu} selectedIcon={selectedIcon}/>
@@ -514,7 +514,7 @@ const App = () => {
           :
           <></>
         }
-       < Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} setSigned={setSigned} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} />
+       <Taskbar activiatingDockMenu={activiatingDockMenu} dockMenuActive={dockMenuActive} displayingTask={displayingTask} displayTasks={displayTasks} indexingTasks={indexingTasks} setSigned={setSigned} setSigningOff={setSigningOff} taskIndices={taskIndices} turningoff={turningoff} setTasksVisibility={setTasksVisibility} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} activeTask={activeTask} icons={icons} iconsInBin={iconsInBin} startingUp={startingUp} setStartingUp={setStartingUp} />
       </ThemeProvider>
     </Helmet>
   )

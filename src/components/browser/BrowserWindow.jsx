@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   background: transparent;
 `;
 
-const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
+const BrowserWindow = ({ projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
   const task = 'browser'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
