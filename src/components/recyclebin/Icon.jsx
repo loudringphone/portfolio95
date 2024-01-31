@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
+import { getPropertyValue } from '../../functions/customFunctions';
 
 const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binIconRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, iconsInBin, setIconsInBin }) => {
   const position = {x: 0, y: 0}
@@ -24,12 +25,17 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
     const dragTime = (DragEndTime - dragStartTime);
     if (dragTime > 250) {
       const binIconsRect = binIconsRef.current.getBoundingClientRect();
+
+      const binGridStyle = window.getComputedStyle(binIconsRef.current);
+      const gridGap = getPropertyValue(binGridStyle, 'grid-gap');
+      const gridColumnHeight = getPropertyValue(binGridStyle, 'grid-template-rows');
+
       const clientX = event.clientX || event.changedTouches[0].clientX;
       const clientY = event.clientY || event.changedTouches[0].clientY;
       if (
         //width: 300, gap: 15, padding: 15, gridWidth: 90, gridHeight: 97
         clientX >= binIconsRect.x && clientX <= binIconsRect.x + binIconsRect.width &&
-        clientY >= binIconsRect.y && clientY <= binIconsRect.y + 112
+        clientY >= binIconsRect.y && clientY <= binIconsRect.y + gridColumnHeight + gridGap
       ) {
         const unshifting = (task) => {
           setIconsInBin(prevIcons => {
@@ -56,29 +62,34 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
           })
         }
         //15 90 15 90 15 90 15 = 330
+        const gridPadding = getPropertyValue(binGridStyle, 'padding');
+        const gridColumnWidth = getPropertyValue(binGridStyle, 'grid-template-columns');
+        const halfWidth = gridPadding*2 + gridColumnWidth*1.5
+        const nineEleventhWidth = gridPadding*3 + gridColumnWidth*2.5
+        const twoEleventhWidth = gridPadding + gridColumnWidth*0.5
         const iconsArr = Array.from(iconsInBin)
         if (iconsArr[0] === task) {
           // 15 90 15 45 || 15 90 15 90 15 45
-          if (clientX > binIconsRect.x + 165 && clientX <= binIconsRect.x + 270 ) {
+          if (clientX > binIconsRect.x + halfWidth && clientX <= binIconsRect.x + nineEleventhWidth ) {
             inserting(task)
           // 15 90 15 90 15 45
-          } else if ( clientX > binIconsRect.x + 270) {
+          } else if ( clientX > binIconsRect.x + nineEleventhWidth) {
             pushing(task)
           }
         } else if (iconsArr[2] === task) {
           // 15 45
-          if (clientX <= binIconsRect.x + 60 ) {
+          if (clientX <= binIconsRect.x + twoEleventhWidth ) {
             unshifting(task)
           // 15 45 ||  15 90 15 45
-          } else if (clientX > binIconsRect.x + 60 && clientX <= binIconsRect.x + 165) {
+          } else if (clientX > binIconsRect.x + twoEleventhWidth && clientX <= binIconsRect.x + halfWidth) {
             inserting(task)
           }
         } else {
           // 15 45
-          if (clientX <= binIconsRect.x + 60 ) {
+          if (clientX <= binIconsRect.x + twoEleventhWidth ) {
             unshifting(task)
           // 15 90 15 90 15 45
-          } else if (clientX > binIconsRect.x + 270) {
+          } else if (clientX > binIconsRect.x + nineEleventhWidth) {
             pushing(task)
           } 
         }

@@ -39,10 +39,14 @@ const downloadResume = () => {
   window.open(resume, '_blank');
 }
 
-function capitalise(str) {
+const capitalise = (str) => {
   const words = str.split(' ');
   const properNoun = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
   return properNoun.join(' ');
 }
 
-export { formatTime, redirectGitHub, handleButtonTouchEnd, downloadResume, capitalise }
+const getPropertyValue = (computedStyle, property) => {
+  return Number(computedStyle.getPropertyValue(property).split(' ')[0].replace('px', ''));
+}
+
+export { formatTime, redirectGitHub, handleButtonTouchEnd, downloadResume, capitalise, getPropertyValue }
