@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import win95error from '../../assets/sounds/win95error.mp3'
 import { getPropertyValue } from '../../functions/customFunctions';
 
-const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binIconRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, iconsInBin, setIconsInBin }) => {
+const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, activeTask, binIconRef, binWindowRef, emptyingBin, setActiveTask, teleportingIcon, isTouchDevice, indexingTasks, setIconDragPoint, binIconsRef, iconsInBin, setIconsInBin, settingIconsInBin }) => {
   const position = {x: 0, y: 0}
   const [lastTouchTime, setLastTouchTime] = useState(0);
   const [iconDisplay, setIconDisplay] = useState('none')
@@ -37,60 +37,36 @@ const Icon = ({ task, icon, visibility, setSelectedBinIcon, selectedBinIcon, act
         clientX >= binIconsRect.x && clientX <= binIconsRect.x + binIconsRect.width &&
         clientY >= binIconsRect.y && clientY <= binIconsRect.y + gridColumnHeight + gridGap
       ) {
-        const unshifting = (task) => {
-          setIconsInBin(prevIcons => {
-            prevIcons.delete(task);
-            const arr = Array.from(prevIcons);
-            arr.unshift(task); 
-            return new Set(arr);
-          })
-        }
-        const inserting = (task) => {
-          setIconsInBin(prevIcons => {
-            prevIcons.delete(task);
-            const arr = Array.from(prevIcons);
-            arr.splice(1, 0, task);
-            return new Set(arr);
-          })
-        }
-        const pushing = (task) => {
-          setIconsInBin(prevIcons => {
-            prevIcons.delete(task);
-            const arr = Array.from(prevIcons);
-            arr.push(task); 
-            return new Set(arr);
-          })
-        }
         //15 90 15 90 15 90 15 = 330
         const gridPadding = getPropertyValue(binGridStyle, 'padding');
         const gridColumnWidth = getPropertyValue(binGridStyle, 'grid-template-columns');
+        const twoEleventhWidth = gridPadding + gridColumnWidth*0.5
         const halfWidth = gridPadding*2 + gridColumnWidth*1.5
         const nineEleventhWidth = gridPadding*3 + gridColumnWidth*2.5
-        const twoEleventhWidth = gridPadding + gridColumnWidth*0.5
         const iconsArr = Array.from(iconsInBin)
         if (iconsArr[0] === task) {
           // 15 90 15 45 || 15 90 15 90 15 45
           if (clientX > binIconsRect.x + halfWidth && clientX <= binIconsRect.x + nineEleventhWidth ) {
-            inserting(task)
+            settingIconsInBin.inserting(task)
           // 15 90 15 90 15 45
           } else if ( clientX > binIconsRect.x + nineEleventhWidth) {
-            pushing(task)
+            settingIconsInBin.pushing(task)
           }
         } else if (iconsArr[2] === task) {
           // 15 45
           if (clientX <= binIconsRect.x + twoEleventhWidth ) {
-            unshifting(task)
+            settingIconsInBin.unshifting(task)
           // 15 45 ||  15 90 15 45
           } else if (clientX > binIconsRect.x + twoEleventhWidth && clientX <= binIconsRect.x + halfWidth) {
-            inserting(task)
+            settingIconsInBin.inserting(task)
           }
         } else {
           // 15 45
           if (clientX <= binIconsRect.x + twoEleventhWidth ) {
-            unshifting(task)
+            settingIconsInBin.unshifting(task)
           // 15 90 15 90 15 45
           } else if (clientX > binIconsRect.x + nineEleventhWidth) {
-            pushing(task)
+            settingIconsInBin.pushing(task)
           } 
         }
       }

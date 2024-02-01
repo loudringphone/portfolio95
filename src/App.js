@@ -6,6 +6,7 @@ import ms_sans_serif from "react95/dist/fonts/ms_sans_serif.woff2";
 import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
 import './App.css';
 import DesktopIcons from './components/desktop-icons/DesktopIcons';
+import { getPropertyValue } from './functions/customFunctions';
 import { Helmet } from './helmet/Helmet';
 import { Taskbar } from './components/taskbar/Taskbar';
 import PortfolioWindow from './components/portfolio/PortfolioWindow';
@@ -153,7 +154,33 @@ const App = () => {
     }
   }, [isTouchDevice])
 
-  const settingIconsInBin = (boolean, task) => {
+  const settingIconsInBin = {
+    unshifting: (task) => {
+      setIconsInBin(prevIcons => {
+        prevIcons.delete(task);
+        const arr = Array.from(prevIcons);
+        arr.unshift(task); 
+        return new Set(arr);
+      });
+    },
+    inserting: (task) => {
+      setIconsInBin(prevIcons => {
+        prevIcons.delete(task);
+        const arr = Array.from(prevIcons);
+        arr.splice(1, 0, task);
+        return new Set(arr);
+      })
+    },
+    pushing: (task) => {
+      setIconsInBin(prevIcons => {
+        prevIcons.delete(task);
+        const arr = Array.from(prevIcons);
+        arr.push(task); 
+        return new Set(arr);
+      })
+    }
+  };
+  const settingIconsInBinSimple = (boolean, task) => {
     setIconsInBin((prevState) => {
       if (boolean) {
         prevState.add(task);
@@ -186,7 +213,7 @@ const App = () => {
       }, 0);
     }
     displayingTask(false, task)
-    settingIconsInBin(true, task)
+    settingIconsInBinSimple(true, task)
     setIcons(prevTasks => ({
       ...prevTasks,
       [task]: {
@@ -209,6 +236,7 @@ const App = () => {
       },
     }));
   }
+  const binIconsRef = useRef()
   const teleportingIcon = (event) => {
     const binRect = binWindowRef.current.getBoundingClientRect();
     const clientX = event.clientX || event.changedTouches[0].clientX;
@@ -222,7 +250,7 @@ const App = () => {
       if (task) {
         const offsetX = clientX - iconDragPoint.x;
         const offsetY = clientY - iconDragPoint.y;
-        settingIconsInBin(false, task)
+        settingIconsInBinSimple(false, task)
         positioningIcon(task, offsetX, offsetY)
         setTimeout(() => {
           setIcons(prevTasks => ({
@@ -244,7 +272,36 @@ const App = () => {
 
       if (task == 'portfolio' || task == 'music' || task =='git') {
         displayingTask(false, task)
-        settingIconsInBin(true, task)
+
+        if (iconsInBin.size === 0) {
+          settingIconsInBinSimple(true, task)
+        } else {
+          const binIconsRect = binIconsRef.current.getBoundingClientRect();
+          const binGridStyle = window.getComputedStyle(binIconsRef.current);
+          const gridPadding = getPropertyValue(binGridStyle, 'padding');
+          const gridColumnWidth = getPropertyValue(binGridStyle, 'grid-template-columns');
+          const twoEleventhWidth = gridPadding + gridColumnWidth*0.5
+          const halfWidth = gridPadding*2 + gridColumnWidth*1.5
+          if (iconsInBin.size === 1) {
+            // 15 45
+            if (clientX <= binIconsRect.x + twoEleventhWidth ) {
+              settingIconsInBin.unshifting(task)
+            } else {
+              settingIconsInBinSimple(true, task)
+            }
+          } else if (iconsInBin.size === 2) {
+            // 15 45
+            if (clientX <= binIconsRect.x + twoEleventhWidth ) {
+              settingIconsInBin.unshifting(task)
+              // 15 45 || 15 90 15 45
+            } else if (clientX > binIconsRect.x + twoEleventhWidth && clientX <= binIconsRect.x + halfWidth) {
+              settingIconsInBin.inserting(task)
+            } else {
+              settingIconsInBinSimple(true, task)
+            }
+          }
+        }
+
         setIcons(prevTasks => ({
           ...prevTasks,
           [task]: {
@@ -497,14 +554,14 @@ const App = () => {
           <PortfolioWindow {...windowProps} setProjectUrl={setProjectUrl} setPortfolioHeight={setPortfolioHeight} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition} />
           <BrowserWindow {...windowProps} setProjectUrl={setProjectUrl} projectUrl={projectUrl}         />
           <MusicWindow {...windowProps} signed={signed} signingOff={signingOff} isTouchDevice={isTouchDevice} />
-          <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} emptyingBin={emptyingBin} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} setIconsInBin={setIconsInBin} />
+          <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} emptyingBin={emptyingBin} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} setIconsInBin={setIconsInBin} binIconsRef={binIconsRef} settingIconsInBin={settingIconsInBin} />
           <BinWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu}  />
           <RecycleWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu} selectedIcon={selectedIcon}/>
           <WarningWindow {...windowProps} warnings={warnings} activiatingDockMenu={activiatingDockMenu} errorAudio={errorAudio} />
 
           {
           isTouchDevice ?
-            <RecycleBinContent binWindowRef={binWindowRef} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} emptyingBin={emptyingBin} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} documentPosition={documentPosition} setDocumentPosition={setDocumentPosition} setIconsInBin={setIconsInBin} />
+            <RecycleBinContent binWindowRef={binWindowRef} taskIndices={taskIndices} displayTasks={displayTasks} tasksVisibility={tasksVisibility} setActiveTask={setActiveTask} indexingTasks={indexingTasks} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} activeTask={activeTask} emptyingBin={emptyingBin} teleportingIcon={teleportingIcon} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} documentPosition={documentPosition} setDocumentPosition={setDocumentPosition} setIconsInBin={setIconsInBin} binIconsRef={binIconsRef} settingIconsInBin={settingIconsInBin} />
           :
             <></>
           }

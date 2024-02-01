@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import DraggableComponent from '../DraggableComponent';
 import WindowComponent from '../WindowComponent';
 import WindowButton from '../buttons/WindowButton';
@@ -19,8 +19,7 @@ const Wrapper = styled.div`
 `;
 
 
-const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, emptyingBin, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, setTaskSwitiching, setIconsInBin }) => {
-  const binIconsRef = useRef()
+const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, icons, setSelectedBinIcon, selectedBinIcon, emptyingBin, binWindowRef, isTouchDevice, setIconDragPoint, iconsInBin, setTaskSwitiching, setIconsInBin, binIconsRef, settingIconsInBin }) => {
   const task = 'recycle bin'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = { x: 20, y: 15 }
@@ -107,6 +106,7 @@ const RecycleBinWindow = ({ displayTasks, displayingTask, setActiveTask, activeT
                       binIconsRef={binIconsRef}
                       iconsInBin={iconsInBin}
                       setIconsInBin={setIconsInBin}
+                      settingIconsInBin={settingIconsInBin}
                     />
                   );
                 })}

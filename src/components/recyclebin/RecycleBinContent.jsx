@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Icon from './Icon';
 
-function RecycleBinContent({ binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, emptyingBin, teleportingIcon, isTouchDevice, setIconDragPoint, documentPosition, setDocumentPosition, iconsInBin, setIconsInBin }) {
+function RecycleBinContent({ binWindowRef, taskIndices, displayTasks, tasksVisibility, setActiveTask, indexingTasks, icons, setSelectedBinIcon, selectedBinIcon, activeTask, emptyingBin, teleportingIcon, isTouchDevice, setIconDragPoint, documentPosition, setDocumentPosition, iconsInBin, setIconsInBin, binIconsRef, settingIconsInBin={settingIconsInBin} }) {
   const contentRef = useRef()
-  const binIconsRef = useRef()
 
   const handleClickInsideWindow = (event) => {
     event.stopPropagation();
@@ -101,6 +100,7 @@ function RecycleBinContent({ binWindowRef, taskIndices, displayTasks, tasksVisib
               binIconsRef={binIconsRef}
               iconsInBin={iconsInBin}
               setIconsInBin={setIconsInBin}
+              settingIconsInBin={settingIconsInBin}
             />
           )})
         }
