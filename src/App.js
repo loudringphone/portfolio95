@@ -553,7 +553,7 @@ const App = () => {
           <ResumeWindow {...windowProps} isTouchDevice={isTouchDevice} />
           <PortfolioWindow {...windowProps} setProjectUrl={setProjectUrl} setPortfolioHeight={setPortfolioHeight} setTouchStartY={setTouchStartY} setDocumentPosition={setDocumentPosition} />
           <BrowserWindow {...windowProps} setProjectUrl={setProjectUrl} projectUrl={projectUrl}         />
-          <MusicWindow {...windowProps} signed={signed} signingOff={signingOff} isTouchDevice={isTouchDevice} />
+          <MusicWindow {...windowProps} signed={signed} signingOff={signingOff} isTouchDevice={isTouchDevice} icons={icons} />
           <RecycleBinWindow {...windowProps} icons={icons} setSelectedBinIcon={setSelectedBinIcon} selectedBinIcon={selectedBinIcon} emptyingBin={emptyingBin} binWindowRef={binWindowRef} isTouchDevice={isTouchDevice} setIconDragPoint={setIconDragPoint} iconsInBin={iconsInBin} setIconsInBin={setIconsInBin} binIconsRef={binIconsRef} settingIconsInBin={settingIconsInBin} />
           <BinWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu}  />
           <RecycleWarningWindow {...windowProps} activiatingDockMenu={activiatingDockMenu} selectedIcon={selectedIcon}/>

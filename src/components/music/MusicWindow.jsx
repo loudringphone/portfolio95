@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   background: transparent;
 `;
 
-const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signingOff, setTaskSwitiching }) => {
+const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility ,signingOff, setTaskSwitiching, icons }) => {
   const task = 'music'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth <= 600 ? {x: window.innerWidth*0.04, y: 15} : { x: (window.innerWidth - 600)/2, y: 60 }
@@ -125,6 +125,22 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
      setPlaying(false)
     }
   }, [signingOff])
+
+  useEffect(() => {
+    if (icons[task].visibility == 'hidden') {
+      handleMusicClose()
+      setTimeout(() => {
+        const newAudio = new Audio(music[0].source);
+        setMusicIndex(0);
+        setAudio(newAudio);
+        setCountdownTime(0)
+        newAudio.addEventListener('loadedmetadata', () => {
+          setCountdownTime(Math.floor(newAudio.duration));
+        });
+      }, 0);
+      
+    }
+  }, [icons])
 
   useEffect(() => {
     let countdownInterval;
