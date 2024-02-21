@@ -159,7 +159,7 @@ const App = () => {
       setIconsInBin(prevIcons => {
         prevIcons.delete(task);
         const arr = Array.from(prevIcons);
-        arr.unshift(task); 
+        arr.unshift(task);
         return new Set(arr);
       });
     },
@@ -238,7 +238,10 @@ const App = () => {
   }
   const binIconsRef = useRef()
   const teleportingIcon = (event) => {
-    const binRect = binWindowRef.current.getBoundingClientRect();
+    if (tasksVisibility['recycle bin'] != 'visible') {
+      return
+    }
+      const binRect = binWindowRef.current.getBoundingClientRect();
     const clientX = event.clientX || event.changedTouches[0].clientX;
     const clientY = event.clientY || event.changedTouches[0].clientY;
     if (
@@ -336,7 +339,7 @@ const App = () => {
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
   }, [window.innerWidth])
-  
+
   const indexingTasks = (task) => {
     setTaskIndices((prevState) => {
       const sortedKeys = Object.keys(prevState).sort((a, b) => prevState[a] - prevState[b]);
@@ -426,7 +429,7 @@ const App = () => {
     } else if (activeTask) {
       activiatingDockMenu(false)
     }
-  }, [activeTask]); 
+  }, [activeTask]);
 
   useEffect(() => {
     if (!desktopRef.current) return;
@@ -472,7 +475,7 @@ const App = () => {
           <ThemeProvider theme={original}>
             <GlobalStyles />
             {
-              window.innerWidth <= 600 ? 
+              window.innerWidth <= 600 ?
               <img className='shut-down' src={window.innerWidth <= 800 ? safeTurnOff : safeTurnOff} alt="start up"/>
               // <p className='shut-down-text'>It's now safe to turn off your computer.</p>
               :
