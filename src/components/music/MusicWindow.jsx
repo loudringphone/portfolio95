@@ -76,7 +76,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     setAudio(newAudio);
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
-    });
+    }, { once: true });
     setIsSkipped(true);
     setPlaying(true);
   }
@@ -98,7 +98,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
     setCountdownTime(0)
     newAudio.addEventListener('loadedmetadata', () => {
       setCountdownTime(Math.floor(newAudio.duration));
-    });
+    }, { once: true });
     setIsSkipped(true);
     setPlaying(true);
   }
@@ -136,7 +136,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
         setCountdownTime(0)
         newAudio.addEventListener('loadedmetadata', () => {
           setCountdownTime(Math.floor(newAudio.duration));
-        });
+        }, { once: true });
       }, 0);
       
     }
@@ -163,7 +163,7 @@ const MusicWindow = ({ displayTasks, displayingTask, setActiveTask, activeTask, 
         }, 1000);
         audio.addEventListener('pause', () => {
           clearInterval(countdownInterval);
-        });
+        }, { once: true });
       }
       return () => {
         audio.removeEventListener('ended', handleAudioEnd);
