@@ -2,7 +2,7 @@
 Explore my portfolio by visiting this [link](https://winstonsportfolio95.netlify.app/). The unique aesthetic of this portfolio is achieved through the integration of `React95`, providing Windows95 UI components for React applications, and `react-draggable`, enabling element drag-and-drop functionality.
 
 ## Draggable Components on Touchscreens
-Throughout the development of this portfolio, I delved into the intricacies of CSS and ReactJS, gaining valuable insights and refining my skills. One challenge involved making both the parent and child components draggable. While this functionality works seamlessly on a traditional computer mouse, it may not function as expected on touchscreens. To address this, I implemented a workaround involving a separate element that tracks the parent's movement, duplicating the content of the child to follow suit and ensuring a smooth dragging experience on touchscreens.
+While building this portfolio, I explored the complexities of CSS and ReactJS, deepening my understanding and honing my skills. One particularly challenging task was enabling both parent and child components to be draggable. Although the functionality works smoothly with a traditional computer mouse, it didn’t perform as expected on touchscreens. To overcome this, I devised a workaround using a separate element to track the parent’s movement. By duplicating the child’s content to follow the parent, I ensured a smoother dragging experience for touchscreen users.
 
 ```
 binContent.style.top = `${scrollTop + binWindowRect.top}px`;
