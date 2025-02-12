@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   background: transparent;
 `;
 
-const BrowserWindow = ({ projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
+const BrowserWindow = ({ setProjectUrl, projectUrl, displayTasks, displayingTask, indexingTasks, taskIndices, tasksVisibility, setTasksVisibility, setActiveTask, activeTask, setTaskSwitiching }) => {
   const task = 'browser'
   const [isDraggable, setIsDraggable] = useState(true)
   const initialPosition = window.innerWidth > 500 ? { x: 80, y: 80 } : { x: 15, y: 10 }
@@ -28,7 +28,7 @@ const BrowserWindow = ({ projectUrl, displayTasks, displayingTask, indexingTasks
         <span>{capitalise(task)}</span>
         <div className="buttons">
           <WindowButton purpose='minimise' tasksVisibility={tasksVisibility} task={task} setTasksVisibility={setTasksVisibility} setActiveTask={setActiveTask} setTaskSwitiching={setTaskSwitiching} setIsDraggable={setIsDraggable} />
-          <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} />
+          <WindowButton purpose='close' task={task} setActiveTask={setActiveTask} displayingTask={displayingTask} setIsDraggable={setIsDraggable} setProjectUrl={setProjectUrl} projectUrl={projectUrl}/>
         </div>
       </WindowHeader></strong>
       <WindowContent className='window-content' style={{display: 'block'}}>

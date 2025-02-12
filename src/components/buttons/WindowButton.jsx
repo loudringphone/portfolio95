@@ -4,7 +4,7 @@ import CloseLineIcon from 'remixicon-react/CloseLineIcon';
 import { handleButtonTouchEnd, downloadResume } from '../../functions/customFunctions';
 import './buttons.css'
 
-const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTaskSwitiching, setIsDraggable, displayingTask, handleMusicClose, setHelperDisplay }) => {
+const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTaskSwitiching, setIsDraggable, displayingTask, handleMusicClose, setHelperDisplay, setProjectUrl, projectUrl}) => {
   const [handle, setHandle] = useState(null)
   useEffect(() => {
     setHandle( () => {
@@ -22,7 +22,9 @@ const WindowButton = ({ purpose, task, setTasksVisibility, setActiveTask, setTas
         case 'close':
           return () => {
             if (handleMusicClose) {
-              handleMusicClose()
+              handleMusicClose();
+            } else if (projectUrl) {
+              setProjectUrl(null);
             }
             displayingTask(false, task)
             setTimeout(() => {
