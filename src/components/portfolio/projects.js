@@ -29,9 +29,9 @@ export const projects = {
     "git": "https://github.com/loudringphone/sancbook",
     "article": "Sancbook, my second General Assembly project, is a robust global platform addressing human rights abuses through Ruby on Rails and PostgreSQL. The standout feature, an interactive world map powered by the Gon gem, visualizes collective impact. Data scraping from Wikipedia and YouTube, real-time messaging via Ajax, and Rails Active Record Validations enhance advocacy. Sancbook unites a global community against injustice, fostering connections and discussions. Built on Ruby on Rails and PostgreSQL, it offers seamless data management, empowering users for positive change. The dynamic map and innovative features exemplify technology's potential to combat human rights abuses, showcasing a commitment to justice and compassion."
   },
-  "ultimate-tic-tac-toe" : {
-    "site": "https://loudringphone.github.io/ultimate-tictactoe/",
-    "git": "https://loudringphone.github.io/ultimate-tictactoe/",
-    "article": "Ultimate Tic Tac Toe, a standout from the General Assembly software engineering course, features two captivating games - Ultimate Tic Tac Toe and Tic Tac Toe. With interactive gameplay, self-built AI algorithms, and DOM manipulation using vanilla JavaScript, it offers character selection, local storage, board reset, and sound effects. This creation provides an enriching learning experience. The article explores the world of Ultimate Tic Tac Toe, spotlighting acquired insights and advanced AI techniques. The game offers engaging gameplay through intuitive moves, character selection, local storage, and sound effects. A notable achievement is the incorporation of AI opponents, showcasing the project's dedication to creativity and mastery in game development."
-  },
+  // "ultimate-tic-tac-toe" : {
+  //   "site": "https://loudringphone.github.io/ultimate-tictactoe/",
+  //   "git": "https://github.com/loudringphone/ultimate-tictactoe",
+  //   "article": "Ultimate Tic Tac Toe, a standout from the General Assembly software engineering course, features two captivating games - Ultimate Tic Tac Toe and Tic Tac Toe. With interactive gameplay, self-built AI algorithms, and DOM manipulation using vanilla JavaScript, it offers character selection, local storage, board reset, and sound effects. This creation provides an enriching learning experience. The article explores the world of Ultimate Tic Tac Toe, spotlighting acquired insights and advanced AI techniques. The game offers engaging gameplay through intuitive moves, character selection, local storage, and sound effects. A notable achievement is the incorporation of AI opponents, showcasing the project's dedication to creativity and mastery in game development."
+  // },
 }
